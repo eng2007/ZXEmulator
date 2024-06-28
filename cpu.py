@@ -25,6 +25,9 @@ class Z80:
 
         # Регистр прерываний
         self.i = 0
+
+        # Регистр регенерации
+        self.r = 0
         
         # Память на 128KB (банки памяти ZX Spectrum 128)
         #self.memory = [0] * 128 * 1024  # 128KB памяти
@@ -46,6 +49,7 @@ class Z80:
         # Сброс всех регистров и флагов
         self.af = self.bc = self.de = self.hl = 0
         self.ix = self.iy = self.sp = self.pc = 0
+        self.r = 0
         self.interrupts_enabled = False
         self.af_prime = self.bc_prime = self.de_prime = self.hl_prime = 0
 
@@ -613,10 +617,25 @@ class Z80:
                 self.memory[address] = self.hl & 0xFF
             else: print(f"Ext.IY opcode: {opcode:02X}" + ' not supported')
         if prefix == 'ED': #opcode prefix #ED
-            if   opcode == 0x43:  # LD (nn),BC
+
+
+            if opcode == 0x42:  # SBC HL,BC
+                carry = 1 if self.carry_flag else 0
+                result = self.hl - self.bc - carry
+                self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
+                hl = result & 0xFFF
+            elif opcode == 0x43:  # LD (nn),BC
                 nn = self.fetch_word()
                 self.memory[nn] = (self.bc >> 8) & 0xFF
                 self.memory[nn+1]  = (self.bc ) & 0xFF
+
+            elif opcode == 0x44:  # NEG
+                a = (self.af >> 8) & 0xFF  # Извлекаем регистр A из регистра AF
+                result = -a & 0xFF         # Приведение к 8 битам
+                self.set_byte_flags(result & 0xFF, subtract=True, carry=(a != 0))
+                # Запись результата в аккумулятор
+                self.af = (result << 8) | (self.af & 0xFF)
+
             elif opcode == 0x45:  # RETN
                 print('RETN')
             elif opcode == 0x46:  # IM 0
@@ -625,11 +644,17 @@ class Z80:
                 self.i = (self.af & 0xFF00) >> 8
             elif opcode == 0x4B:  # LD BC,(nn)
                 nn = self.fetch_word()
-                self.bc = self.memory[nn] + (self.memory[nn + 1] << 8)                
+                self.bc = self.memory[nn] + (self.memory[nn + 1] << 8) 
+
+            elif opcode == 0x4F:  # LD R, A
+                self.r = (self.af & 0xFF00) >> 8
+
             elif opcode == 0x52:  # SBC HL,DE
                 carry = 1 if self.carry_flag else 0
                 result = self.hl - self.de - carry
                 self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
+                hl = result & 0xFFF
+
             elif opcode == 0x53:  # LD (nn),DE
                 nn = self.fetch_word()
                 self.memory[nn] = (self.de >> 8) & 0xFF
@@ -637,6 +662,13 @@ class Z80:
 
             elif opcode == 0x56:  # IM 1
                 self.interrupt_mode = 1
+
+            elif opcode == 0x5A:  # ADC HL,BC
+                carry = 1 if self.carry_flag else 0
+                result = self.hl + self.bc + carry
+                self.set_flags(result & 0xFF, subtract=False, carry=(result > 0xFFFF))
+                hl = result & 0xFFF
+
             elif opcode == 0x5B:  # LD DE,(nn)
                 nn = self.fetch_word()
                 self.de = self.memory[nn] + (self.memory[nn + 1] << 8)                
@@ -656,6 +688,11 @@ class Z80:
             elif opcode == 0x78:  # IN A, (bc)
                 result = self.io_controller.read_port(self.bc)
                 self.af = (result << 8) | (self.af & 0xFF)
+
+            elif opcode == 0x79:  # OUT (bc), A
+                a = (self.af >> 8) & 0xFF
+                self.io_controller.write_port(self.bc, a) 
+
 
             elif opcode == 0x7B:  # LD SP,(nn)
                 nn = self.fetch_word()
@@ -1124,11 +1161,22 @@ class Z80:
         elif opcode == 0x68:  # LD L, B
             b = (self.bc >> 8) & 0xFF
             self.hl = (self.hl & 0xFF00) | b   
+        elif opcode == 0x69:  # LD L, C
+            c = self.bc & 0xFF
+            self.hl = (self.hl & 0xFF00) | c   
 
-
+        elif opcode == 0x6A:  # LD L, D
+            d = (self.de >> 8) & 0xFF
+            self.hl = (self.hl & 0xFF00) | d 
         elif opcode == 0x6B:  # LD L, E
             e = self.de & 0xFF
-            self.hl = (self.hl & 0xFF00) | e                             
+            self.hl = (self.hl & 0xFF00) | e  
+
+        elif opcode == 0x6C:  # LD L, H
+            h = (self.hl >> 8) & 0xFF
+            self.hl = (self.hl & 0xFF00) | h 
+
+
         elif opcode == 0x6F:  # LD L, A
             a = (self.af >> 8) & 0xFF
             self.hl = (self.hl & 0xFF00) | a
@@ -1309,7 +1357,15 @@ class Z80:
         elif opcode == 0x92:  # SUB D
             result = (self.get_register_value('af') >> 8) - (self.get_register_value('de') >> 8)
             self.set_flags(result, subtract=True, carry=(result < 0))
-            self.set_register_value('af', (result & 0xFF) << 8 | (self.get_register_value('af') & 0x00FF))                 
+            self.set_register_value('af', (result & 0xFF) << 8 | (self.get_register_value('af') & 0x00FF))   
+
+        elif opcode == 0x94:  # SUB H
+            a = (self.af >> 8) & 0xFF
+            h = (self.hl >> 8) & 0xFF
+            result = a - h
+            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
+
         elif opcode == 0x95:  # SUB L
             a = (self.af >> 8) & 0xFF
             l = self.hl & 0xFF
