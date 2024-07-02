@@ -185,6 +185,8 @@ class Z80:
             self.pc = 0x0038
         elif self.interrupt_mode == 1:
             self.pc = 0x0038
+            logging.info('========== Call interrupt ==========')
+            logging.disable()
         elif self.interrupt_mode == 2:
             vector = self.io_controller.get_data_bus_value()
             address = (self.i << 8) | vector

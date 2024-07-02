@@ -1,0 +1,8743 @@
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+========== Finish interrupt ==========
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0C55: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0C59: RET NZ
+opcode: C0
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC6: DEC H
+opcode: 25
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C29: INC DE
+opcode: 13
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F2: EXX
+opcode: D9
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B6E: CB prefix
+opcode: CB
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B7E: EX DE,HL
+opcode: EB
+#
+0B7F: LD A,C
+opcode: 79
+#
+0B80: DEC A
+opcode: 3D
+#
+0B81: LD A,n
+opcode: 3E
+Byte: 21
+#
+0B83: JR NZ,e
+opcode: 20
+Byte: 0E
+#
+0B93: CP C
+opcode: B9
+#
+0B94: PUSH DE
+opcode: D5
+#
+0B95: CALL Z,nn
+opcode: CC
+Word: 0C55
+#
+0B98: POP DE
+opcode: D1
+#
+0B99: PUSH BC
+opcode: C5
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B9A: PUSH HL
+opcode: E5
+#
+0B9B: LD A,(nn)
+opcode: 3A
+Word: 5C91
+#
+0B9E: LD B,n
+opcode: 06
+Byte: FF
+#
+0BA0: RRA
+opcode: 1F
+#
+0BA1: JR C,e
+opcode: 38
+Byte: 01
+#
+0BA3: INC B
+opcode: 04
+#
+0BA4: RRA
+opcode: 1F
+#
+0BA5: RRA
+opcode: 1F
+#
+0BA6: SBC A,A
+opcode: 9F
+#
+0BA7: LD C,A
+opcode: 4F
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BA8: LD A,n
+opcode: 3E
+Byte: 08
+#
+0BAA: AND A
+opcode: A7
+#
+0BAB: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BAF: JR Z,e
+opcode: 28
+Byte: 05
+#
+0BB1: FD prefix
+opcode: FD
+Byte: CB
+Byte: 30
+Byte: CE
+#
+0BB5: SCF
+opcode: 37
+#
+0BB6: EX DE,HL
+opcode: EB
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BD3: EX AF,AF'
+opcode: 08
+#
+0BD4: LD A,n
+opcode: 3E
+Byte: 20
+#
+0BD6: ADD A,E
+opcode: 83
+#
+0BD7: LD E,A
+opcode: 5F
+#
+0BD8: EX AF,AF'
+opcode: 08
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BD9: JR e
+opcode: 18
+Byte: E6
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BB7: EX AF,AF'
+opcode: 08
+#
+0BB8: LD A,(DE)
+opcode: 1A
+#
+0BB9: AND B
+opcode: A0
+#
+0BBA: XOR (HL)
+opcode: AE
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BBB: XOR C
+opcode: A9
+#
+0BBC: LD (DE),A
+opcode: 12
+#
+0BBD: EX AF,AF'
+opcode: 08
+#
+0BBE: JR C,e
+opcode: 38
+Byte: 13
+#
+0BC0: INC D
+opcode: 14
+#
+0BC1: INC HL
+opcode: 23
+#
+0BC2: DEC A
+opcode: 3D
+#
+0BC3: JR NZ,e
+opcode: 20
+Byte: F2
+#
+0BC5: EX DE,HL
+opcode: EB
+#
+0BC6: DEC H
+opcode: 25
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0BC7: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0BCB: CALL Z,nn
+opcode: CC
+Word: 0BDB
+#
+0BCE: POP HL
+opcode: E1
+#
+0BCF: POP BC
+opcode: C1
+#
+0BD0: DEC C
+opcode: 0D
+#
+0BD1: INC HL
+opcode: 23
+#
+0BD2: RET
+opcode: C9
+#
+0ADC: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+#
+0AE0: JR NZ,e
+opcode: 20
+Byte: 1A
+#
+0AFC: FD prefix
+opcode: FD
+Byte: 71
+Byte: 45
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0AFF: LD (nn),HL
+opcode: 22
+Word: 5C80
+#
+0B02: RET
+opcode: C9
+#
+15FE: POP HL
+opcode: E1
+#
+15FF: EXX
+opcode: D9
+#
+1600: RET
+opcode: C9
+#
+0C3E: EXX
+opcode: D9
+#
+0C3F: POP DE
+opcode: D1
+#
+0C40: RET
+opcode: C9
+#
+0C28: LD A,(DE)
+opcode: 1A
+#
+0C29: INC DE
+opcode: 13
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0C2A: ADD A,A
+opcode: 87
+#
+0C2B: JR NC,e
+opcode: 30
+#
+0C22: LD A,(DE)
+opcode: 1A
+#
+0C23: AND n
+opcode: E6
+#
+0C25: CALL nn
+opcode: CD
+Word: 0C3B
+#
+0C3B: PUSH DE
+opcode: D5
+#
+0C3C: EXX
+opcode: D9
+#
+0C3D: RST 10H
+opcode: D7
+#
+0010: JP nn
+opcode: C3
+Word: 15F2
+#
+15F2: EXX
+opcode: D9
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+15F3: PUSH HL
+opcode: E5
+#
+15F4: LD HL,(nn)
+opcode: 2A
+Word: 5C51
+#
+15F7: LD E,(HL)
+opcode: 5E
+#
+15F8: INC HL
+opcode: 23
+#
+15F9: LD D,(HL)
+opcode: 56
+#
+15FA: EX DE,HL
+opcode: EB
+#
+15FB: CALL nn
+opcode: CD
+Word: 162C
+#
+162C: JP (HL)
+opcode: E9
+#
+09F4: CALL nn
+opcode: CD
+Word: 0B03
+#
+0B03: FD prefix
+opcode: FD
+Byte: CB
+Byte: 01
+Byte: 4E
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B07: JR NZ,e
+opcode: 20
+Byte: 14
+#
+0B1D: FD prefix
+opcode: FD
+Byte: 4E
+Byte: 45
+#
+0B20: LD HL,(nn)
+opcode: 2A
+Word: 5C80
+#
+0B23: RET
+opcode: C9
+#
+09F7: CP n
+opcode: FE
+Byte: 20
+#
+09F9: JP NC,nn
+opcode: D2
+Word: 0AD9
+#
+0AD9: CALL nn
+opcode: CD
+Word: 0B24
+#
+0B24: CP n
+opcode: FE
+Byte: 80
+#
+0B26: JR C,e
+opcode: 38
+Byte: 3D
+#
+0B28: CP n
+opcode: FE
+Byte: 90
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B2A: JR NC,e
+opcode: 30
+#
+0B52: SUB n
+opcode: D6
+Byte: A5
+#
+0B54: JR NC,e
+opcode: 30
+#
+0B56: ADD A,n
+opcode: C6
+Byte: 15
+#
+0B58: PUSH BC
+opcode: C5
+#
+0B59: ED prefix
+opcode: ED
+Byte: 4B
+Word: 5C7B
+#
+0B5D: JR e
+opcode: 18
+Byte: 0B
+#
+0B6A: EX DE,HL
+opcode: EB
+#
+0B6B: LD HL,nn
+opcode: 21
+Word: 5C3B
+#
+0B6E: CB prefix
+opcode: CB
+========== Call interrupt ==========
+========== Finish interrupt ==========
+#
+0B70: CP n
+opcode: FE
+Byte: 20
+#
+0B72: JR NZ,e
+opcode: 20
+Byte: 02
+#
+0B76: LD H,n
+opcode: 26
+Byte: 00
+#
+0B78: LD L,A
+opcode: 6F
+#
+0B79: ADD HL,HL
+opcode: 29
+#
+0B7A: ADD HL,HL
+opcode: 29
+#
+0B7B: ADD HL,HL
+opcode: 29
+#
+0B7C: ADD HL,BC
+opcode: 09
+#
+0B7D: POP BC
+opcode: C1
+#
+0B7E: EX DE,HL
+opcode: EB
+========== Call interrupt ==========

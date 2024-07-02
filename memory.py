@@ -1,3 +1,5 @@
+import const
+
 # memory.py
 
 class Memory:
@@ -37,9 +39,13 @@ class Memory:
 
         x, y = 10, offset
         for i in range(0, dump_size, word_size):
+            if x > 300:
+                x = 10
+                y += 20
             word = (memory_dump[i + 1] << 8) | memory_dump[i]  # Считываем 2 байта как слово
-            text = font.render(f"{start_address + i:04X}: {word:04X}", True, (255, 255, 255))
+            text = font.render(f"{start_address + i:04X}: {word:04X} {const.spectrum_characters[memory_dump[i]]} {const.spectrum_characters[memory_dump[i+1]]}", True, (255, 255, 255))
             screen.blit(text, (x, y))
-            y += 20
+            x += 210
+            
 
         return 
