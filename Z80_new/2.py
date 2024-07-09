@@ -81,6 +81,24 @@ class Z80:
         high, low = pair
         return (self.registers[high] << 8) | self.registers[low]
 
+    def set_register_pair(self, pair, value):
+        """
+        Устанавливает значение для пары регистров.
+        
+        :param pair: строка, обозначающая пару регистров ('BC', 'DE', 'HL', 'AF', 'SP')
+        :param value: 16-битное значение для установки
+        """
+        # Убеждаемся, что значение 16-битное
+        value = value & 0xFFFF
+        
+        if pair == 'SP':
+            self.registers['SP'] = value
+        else:
+            # Для остальных пар регистров
+            high, low = pair
+            self.registers[high] = (value >> 8) & 0xFF  # Старший байт
+            self.registers[low] = value & 0xFF  # Младший байт
+
     def store_memory(self, address, value):
         self.memory[address] = value & 0xFF
 

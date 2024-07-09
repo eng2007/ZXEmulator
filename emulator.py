@@ -2,7 +2,8 @@
 import logging
 import pygame
 from memory import Memory
-from cpu import Z80
+#from cpu import Z80
+from new_cpu import Z80
 from interrupt_controller import InterruptController
 from io_controller import IOController
 from graphics import ZX_Spectrum_Graphics
@@ -91,8 +92,10 @@ class ZX_Spectrum_Emulator:
             #    self.interrupt_controller.check_and_trigger_interrupt()
 
             if not self.cpu.halted:
-                prev_pc = self.cpu.pc
-                self.cpu.execute_instruction()  # Заглушка для обработки инструкций
+                #prev_pc = self.cpu.pc
+                prev_pc = self.cpu.registers['PC']
+                #self.cpu.execute_instruction()  # обработка инструкций
+                self.cpu.execute()
             # Условие для вызова прерываний, например, каждые 20 мс
             self.interrupt_controller.check_and_trigger_interrupt()
 
@@ -103,11 +106,12 @@ class ZX_Spectrum_Emulator:
             if i > 10000:                
                 i = 0     
 
-            if self.cpu.pc == 0x0C0A: print('init')
-            a = (self.cpu.af >> 8) & 0xFF
-            if self.cpu.pc == 0x0010: print(const.spectrum_characters[a])
+            if self.cpu.registers['PC'] == 0x0C0A: print('init')
+            #a = (self.cpu.registers['PC'] >> 8) & 0xFF
+            a = self.cpu.registers['A']
+            if self.cpu.registers['PC'] == 0x0010: print(const.spectrum_characters[a])
 
-            if self.cpu.pc == 0x09F4:
+            if self.cpu.registers['PC'] == 0x09F4:
                 logging.disable(logging.NOTSET)
                 log_on = True
             if prev_pc == 0x0052:
