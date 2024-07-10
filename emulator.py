@@ -151,15 +151,15 @@ if __name__ == "__main__":
     zx_emulator = ZX_Spectrum_Emulator()
 
     # Загрузка ROM файла
-    zx_emulator.load_rom('48.rom')
+    #zx_emulator.load_rom('48.rom')
     #zx_emulator.load_rom('128k.rom')
     #zx_emulator.load_rom('mini.rom')
     #zx_emulator.load_rom('TEST48K.rom')
     #zx_emulator.load_rom('ZX Test Rom.rom')
     #zx_emulator.load_rom('zexdoc', 0x8000)
-    #zx_emulator.load_rom('vrcpwins.rom')
+    ##zx_emulator.load_rom('vrcpwins.rom')
     #zx_emulator.load_rom('zxsemenu.rom')
-    #zx_emulator.load_rom('G10R_ROM.bin')
+    zx_emulator.load_rom('G10R_ROM.bin')
 
     # Запуск эмуляции
     zx_emulator.emulate()
