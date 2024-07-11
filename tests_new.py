@@ -183,7 +183,8 @@ if __name__ == '__main__':
         i = 1
         while expected_lines[i].startswith(" "):
             i += 1
-        regs = [int(s, 16) for s in expected_lines[i].split()]
+        regs = [int(s, 16) for s in expected_lines[i].split()]        
+        regs_exp = [int(s, 16) for s in expected_lines[i].split()]
         try:    
             #if mach.registers.A != regs[0] >> 8:
             #    raise Exception("Bad A register")
@@ -292,6 +293,13 @@ if __name__ == '__main__':
             for rl, rr in zip(regs, regsr):
                 print (f"{rl}\t{rl}:\t0x{mach.registers[rl]:04X} 0b{mach.registers[rl]:08b}\t\t{rr}:\t{mach.registers[rr]:04X} 0b{mach.registers[rr]:08b}")
                 #print  (rl, ": {0:4X}".format( mach.get_register_pair(rl)), "\t\t", rr, ": {0:4X}".format(mach.get_register_pair(rr) ))                
+
+            print ("Registers expected:")
+            print(f"AF: 0x{regs_exp[0]:04X}\t0b{regs_exp[0]:016b}")
+            print(f"BC: 0x{regs_exp[1]:04X}\t0b{regs_exp[1]:016b}")
+            print(f"DE: 0x{regs_exp[2]:04X}\t0b{regs_exp[2]:016b}")
+            print(f"IX: 0x{regs_exp[8]:04X}\t0b{regs_exp[8]:016b}")
+            print(f"IY: 0x{regs_exp[9]:04X}\t0b{regs_exp[9]:016b}")
             raise
         print ("PASSED")
         passes += 1

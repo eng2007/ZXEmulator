@@ -1,6 +1,6 @@
 import logging
 class baseCPUClass:
-    def __init__(self):self.registers={'A':0,'F':0,'B':0,'C':0,'D':0,'E':0,'H':0,'L':0,'IX':0,'IY':0,'SP':0,'PC':0,'A_':0,'F_':0,'B_':0,'C_':0,'D_':0,'E_':0,'H_':0,'L_':0};self.registers['IX']=0;self.registers['IY']=0;self.registers['I']=0;self.registers['R']=0;self.registers['IFF']=0;self.registers['IM']=0;self.iff1=False;self.iff2=False;self.memory=[0]*65536;self.interrupts_enabled=False;self.interrupt_mode=0;self.halted=False
+    def __init__(self):self.registers={'A':0,'F':0,'B':0,'C':0,'D':0,'E':0,'H':0,'L':0,'IX':0,'IY':0,'SP':0,'PC':0,'A_':0,'F_':0,'B_':0,'C_':0,'D_':0,'E_':0,'H_':0,'L_':0};self.registers['IX']=0;self.registers['IY']=0;self.registers['I']=0;self.registers['R']=0;self.registers['IFF']=0;self.registers['IM']=0;self.iff1=False;self.iff2=False;self.memory=[0]*65536;self.interrupts_enabled=False;self.interrupt_mode=0;self.halted=False;self.cycles=0
     def reset(self):self.registers={'A':0,'F':0,'B':0,'C':0,'D':0,'E':0,'H':0,'L':0,'IX':0,'IY':0,'SP':0,'PC':0,'A_':0,'F_':0,'B_':0,'C_':0,'D_':0,'E_':0,'H_':0,'L_':0};self.registers['IX']=0;self.registers['IY']=0;self.registers['I']=0;self.registers['R']=0;self.interrupts_enabled=False;self.interrupt_mode=0;self.halted=False
     def display_registers(self,screen,font,offset):x,y=10,10+offset;text=font.render(f"AF: {self.get_register_pair('AF'):04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"BC: {self.get_register_pair('BC'):04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"DE: {self.get_register_pair('DE'):04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"HL: {self.get_register_pair('HL'):04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"IX: {self.registers['IX']:04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"IY: {self.registers['IY']:04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"PC: {self.registers['PC']:04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"SP: {self.registers['SP']:04X}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"Interrupts enabled: {self.interrupts_enabled}",True,(255,255,255));screen.blit(text,(x,y));y+=20;text=font.render(f"Interrupt mode: {self.interrupt_mode}",True,(255,255,255));screen.blit(text,(x,y))
     def load_memory(self,address,data):self.memory[address:address+len(data)]=data
@@ -22,7 +22,7 @@ class baseCPUClass:
     def fetch_word(self):low=self.fetch();high=self.fetch();return high<<8|low
     def fetch_signed(self):value=self.fetch();return value if value<128 else value-256
     def set_flag(self,flag,value):
-        mask={'C':1,'N':2,'P/V':4,'H':16,'Z':64,'S':128}[flag]
+        mask={'C':1,'N':2,'P/V':4,'3':8,'H':16,'5':32,'Z':64,'S':128}[flag]
         if value:self.registers['F']|=mask
         else:self.registers['F']&=~mask
     def get_flag(self,flag):mask={'C':1,'N':2,'P/V':4,'H':16,'Z':64,'S':128}[flag];return self.registers['F']&mask!=0
@@ -38,7 +38,9 @@ class baseCPUClass:
     def load_register(self,reg,value):
         self.registers[reg]=value&255
         if reg=='A':self.update_flags(value)
-    def load_register_pair(self,pair,value):high,low=pair;self.registers[high]=value>>8&255;self.registers[low]=value&255
+    def load_register_pair(self,pair,value):
+        if pair=='SP':self.registers['SP']=value
+        else:high,low=pair;self.registers[high]=value>>8&255;self.registers[low]=value&255
     def get_register_pair(self,pair):
         if pair=='SP':return self.registers['SP']
         elif pair=='PC':return self.registers['PC']
@@ -48,17 +50,20 @@ class baseCPUClass:
     def set_register_pair(self,pair,value):
         value=value&65535
         if pair=='SP':self.registers['SP']=value
+        elif pair=='PC':self.registers['PC']=value
+        elif pair=='IX':self.registers['IX']=value
+        elif pair=='IY':self.registers['IY']=value
         else:high,low=pair;self.registers[high]=value>>8&255;self.registers[low]=value&255
     def store_memory(self,address,value):self.memory[address]=value&255
     def store_word(self,address,value):value=value&65535;self.memory[address]=value&255;self.memory[address+1&65535]=value>>8&255
-    def inc_register(self,reg):self.registers[reg]=self.registers[reg]+1&255;self.update_flags(self.registers[reg],zero=True,sign=True,halfcarry=True)
-    def dec_register(self,reg):self.registers[reg]=self.registers[reg]-1&255;self.update_flags(self.registers[reg],zero=True,sign=True,halfcarry=True)
-    def inc_memory(self,address):self.memory[address]=self.memory[address]+1&255;self.update_flags(self.memory[address],zero=True,sign=True,halfcarry=True)
-    def dec_memory(self,address):self.memory[address]=self.memory[address]-1&255;self.update_flags(self.memory[address],zero=True,sign=True,halfcarry=True)
+    def load_word(self,address):return self.memory[address]|self.memory[address+1]<<8
+    def inc_register(self,reg):value=self.registers[reg];self.registers[reg]=self.registers[reg]+1&255;self.update_flags(self.registers[reg],zero=True,sign=True,halfcarry=True);self.set_flag('H',value&15==15);self.set_flag('P/V',self.registers[reg]==128);self.set_flag('3',self.registers[reg]&8);self.set_flag('5',self.registers[reg]&32)
+    def dec_register(self,reg):value=self.registers[reg];self.registers[reg]=self.registers[reg]-1&255;self.update_flags(self.registers[reg],zero=True,sign=True,halfcarry=True);self.set_flag('N',1);self.set_flag('H',value&15==0);self.set_flag('P/V',self.registers[reg]==127);self.set_flag('3',self.registers[reg]&8);self.set_flag('5',self.registers[reg]&32)
+    def inc_memory(self,address):value=self.memory[address];self.memory[address]=self.memory[address]+1&255;self.update_flags(self.memory[address],zero=True,sign=True,halfcarry=True);self.set_flag('H',value&15==15);self.set_flag('P/V',self.memory[address]==128);self.set_flag('3',self.memory[address]&8);self.set_flag('5',self.memory[address]&32)
+    def dec_memory(self,address):value=self.memory[address];self.memory[address]=self.memory[address]-1&255;self.update_flags(self.memory[address],zero=True,sign=True,halfcarry=True);self.set_flag('N',1);self.set_flag('H',value&15==0);self.set_flag('P/V',self.memory[address]==127);self.set_flag('3',self.memory[address]&8);self.set_flag('5',self.memory[address]&32)
     def inc_register_pair(self,pair):value=self.get_register_pair(pair);value=value+1&65535;self.load_register_pair(pair,value)
     def dec_register_pair(self,pair):value=self.get_register_pair(pair);value=value-1&65535;self.load_register_pair(pair,value)
     def add(self,operand):value=self.registers[operand]if isinstance(operand,str)else operand;result=self.registers['A']+value;self.registers['A']=result&255;self.update_flags(result,zero=True,sign=True,carry=True,halfcarry=True)
-    def add_hl(self,pair):hl=self.get_register_pair('HL');value=self.get_register_pair(pair);result=hl+value;self.load_register_pair('HL',result&65535);self.update_flags(result,carry=True,halfcarry=True)
     def rotate_left_carry(self,reg):value=self.registers[reg];carry=value>>7;result=(value<<1|carry)&255;self.registers[reg]=result;self.update_flags(result,carry=True)
     def rotate_right_carry(self,reg):value=self.registers[reg];carry=value&1;result=(value>>1|carry<<7)&255;self.registers[reg]=result;self.update_flags(result,carry=True)
     def exchange_de_hl(self):self.registers['D'],self.registers['H']=self.registers['H'],self.registers['D'];self.registers['E'],self.registers['L']=self.registers['L'],self.registers['E']

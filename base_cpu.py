@@ -27,6 +27,8 @@ class baseCPUClass:
 
         self.cycles = 0
 
+        self.debug = True
+
     def reset(self):
         # Сброс всех регистров и флагов
         self.registers = {
@@ -331,8 +333,13 @@ class baseCPUClass:
     def add(self, operand):
         value = self.registers[operand] if isinstance(operand, str) else operand
         result = self.registers['A'] + value
+        h_flag = ((self.registers['A'] & 0xF) + (value & 0xF)) & 0x10 == 0x10
         self.registers['A'] = result & 0xFF
         self.update_flags(result, zero=True, sign=True, carry=True, halfcarry=True)
+        self.set_flag('H',  h_flag)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)        
 
     #def add_hl(self, pair):
     #    hl = self.get_register_pair('HL')
@@ -425,6 +432,10 @@ class baseCPUClass:
         self.set_flag('N', 0)              # Сбрасываем флаг вычитания
         self.set_flag('C', 0)              # Сбрасываем флаг переноса
 
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20) 
+
     def or_a(self, operand):
         """
         Выполняет побитовую операцию OR между аккумулятором и операндом.
@@ -450,7 +461,10 @@ class baseCPUClass:
         self.set_flag('H', 0)              # Сбрасываем флаг полупереноса
         self.set_flag('P/V', self.parity(result))  # Устанавливаем флаг четности/переполнения
         self.set_flag('N', 0)              # Сбрасываем флаг вычитания
-        self.set_flag('C', 0)              # Сбрасываем флаг переноса        
+        self.set_flag('C', 0)              # Сбрасываем флаг переноса      
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)           
 
     def parity(self, value):
         """
@@ -510,6 +524,10 @@ class baseCPUClass:
         self.set_flag('N', 1)  # Всегда устанавливается, так как это операция вычитания
         self.set_flag('C', self.registers['A'] < operand)  # Устанавливаем флаг переноса
 
+        # Установка флагов 3 и 5
+        self.set_flag('3', operand & 0x08)
+        self.set_flag('5', operand & 0x20) 
+
     def and_a(self, value):
         """
         Выполняет побитовую операцию AND между аккумулятором и операндом.
@@ -537,6 +555,10 @@ class baseCPUClass:
         self.set_flag('P/V', self.parity(result))  # Устанавливаем флаг четности
         self.set_flag('N', 0)              # Сбрасываем флаг вычитания
         self.set_flag('C', 0)              # Сбрасываем флаг переноса
+
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20) 
 
     def push(self, rr):
         """
@@ -587,6 +609,10 @@ class baseCPUClass:
         self.set_flag('Z', self.registers['A'] == 0)
         self.set_flag('N', 1)
 
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20) 
+
     def sub(self, operand):
         """
         Выполняет вычитание (SUB A, operand).
@@ -609,6 +635,10 @@ class baseCPUClass:
         self.set_flag('S', self.registers['A'] & 0x80)
         self.set_flag('Z', self.registers['A'] == 0)
         self.set_flag('N', 1)
+
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20) 
 
     def adc(self, operand):
         """
@@ -633,3 +663,7 @@ class baseCPUClass:
         self.set_flag('S', self.registers['A'] & 0x80)
         self.set_flag('Z', self.registers['A'] == 0)
         self.set_flag('N', 0)        
+
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20) 

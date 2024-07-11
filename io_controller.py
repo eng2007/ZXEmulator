@@ -13,8 +13,10 @@ class IOController:
             self.emulator.set_border(self.border_color)
 
     def read_port(self, port):
-        #print(f"Input from port {port:02X}")  
+        print(f"Input from port {port:02X}")  
         if port == 0xFE:
             # Чтение состояния клавиатуры
             return self.emulator.keyboard.read_keyboard()
+        if port == 0xE3: return 0xC1
+        if port == 0xE2: return 0x71
         return 0xFF  # Возвращаем значение по умолчанию для других портов

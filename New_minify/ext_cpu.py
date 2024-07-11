@@ -30,10 +30,10 @@ class extCPUClass(baseCPUClass):
         if self.check_condition(condition):self.ret()
     def rlc(self,value):carry=value>>7;result=(value<<1|carry)&255;self.set_flag('C',carry);self.update_flags(result,zero=True,sign=True,parity=True);return result
     def rrc(self,value):carry=value&1;result=(value>>1|carry<<7)&255;self.set_flag('C',carry);self.update_flags(result,zero=True,sign=True,parity=True);return result
-    def rlca(self):carry=self.registers['A']>>7;self.registers['A']=(self.registers['A']<<1|carry)&255;self.set_flag('C',carry);self.set_flag('H',0);self.set_flag('N',0)
-    def rrca(self):carry=self.registers['A']&1;self.registers['A']=(self.registers['A']>>1|carry<<7)&255;self.set_flag('C',carry);self.set_flag('H',0);self.set_flag('N',0)
-    def rla(self):old_carry=self.get_flag('C');new_carry=self.registers['A']>>7;self.registers['A']=(self.registers['A']<<1|old_carry)&255;self.set_flag('C',new_carry);self.set_flag('H',0);self.set_flag('N',0)
-    def rra(self):old_carry=self.get_flag('C');new_carry=self.registers['A']&1;self.registers['A']=(self.registers['A']>>1|old_carry<<7)&255;self.set_flag('C',new_carry);self.set_flag('H',0);self.set_flag('N',0)
+    def rlca(self):carry=self.registers['A']>>7;self.registers['A']=(self.registers['A']<<1|carry)&255;self.set_flag('C',carry);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('3',self.registers['A']&8);self.set_flag('5',self.registers['A']&32)
+    def rrca(self):carry=self.registers['A']&1;self.registers['A']=(self.registers['A']>>1|carry<<7)&255;self.set_flag('C',carry);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('3',self.registers['A']&8);self.set_flag('5',self.registers['A']&32)
+    def rla(self):old_carry=self.get_flag('C');new_carry=self.registers['A']>>7;self.registers['A']=(self.registers['A']<<1|old_carry)&255;self.set_flag('C',new_carry);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('3',self.registers['A']&8);self.set_flag('5',self.registers['A']&32)
+    def rra(self):old_carry=self.get_flag('C');new_carry=self.registers['A']&1;self.registers['A']=(self.registers['A']>>1|old_carry<<7)&255;self.set_flag('C',new_carry);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('3',self.registers['A']&8);self.set_flag('5',self.registers['A']&32)
     def rl(self,value):old_carry=self.get_flag('C');carry=value>>7;result=(value<<1|old_carry)&255;self.set_flag('C',carry);self.update_flags(result,zero=True,sign=True,parity=True);return result
     def rr(self,value):old_carry=self.get_flag('C');carry=value&1;result=(value>>1|old_carry<<7)&255;self.set_flag('C',carry);self.update_flags(result,zero=True,sign=True,parity=True);return result
     def sla(self,value):carry=value>>7;result=value<<1&255;self.set_flag('C',carry);self.update_flags(result,zero=True,sign=True,parity=True);return result
@@ -45,14 +45,14 @@ class extCPUClass(baseCPUClass):
     def set(self,bit,value):return value|1<<bit
     def in_r_c(self,reg):port=self.registers['C'];value=self.io_read(port);self.registers[reg]=value;self.update_flags(value,zero=True,sign=True,parity=True)
     def out_c_r(self,reg):port=self.registers['C'];value=self.registers[reg];self.io_write(port,value)
-    def add_hl(self,rp):hl=self.get_register_pair('HL');value=self.get_register_pair(rp);result=hl+value;self.set_register_pair('HL',result&65535);self.set_flag('C',result>65535);self.set_flag('H',(hl&4095)+(value&4095)>4095);self.set_flag('N',0)
+    def add_hl(self,rp):hl=self.get_register_pair('HL');value=self.get_register_pair(rp);result=hl+value;self.set_register_pair('HL',result&65535);self.set_flag('C',result>65535);self.set_flag('H',(hl&4095)+(value&4095)>4095);self.set_flag('N',0);result_h=result>>8&255;self.set_flag('3',result_h&8);self.set_flag('5',result_h&32)
     def adc_hl(self,rp):hl=self.get_register_pair('HL');value=self.get_register_pair(rp);carry=self.get_flag('C');result=hl+value+carry;self.set_register_pair('HL',result&65535);self.set_flag('C',result>65535);self.set_flag('H',(hl&4095)+(value&4095)+carry>4095);self.update_flags(result&65535,zero=True,sign=True,parity=True);self.set_flag('N',0)
     def sbc_hl(self,rp):hl=self.get_register_pair('HL');value=self.get_register_pair(rp);carry=self.get_flag('C');result=hl-value-carry;self.set_register_pair('HL',result&65535);self.set_flag('C',result<0);self.set_flag('H',(hl&4095)-(value&4095)-carry<0);self.update_flags(result&65535,zero=True,sign=True,parity=True);self.set_flag('N',1)
     def neg(self):value=self.registers['A'];result=-value&255;self.registers['A']=result;self.set_flag('C',value!=0);self.set_flag('H',value&15!=0);self.update_flags(result,zero=True,sign=True,parity=True);self.set_flag('N',1)
     def rrd(self):a=self.registers['A'];hl=self.get_register_pair('HL');m=self.memory[hl];self.registers['A']=a&240|m&15;self.memory[hl]=(m>>4|a<<4)&255;self.update_flags(self.registers['A'],zero=True,sign=True,parity=True);self.set_flag('H',0);self.set_flag('N',0)
     def rld(self):a=self.registers['A'];hl=self.get_register_pair('HL');m=self.memory[hl];self.registers['A']=a&240|m>>4;self.memory[hl]=(m<<4|a&15)&255;self.update_flags(self.registers['A'],zero=True,sign=True,parity=True);self.set_flag('H',0);self.set_flag('N',0)
-    def ldi(self):self._block_transfer(1);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('P/V',self.get_register_pair('BC')!=0)
-    def ldd(self):self._block_transfer(-1);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('P/V',self.get_register_pair('BC')!=0)
+    def ldi(self):self._block_transfer(1);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('P/V',self.get_register_pair('BC')!=0);n=self.registers['A']+self.memory[self.get_register_pair('HL')-1];self.set_flag('5',n&2);self.set_flag('3',n&8)
+    def ldd(self):self._block_transfer(-1);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('P/V',self.get_register_pair('BC')!=0);n=self.registers['A']+self.memory[self.get_register_pair('HL')+1];self.set_flag('5',n&2);self.set_flag('3',n&8)
     def ldir(self):
         self.ldi()
         if self.get_register_pair('BC')!=0:self.registers['PC']-=2
@@ -79,6 +79,7 @@ class extCPUClass(baseCPUClass):
         elif opcode&192==64:self._indexed_load(index_reg,opcode)
         elif opcode&192==128:self._indexed_arithmetic(index_reg,opcode)
         elif opcode==203:self._execute_indexed_cb(index_reg)
+        elif opcode==225:self.registers[index_reg]=self.memory[self.registers['SP']]|self.memory[self.registers['SP']+1]<<8;self.registers['SP']=self.registers['SP']+2&65535
         else:raise ValueError(f"Unsupported {index_reg} instruction: {opcode:02X}")
     def _indexed_load(self,index_reg,opcode):
         reg=['B','C','D','E','H','L',None,'A'][opcode&7]

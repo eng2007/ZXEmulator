@@ -289,7 +289,7 @@ class Z80(extCPUClass):
         Complement carry flag.
         """
         self.set_flag('C', not self.get_flag('C'))
-        self.set_flag('H', self.get_flag('C'))
+        self.set_flag('H', not self.get_flag('C'))
         self.set_flag('N', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
@@ -331,15 +331,17 @@ class Z80(extCPUClass):
         Инструкция: IN A, (n)
         """
         port = self.fetch()  # Получаем номер порта из следующего байта
-        value = self.io_read((self.registers['A'] << 8) | port)  # Читаем из порта
+        print(f"port {port:02X}")
+        value = self.io_read(port)  # Читаем из порта
+        print(f"value {value:02X}")
         self.registers['A'] = value  # Сохраняем значение в аккумуляторе
         
         # Устанавливаем флаги
-        self.set_flag('S', value & 0x80)  # Знаковый флаг
-        self.set_flag('Z', value == 0)    # Флаг нуля
-        self.set_flag('H', 0)             # Сбрасываем флаг полупереноса
-        self.set_flag('P/V', self.parity(value))  # Флаг четности
-        self.set_flag('N', 0)             # Сбрасываем флаг вычитания
+        #self.set_flag('S', value & 0x80)  # Знаковый флаг
+        #self.set_flag('Z', value == 0)    # Флаг нуля
+        #self.set_flag('H', 0)             # Сбрасываем флаг полупереноса
+        #self.set_flag('P/V', self.parity(value))  # Флаг четности
+        #self.set_flag('N', 0)             # Сбрасываем флаг вычитания
 
     def out_n_a(self):
         """
