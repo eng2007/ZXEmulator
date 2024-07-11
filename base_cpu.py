@@ -13,6 +13,9 @@ class baseCPUClass:
         self.registers['I'] = 0
         self.registers['R'] = 0
 
+        self.registers['IFF'] = 0
+        self.registers['IM'] = 0
+
         self.iff1 = False
         self.iff2 = False
         #self.im = 0
@@ -21,6 +24,8 @@ class baseCPUClass:
         self.interrupts_enabled = False
         self.interrupt_mode = 0
         self.halted = False
+
+        self.cycles = 0
 
     def reset(self):
         # Сброс всех регистров и флагов
@@ -36,6 +41,8 @@ class baseCPUClass:
         self.registers['R'] = 0
 
         self.interrupts_enabled = False
+        self.interrupt_mode = 0
+        self.halted = False
 
     def display_registers(self, screen, font, offset):
         x, y = 10, 10 + offset
@@ -89,6 +96,7 @@ class baseCPUClass:
             raise ValueError(f"Недопустимый режим прерываний: {mode}")
         
         self.interrupt_mode = mode
+        self.registers['IM'] = mode
         
         if mode == 0:
             # В режиме 0 внешнее устройство может поместить любую инструкцию на шину данных
@@ -127,7 +135,7 @@ class baseCPUClass:
             address = (self.registers['I'] << 8) | vector
             self.registers['PC'] = (self.memory[address + 1] << 8) | self.memory[address]   
 
-        #print("Interrupt 38")         
+        #print("Interrupt 38")
 
     def handle_nmi(self):
         self.sp = (self.sp - 1) & 0xFFFF
@@ -136,10 +144,9 @@ class baseCPUClass:
         self.memory[self.sp] = self.pc & 0xFF
         self.pc = 0x0066 
 
-
     def fetch(self):
         value = self.memory[self.registers['PC']]
-        self.registers['PC'] += 1
+        self.registers['PC'] = (self.registers['PC'] + 1) & 0xFFFF
         return value
 
     def fetch_word(self):
@@ -153,7 +160,7 @@ class baseCPUClass:
         return value if value < 128 else value - 256
 
     def set_flag(self, flag, value):
-        mask = {'C': 0x01, 'N': 0x02, 'P/V': 0x04, 'H': 0x10, 'Z': 0x40, 'S': 0x80}[flag]
+        mask = {'C': 0x01, 'N': 0x02, 'P/V': 0x04, '3': 0x08, 'H': 0x10, '5': 0x20, 'Z': 0x40, 'S': 0x80}[flag]
         if value:
             self.registers['F'] |= mask
         else:
@@ -192,13 +199,25 @@ class baseCPUClass:
             self.update_flags(value)
 
     def load_register_pair(self, pair, value):
-        high, low = pair
-        self.registers[high] = (value >> 8) & 0xFF
-        self.registers[low] = value & 0xFF
+        if pair == 'SP':
+            self.registers['SP'] = value
+        else:
+            high, low = pair
+            self.registers[high] = (value >> 8) & 0xFF
+            self.registers[low] = value & 0xFF
 
     def get_register_pair(self, pair):
-        high, low = pair
-        return (self.registers[high] << 8) | self.registers[low]
+        if pair == 'SP':
+            return self.registers['SP']
+        elif pair == 'PC':
+            return self.registers['PC']
+        elif pair == 'IX':
+            return self.registers['IX']
+        elif pair == 'IY':
+            return self.registers['IY']
+        else:
+            high, low = pair
+            return (self.registers[high] << 8) | self.registers[low]
 
     def set_register_pair(self, pair, value):
         """
@@ -212,6 +231,12 @@ class baseCPUClass:
         
         if pair == 'SP':
             self.registers['SP'] = value
+        elif pair == 'PC':
+            self.registers['PC'] = value
+        elif pair == 'IX':
+            self.registers['IX'] = value
+        elif pair == 'IY':
+            self.registers['IY'] = value
         else:
             # Для остальных пар регистров
             high, low = pair
@@ -237,21 +262,61 @@ class baseCPUClass:
         # Сохраняем старший байт
         self.memory[(address + 1) & 0xFFFF] = (value >> 8) & 0xFF        
 
+    def load_word(self, address):
+        """
+        Загружает 16-битное слово из памяти по указанному адресу.
+        
+        :param address: адрес в памяти, куда нужно сохранить слово
+        :param value: 16-битное значение для сохранения
+        """
+        return self.memory[address] | (self.memory[address + 1] << 8)  
+
     def inc_register(self, reg):
+        value = self.registers[reg]
         self.registers[reg] = (self.registers[reg] + 1) & 0xFF
         self.update_flags(self.registers[reg], zero=True, sign=True, halfcarry=True)
 
+        self.set_flag('H', (value & 0x0F) == 0x0F)
+        self.set_flag('P/V', self.registers[reg] == 0x80)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers[reg] & 0x08)
+        self.set_flag('5', self.registers[reg] & 0x20)
+
     def dec_register(self, reg):
+        value = self.registers[reg]
         self.registers[reg] = (self.registers[reg] - 1) & 0xFF
         self.update_flags(self.registers[reg], zero=True, sign=True, halfcarry=True)
 
+        self.set_flag('N', 1)  # Add/Subtract flag (set for decrement)
+        self.set_flag('H', (value & 0x0F) == 0)
+        self.set_flag('P/V', self.registers[reg] == 0x7F)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers[reg] & 0x08)
+        self.set_flag('5', self.registers[reg] & 0x20)
+
     def inc_memory(self, address):
+        value = self.memory[address]
         self.memory[address] = (self.memory[address] + 1) & 0xFF
         self.update_flags(self.memory[address], zero=True, sign=True, halfcarry=True)
 
+        self.set_flag('H', (value & 0x0F) == 0x0F)
+        self.set_flag('P/V', self.memory[address] == 0x80)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.memory[address] & 0x08)
+        self.set_flag('5', self.memory[address] & 0x20)
+
+
     def dec_memory(self, address):
+        value = self.memory[address]
         self.memory[address] = (self.memory[address] - 1) & 0xFF
         self.update_flags(self.memory[address], zero=True, sign=True, halfcarry=True)
+
+        self.set_flag('N', 1)  # Add/Subtract flag (set for decrement)
+        self.set_flag('H', (value & 0x0F) == 0)
+        self.set_flag('P/V', self.memory[address] == 0x7F)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.memory[address] & 0x08)
+        self.set_flag('5', self.memory[address] & 0x20)
 
     def inc_register_pair(self, pair):
         value = self.get_register_pair(pair)
@@ -269,12 +334,12 @@ class baseCPUClass:
         self.registers['A'] = result & 0xFF
         self.update_flags(result, zero=True, sign=True, carry=True, halfcarry=True)
 
-    def add_hl(self, pair):
-        hl = self.get_register_pair('HL')
-        value = self.get_register_pair(pair)
-        result = hl + value
-        self.load_register_pair('HL', result & 0xFFFF)
-        self.update_flags(result, carry=True, halfcarry=True)
+    #def add_hl(self, pair):
+    #    hl = self.get_register_pair('HL')
+    #    value = self.get_register_pair(pair)
+    #    result = hl + value
+    #    self.load_register_pair('HL', result & 0xFFFF)
+    #    self.update_flags(result, carry=True, halfcarry=True)
 
     def rotate_left_carry(self, reg):
         value = self.registers[reg]

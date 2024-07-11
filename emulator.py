@@ -94,8 +94,7 @@ class ZX_Spectrum_Emulator:
             if not self.cpu.halted:
                 #prev_pc = self.cpu.pc
                 prev_pc = self.cpu.registers['PC']
-                #self.cpu.execute_instruction()  # обработка инструкций
-                self.cpu.execute()
+                self.cpu.execute_instruction()  # обработка инструкций
             # Условие для вызова прерываний, например, каждые 20 мс
             self.interrupt_controller.check_and_trigger_interrupt()
 
@@ -151,7 +150,7 @@ if __name__ == "__main__":
     zx_emulator = ZX_Spectrum_Emulator()
 
     # Загрузка ROM файла
-    #zx_emulator.load_rom('48.rom')
+    zx_emulator.load_rom('48.rom')
     #zx_emulator.load_rom('128k.rom')
     #zx_emulator.load_rom('mini.rom')
     #zx_emulator.load_rom('TEST48K.rom')
@@ -159,7 +158,7 @@ if __name__ == "__main__":
     #zx_emulator.load_rom('zexdoc', 0x8000)
     ##zx_emulator.load_rom('vrcpwins.rom')
     #zx_emulator.load_rom('zxsemenu.rom')
-    zx_emulator.load_rom('G10R_ROM.bin')
+    #zx_emulator.load_rom('G10R_ROM.bin')
 
     # Запуск эмуляции
     zx_emulator.emulate()

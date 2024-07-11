@@ -31,6 +31,8 @@ class extCPUClass(baseCPUClass):
         # Преобразуем смещение в знаковое число
         if offset > 127:
             offset -= 256
+        #print('******************************************************************* JUMP ', offset)
+        #print(f"B:{self.registers['B']}")
         self.registers['PC'] = (self.registers['PC'] + offset) & 0xFFFF
 
     def jr_cc(self, condition, offset):
@@ -151,6 +153,9 @@ class extCPUClass(baseCPUClass):
         self.set_flag('C', carry)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def rrca(self):
         carry = self.registers['A'] & 1
@@ -158,6 +163,9 @@ class extCPUClass(baseCPUClass):
         self.set_flag('C', carry)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def rla(self):
         old_carry = self.get_flag('C')
@@ -166,6 +174,9 @@ class extCPUClass(baseCPUClass):
         self.set_flag('C', new_carry)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def rra(self):
         old_carry = self.get_flag('C')
@@ -174,6 +185,9 @@ class extCPUClass(baseCPUClass):
         self.set_flag('C', new_carry)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def rl(self, value):
         old_carry = self.get_flag('C')
@@ -254,6 +268,10 @@ class extCPUClass(baseCPUClass):
         self.set_flag('C', result > 0xFFFF)
         self.set_flag('H', (hl & 0xFFF) + (value & 0xFFF) > 0xFFF)
         self.set_flag('N', 0)
+        # Устанавливаем флаги 3 и 5 на основе старшего байта результата
+        result_h = (result >> 8) & 0xFF
+        self.set_flag('3', result_h & 0x08)
+        self.set_flag('5', result_h & 0x20)
 
     def adc_hl(self, rp):
         hl = self.get_register_pair('HL')
@@ -313,12 +331,21 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         self.set_flag('N', 0)
         self.set_flag('P/V', self.get_register_pair('BC') != 0)
+        # Дополнительные флаги
+        n = self.registers['A'] + self.memory[self.get_register_pair('HL') - 1]
+        self.set_flag('5', n & 0x02)
+        self.set_flag('3', n & 0x08)
 
     def ldd(self):
         self._block_transfer(-1)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
         self.set_flag('P/V', self.get_register_pair('BC') != 0)
+
+        # Дополнительные флаги
+        n = self.registers['A'] + self.memory[self.get_register_pair('HL') + 1]
+        self.set_flag('5', n & 0x02)
+        self.set_flag('3', n & 0x08)
 
     def ldir(self):
         self.ldi()
@@ -432,13 +459,16 @@ class extCPUClass(baseCPUClass):
             elif opcode == 0xE9:  # JP (IX/IY)
                 self.registers['PC'] = self.registers[index_reg]
             elif opcode == 0xF9:  # LD SP, IX/IY
-                self.registers['SP'] = self.registers[index_reg]                
+                self.registers['SP'] = self.registers[index_reg]
         elif opcode & 0xC0 == 0x40:  # LD instructions
             self._indexed_load(index_reg, opcode)
         elif opcode & 0xC0 == 0x80:  # Arithmetic instructions
             self._indexed_arithmetic(index_reg, opcode)
         elif opcode == 0xCB:  # CB-prefixed instructions
             self._execute_indexed_cb(index_reg)
+        elif opcode == 0xE1: # POP (IX/IY)
+            self.registers[index_reg] = self.memory[self.registers['SP']] | (self.memory[self.registers['SP'] + 1] << 8)
+            self.registers['SP'] = (self.registers['SP'] + 2) & 0xFFFF
         else:
             raise ValueError(f"Unsupported {index_reg} instruction: {opcode:02X}")
 

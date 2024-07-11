@@ -1,5 +1,6 @@
 from ext_cpu import extCPUClass
 from z80_asm import z80_to_asm
+import logging
 
 class Z80(extCPUClass):
     def __init__(self, memory, io_controller, start_addr=0x0000):
@@ -13,8 +14,18 @@ class Z80(extCPUClass):
         self.io_controller = io_controller
 
 
-    def execute(self):
+    def execute_instruction(self, debug = False):
         opcode = self.fetch()
+
+        if debug:
+            logging.info('#')
+            logging.info(f"{self.registers['PC']-1:04X}: {z80_to_asm[opcode]}")
+            logging.info(f"opcode: {opcode:02X}")
+
+            print('#')
+            print(f"{self.registers['PC']-1:04X}: {z80_to_asm[opcode]}")
+            print(f"opcode: {opcode:02X}")
+
         if opcode in self.instructions:
             self.instructions[opcode]()
         else:
@@ -107,7 +118,7 @@ class Z80(extCPUClass):
             0x11: lambda: self.load_register_pair('DE', self.fetch_word()),
             0x21: lambda: self.load_register_pair('HL', self.fetch_word()),
             0x31: lambda: self.load_register_pair('SP', self.fetch_word()),
-            0x2A: lambda: self.load_register_pair('HL', self.memory[self.fetch_word()]),
+            0x2A: lambda: self.load_register_pair('HL', self.load_word(self.fetch_word())),
             0x22: lambda: self.store_word(self.fetch_word(), self.get_register_pair('HL')),
             0xF9: lambda: self.load_register_pair('SP', self.get_register_pair('HL')),
             0xC5: lambda: self.push('BC'), 0xD5: lambda: self.push('DE'),
@@ -269,6 +280,9 @@ class Z80(extCPUClass):
         self.registers['A'] = (~self.registers['A']) & 0xFF
         self.set_flag('H', 1)
         self.set_flag('N', 1)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def ccf(self):
         """
@@ -277,6 +291,9 @@ class Z80(extCPUClass):
         self.set_flag('C', not self.get_flag('C'))
         self.set_flag('H', self.get_flag('C'))
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def scf(self):
         """
@@ -285,6 +302,9 @@ class Z80(extCPUClass):
         self.set_flag('C', 1)
         self.set_flag('H', 0)
         self.set_flag('N', 0)
+        # Установка флагов 3 и 5
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def nop(self):
         """
