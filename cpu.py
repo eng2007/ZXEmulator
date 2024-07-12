@@ -28,23 +28,23 @@ class Z80:
 
         # Регистр регенерации
         self.r = 0
-        
+
         # Память на 128KB (банки памяти ZX Spectrum 128)
         #self.memory = [0] * 128 * 1024  # 128KB памяти
         self.memory = memory.memory
         self.mem_class = memory
         self.io_controller = io_controller
-        
+
         # Флаги процессора
         self.sign_flag = False
         self.zero_flag = False
         self.f5_flag = False
         self.half_carry_flag = False
         self.f3_flag = False
-        self.parity_overflow_flag = False        
+        self.parity_overflow_flag = False
         self.add_subtract_flag = False
         self.carry_flag = False
-       
+
     def reset(self):
         # Сброс всех регистров и флагов
         self.af = self.bc = self.de = self.hl = 0
@@ -90,21 +90,21 @@ class Z80:
             (self.parity_overflow_flag << 2) |
             (self.add_subtract_flag << 1) |
             self.carry_flag
-        )        
+        )
 
     def set_byte_flags(self, value, subtract=False, carry=None, keepSign = False, keepZero = False,  keepHalf = False, keepParity = False, keepSub = False):
         # Установка флагов для результата операции
         #print(f"value: {value}")
-        #print(f"value: {value & 0x0F}")    
-        #a = (self.af >> 8) & 0xFF  
-        #print(f"value {hex(value)}")  
+        #print(f"value: {value & 0x0F}")
+        #a = (self.af >> 8) & 0xFF
+        #print(f"value {hex(value)}")
         if not keepSign: self.sign_flag = (value & 0x80 != 0)
         if not keepZero: self.zero_flag = ((value & 0xFF) == 0)
-        self.f5_flag = ((value & 0x20) != 0)      
+        self.f5_flag = ((value & 0x20) != 0)
         if not keepHalf: self.half_carry_flag = ((value & 0x10) != 0) if not subtract else (value & 0x0F) > 0
-        self.f3_flag = ((value & 0x08) != 0)      
-       
-        if not keepParity: self.parity_overflow_flag = (bin(value).count('1') % 2 == 0)                 
+        self.f3_flag = ((value & 0x08) != 0)
+
+        if not keepParity: self.parity_overflow_flag = (bin(value).count('1') % 2 == 0)
         if not keepSub: self.add_subtract_flag = subtract
         if carry is not None:
             self.carry_flag = carry
@@ -119,9 +119,9 @@ class Z80:
         a = (self.af >> 8) & 0xFF
         #if not keepSign: self.sign_flag = (a & 0x80 != 0)
         if not keepZero: self.zero_flag = (value & 0xFFFF == 0)
-        self.f5_flag = ((value & 0x20) != 0) 
+        self.f5_flag = ((value & 0x20) != 0)
         if not keepHalf: self.half_carry_flag = (value & 0x10 != 0) if not subtract else (value & 0xF) > 0
-        self.f3_flag = ((value & 0x08) != 0) 
+        self.f3_flag = ((value & 0x08) != 0)
         if not keepParity: self.parity_overflow_flag = (bin(value).count('1') % 2 == 0)
         if not keepSub: self.add_subtract_flag = subtract
         if carry is not None:
@@ -129,7 +129,7 @@ class Z80:
 
         f = self.flags_to_byte()
         #print(f"f: {f}")
-        self.af = (self.af & 0xFF00) | f        
+        self.af = (self.af & 0xFF00) | f
 
     def get_register_value(self, reg_name):
         return getattr(self, reg_name)
@@ -147,7 +147,7 @@ class Z80:
         self.sign_flag = (value & 0x80) != 0
         self.zero_flag = (value & 0x40) != 0
         self.half_carry_flag = (value & 0x10) != 0
-        self.parity_overflow_flag = (value & 0x04) != 0        
+        self.parity_overflow_flag = (value & 0x04) != 0
         self.add_subtract_flag = (value & 0x02) != 0
         self.carry_flag = (value & 0x01) != 0
 
@@ -161,7 +161,7 @@ class Z80:
     #        self.memory[self.sp - 2] = self.pc & 0xFF
 
     #        self.sp = (self.sp - 2) & 0xFFFF
-    #        self.pc = 0x0038  # Адрес обработчика прерываний в ZX Spectrum   
+    #        self.pc = 0x0038  # Адрес обработчика прерываний в ZX Spectrum
     #    if self.halted:
     #        self.halted = False  # Выход из HALT
     #        print("Процессор возобновил выполнение после прерывания.")
@@ -169,7 +169,7 @@ class Z80:
     def handle_interrupt(self):
         if not self.interrupts_enabled:
             return
-        
+
         if self.halted:
             self.halted = False  # Выход из HALT
             print("Процессор возобновил выполнение после прерывания.")
@@ -190,16 +190,16 @@ class Z80:
         elif self.interrupt_mode == 2:
             vector = self.io_controller.get_data_bus_value()
             address = (self.i << 8) | vector
-            self.pc = (self.memory[address + 1] << 8) | self.memory[address]   
+            self.pc = (self.memory[address + 1] << 8) | self.memory[address]
 
-        #print("Interrupt 38")         
+        #print("Interrupt 38")
 
     def handle_nmi(self):
         self.sp = (self.sp - 1) & 0xFFFF
         self.memory[self.sp] = (self.pc >> 8) & 0xFF
         self.sp = (self.sp - 1) & 0xFFFF
         self.memory[self.sp] = self.pc & 0xFF
-        self.pc = 0x0066            
+        self.pc = 0x0066
 
     def halt(self):
         """Выполняет команду HALT."""
@@ -326,8 +326,8 @@ class Z80:
 
     def execute_dd_prefix(self, opcode):
         # Сначала нужно получить байт смещения
-        
-        
+
+
         # Декодируем операцию
         if opcode == 0x21:  # LD IX, nn
             low = self.fetch_byte()
@@ -348,6 +348,7 @@ class Z80:
             d = self.fetch_byte()
             n = self.fetch_byte()
             self.memory[self.ix + d] = n
+            
         elif opcode == 0x46:  # LD B, (IX+d)
             d = self.fetch_byte()
             self.bc = (self.bc & 0xFF) | (self.memory[self.ix + d] << 8)
@@ -369,9 +370,7 @@ class Z80:
         elif opcode == 0x7E:  # LD A, (IX+d)
             d = self.fetch_byte()
             self.af = (self.af & 0xFF) | (self.memory[self.ix + d] << 8)
-        elif opcode == 0x77:  # LD (IX+d), A
-            d = self.fetch_byte()
-            self.memory[self.ix + d] = (self.af >> 8) & 0xFF
+
         elif opcode == 0x70:  # LD (IX+d), B
             d = self.fetch_byte()
             self.memory[self.ix + d] = (self.bc >> 8) & 0xFF
@@ -390,6 +389,10 @@ class Z80:
         elif opcode == 0x75:  # LD (IX+d), L
             d = self.fetch_byte()
             self.memory[self.ix + d] = self.hl & 0xFF
+        elif opcode == 0x77:  # LD (IX+d), A
+            d = self.fetch_byte()
+            self.memory[self.ix + d] = (self.af >> 8) & 0xFF
+
         elif opcode == 0x34:  # INC (IX+d)
             d = self.fetch_byte()
             addr = self.ix + d
@@ -486,7 +489,7 @@ class Z80:
 
     def execute_fd_prefix(self, opcode):
         # Получаем байт смещения
-        
+
 
         # Декодируем операцию
         if opcode == 0x21:  # LD IY, nn
@@ -641,12 +644,12 @@ class Z80:
             elif opcode == 0x45:  # RETN
                 print('RETN')
             elif opcode == 0x46:  # IM 0
-                self.interrupt_mode = 0                
+                self.interrupt_mode = 0
             elif opcode == 0x47:  # LD I, A
                 self.i = (self.af & 0xFF00) >> 8
             elif opcode == 0x4B:  # LD BC,(nn)
                 nn = self.fetch_word()
-                self.bc = self.memory[nn] + (self.memory[nn + 1] << 8) 
+                self.bc = self.memory[nn] + (self.memory[nn + 1] << 8)
 
             elif opcode == 0x4F:  # LD R, A
                 self.r = (self.af & 0xFF00) >> 8
@@ -673,14 +676,14 @@ class Z80:
 
             elif opcode == 0x5B:  # LD DE,(nn)
                 nn = self.fetch_word()
-                self.de = self.memory[nn] + (self.memory[nn + 1] << 8)                
+                self.de = self.memory[nn] + (self.memory[nn + 1] << 8)
 
             elif opcode == 0x5E:  # IM 2
                 self.interrupt_mode = 2
 
             elif opcode == 0x6B:  # LD HL,(nn)
                 nn = self.fetch_word()
-                self.hl = self.memory[nn] + (self.memory[nn + 1] << 8) 
+                self.hl = self.memory[nn] + (self.memory[nn + 1] << 8)
 
             elif opcode == 0x73:  # LD (nn),SP
                 nn = self.fetch_word()
@@ -693,7 +696,7 @@ class Z80:
 
             elif opcode == 0x79:  # OUT (bc), A
                 a = (self.af >> 8) & 0xFF
-                self.io_controller.write_port(self.bc, a) 
+                self.io_controller.write_port(self.bc, a)
 
 
             elif opcode == 0x7B:  # LD SP,(nn)
@@ -758,33 +761,33 @@ class Z80:
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"BC: {self.bc:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"DE: {self.de:04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"HL: {self.hl:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"IX: {self.ix:04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"IY: {self.iy:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"PC: {self.pc:04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"SP: {self.sp:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
         y += 20
         text = font.render(f"Interrupts enabled: {self.interrupts_enabled}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
         y += 20
         text = font.render(f"Interrupt mode: {self.interrupt_mode}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
     def execute_instruction(self):
         opcode = self.fetch_byte(False)
@@ -825,7 +828,7 @@ class Z80:
             self.bc = (self.bc & 0xFF) | (b << 8)
             self.set_byte_flags(b, subtract=True)
         elif opcode == 0x06:  # LD B,n
-            self.bc = (self.bc & 0xFF) | (self.fetch_byte() << 8)  
+            self.bc = (self.bc & 0xFF) | (self.fetch_byte() << 8)
         elif opcode == 0x07:  # RLCA
             a = (self.af >> 8) & 0xFF
             carry = (a & 0x80) >> 7  # Сохранение старшего бита
@@ -837,7 +840,7 @@ class Z80:
             # Знак, нуль и парность не изменяются для RLCA
 
         elif opcode == 0x08:  # EX AF, AF'
-            self.af, self.af_prime = self.af_prime, self.af  
+            self.af, self.af_prime = self.af_prime, self.af
         elif opcode == 0x09:  # ADD HL,BC
             hl = self.hl + self.bc
             self.set_flags(hl, carry=hl > 0xFFFF, keepParity=True)
@@ -925,7 +928,7 @@ class Z80:
             # Приведение смещения e к signed byte
             if e > 127: e -= 256
             if not self.zero_flag:
-                self.pc = (self.pc + e) & 0xFFFF            
+                self.pc = (self.pc + e) & 0xFFFF
         elif opcode == 0x21:  # LD HL,nn
             self.hl = self.fetch_word()
         elif opcode == 0x22:  # LD (nn),HL
@@ -993,7 +996,7 @@ class Z80:
             offset = self.memory[self.pc]
             self.pc = (self.pc + 1) & 0xFFFF
             if not self.carry_flag:
-                self.pc = (self.pc + (offset if offset < 0x80 else offset - 256)) & 0xFFFF            
+                self.pc = (self.pc + (offset if offset < 0x80 else offset - 256)) & 0xFFFF
         elif opcode == 0x31:  # LD SP,nn
             self.sp = self.fetch_word()
         elif opcode == 0x32:  # LD (nn),A
@@ -1067,7 +1070,7 @@ class Z80:
             self.bc = (self.bc & 0xFF00) | b
         elif opcode == 0x49:  # LD C, C
             c = self.bc & 0xFF
-            self.bc = (self.bc & 0xFF00) | c 
+            self.bc = (self.bc & 0xFF00) | c
         elif opcode == 0x4A:  # LD C, D
             d = (self.de >> 8) & 0xFF
             self.bc = (self.bc & 0xFF00) | d
@@ -1082,16 +1085,16 @@ class Z80:
             self.bc = (self.bc & 0xFF00) | l
         elif opcode == 0x4E:  # LD C, (HL)
             hl = self.hl
-            self.bc = (self.bc & 0xFF00) | self.memory[hl]            
+            self.bc = (self.bc & 0xFF00) | self.memory[hl]
         elif opcode == 0x4F:  # LD C, A
             a = (self.af >> 8) & 0xFF
-            self.bc = (self.bc & 0xFF00) | a  
+            self.bc = (self.bc & 0xFF00) | a
         elif opcode == 0x51:  # LD D, C
             c = self.bc & 0xFF
-            self.de = (self.de & 0xFF00) | c 
+            self.de = (self.de & 0xFF00) | c
         elif opcode == 0x52:  # LD D, D
             # Ничего не делает, так как это просто копирование самого себя.
-            pass                     
+            pass
         elif opcode == 0x53:  # LD D, E
             e = self.de & 0xFF
             self.de = (e << 8) | e
@@ -1107,14 +1110,14 @@ class Z80:
 
         elif opcode == 0x57:  # LD D, A
             a = (self.af >> 8) & 0xFF
-            self.de = (self.de & 0xFF00) | (a << 8)    
+            self.de = (self.de & 0xFF00) | (a << 8)
 
         elif opcode == 0x58:  # LD E, B
             b = (self.bc >> 8) & 0xFF
-            self.de = (self.de & 0xFF00) | b  
+            self.de = (self.de & 0xFF00) | b
         elif opcode == 0x59:  # LD E, C
             c = (self.bc) & 0xFF
-            self.de = (self.de & 0xFF00) | c  
+            self.de = (self.de & 0xFF00) | c
         elif opcode == 0x5A:  # LD E, D
             d = (self.de >> 8) & 0xFF
             self.de = (self.de & 0xFF00) | d
@@ -1127,15 +1130,15 @@ class Z80:
             self.set_register_value('de', (self.get_register_value('de') & 0xFF00) | (self.get_register_value('hl') & 0x00FF))
         elif opcode == 0x5E:  # LD E, (HL)
             hl = self.hl
-            self.de = (self.de & 0xFF00) | self.memory[hl]             
+            self.de = (self.de & 0xFF00) | self.memory[hl]
         elif opcode == 0x5F:  # LD E, A
             a = (self.af >> 8) & 0xFF
-            self.de = (self.de & 0xFF00) | a  
+            self.de = (self.de & 0xFF00) | a
 
 
         elif opcode == 0x60:  # LD H, B
             b = (self.bc >> 8) & 0xFF
-            self.hl = (self.hl & 0x00FF) | (b << 8)            
+            self.hl = (self.hl & 0x00FF) | (b << 8)
         elif opcode == 0x61:  # LD H, C
             c = (self.bc) & 0xFF
             self.hl = (self.hl & 0x00FF) | (c << 8)
@@ -1149,7 +1152,7 @@ class Z80:
             self.hl = (self.hl & 0x00FF) | (e << 8)
 
         elif opcode == 0x64:  # LD H, H
-            pass           
+            pass
         elif opcode == 0x65:  # LD H, L
             l = (self.hl ) & 0xFF
             self.hl = (self.hl & 0xFF00) | (l << 8)
@@ -1162,21 +1165,21 @@ class Z80:
 
         elif opcode == 0x68:  # LD L, B
             b = (self.bc >> 8) & 0xFF
-            self.hl = (self.hl & 0xFF00) | b   
+            self.hl = (self.hl & 0xFF00) | b
         elif opcode == 0x69:  # LD L, C
             c = self.bc & 0xFF
-            self.hl = (self.hl & 0xFF00) | c   
+            self.hl = (self.hl & 0xFF00) | c
 
         elif opcode == 0x6A:  # LD L, D
             d = (self.de >> 8) & 0xFF
-            self.hl = (self.hl & 0xFF00) | d 
+            self.hl = (self.hl & 0xFF00) | d
         elif opcode == 0x6B:  # LD L, E
             e = self.de & 0xFF
-            self.hl = (self.hl & 0xFF00) | e  
+            self.hl = (self.hl & 0xFF00) | e
 
         elif opcode == 0x6C:  # LD L, H
             h = (self.hl >> 8) & 0xFF
-            self.hl = (self.hl & 0xFF00) | h 
+            self.hl = (self.hl & 0xFF00) | h
 
 
         elif opcode == 0x6F:  # LD L, A
@@ -1188,10 +1191,10 @@ class Z80:
             self.hl = (self.hl & 0xFF00) | l
         elif opcode == 0x70:  # LD (HL), B
             b = (self.bc >> 8) & 0xFF
-            self.memory[self.hl] = b 
+            self.memory[self.hl] = b
         elif opcode == 0x71:  # LD (HL), C
             c = self.bc & 0xFF
-            self.memory[self.hl] = c          
+            self.memory[self.hl] = c
         elif opcode == 0x72:  # LD (HL), D
             d = (self.de >> 8) & 0xFF
             self.memory[self.hl] = d
@@ -1210,19 +1213,19 @@ class Z80:
 
         elif opcode == 0x77:  # LD (HL), A
             a = (self.af >> 8) & 0xFF
-            self.memory[self.hl] = a            
+            self.memory[self.hl] = a
         elif opcode == 0x78:  # LD A, B
             b = (self.bc >> 8) & 0xFF
-            self.af = (b << 8) | (self.af & 0xFF)   
+            self.af = (b << 8) | (self.af & 0xFF)
         elif opcode == 0x79:  # LD A, C
             c = (self.bc) & 0xFF
-            self.af = (c << 8) | (self.af & 0xFF)       
+            self.af = (c << 8) | (self.af & 0xFF)
         elif opcode == 0x7A:  # LD A, D
             d = (self.de >> 8) & 0xFF
-            self.af = (d << 8) | (self.af & 0xFF) 
+            self.af = (d << 8) | (self.af & 0xFF)
         elif opcode == 0x7B:  # LD A, E
             e = (self.de) & 0xFF
-            self.af = (e << 8) | (self.af & 0xFF)             
+            self.af = (e << 8) | (self.af & 0xFF)
         elif opcode == 0x7C:  # LD A, H
             a = (self.af >> 8) & 0xFF
             h = (self.hl >> 8) & 0xFF
@@ -1234,10 +1237,10 @@ class Z80:
         elif opcode == 0x7E:  # LD A, (HL)
             hl = self.hl
             a = self.memory[hl]
-            self.af = (a << 8) | (self.af & 0xFF)  
+            self.af = (a << 8) | (self.af & 0xFF)
         elif opcode == 0x7F:  # LD A, A
             # Ничего не делает, так как это просто копирование самого себя.
-            pass 
+            pass
         elif opcode == 0x80:  # ADD A, B
             a = (self.af >> 8) & 0xFF
             b = (self.bc >> 8) & 0xFF
@@ -1355,11 +1358,11 @@ class Z80:
             c = self.bc & 0xFF
             result = a - c
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)    
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0x92:  # SUB D
             result = (self.get_register_value('af') >> 8) - (self.get_register_value('de') >> 8)
             self.set_flags(result, subtract=True, carry=(result < 0))
-            self.set_register_value('af', (result & 0xFF) << 8 | (self.get_register_value('af') & 0x00FF))   
+            self.set_register_value('af', (result & 0xFF) << 8 | (self.get_register_value('af') & 0x00FF))
 
         elif opcode == 0x94:  # SUB H
             a = (self.af >> 8) & 0xFF
@@ -1386,7 +1389,7 @@ class Z80:
             carry = 1 if self.carry_flag else 0
             result = a - c - carry
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)  
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
 
         elif opcode == 0x9A:  # SBC D
@@ -1401,7 +1404,7 @@ class Z80:
             carry = 1 if self.carry_flag else 0
             result = a - e - carry
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
 
         elif opcode == 0x9C:  # SBC H
@@ -1416,7 +1419,7 @@ class Z80:
             carry = 1 if self.carry_flag else 0
             result = a - l - carry
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0x9E:  # SBC (HL)
             a = (self.af >> 8) & 0xFF
@@ -1424,13 +1427,13 @@ class Z80:
             carry = 1 if self.carry_flag else 0
             result = a - value - carry
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0x9F:  # SBC A
             a = (self.af >> 8) & 0xFF
             carry = 1 if self.carry_flag else 0
             result = a - a - carry
             self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)             
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0xA0:  # AND A, B
             a = (self.af >> 8) & 0xFF
@@ -1489,46 +1492,46 @@ class Z80:
             b = (self.bc >> 8) & 0xFF
             result = a ^ b
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0xA9:  # XOR A, C
             a = (self.af >> 8) & 0xFF
             c = self.bc & 0xFF
             result = a ^ c
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0xAA:  # XOR A, D
             a = (self.af >> 8) & 0xFF
             d = (self.de >> 8) & 0xFF
             result = a ^ d
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0xAB:  # XOR A, E
             a = (self.af >> 8) & 0xFF
             e = self.de & 0xFF
             result = a ^ e
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0xAC:  # XOR A, H
             a = (self.af >> 8) & 0xFF
             h = (self.hl >> 8) & 0xFF
             result = a ^ h
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0xAD:  # XOR A, L
             a = (self.af >> 8) & 0xFF
             l = self.hl & 0xFF
             result = a ^ l
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0xAE:  # XOR (HL)
             a = (self.af >> 8) & 0xFF
             value = self.memory[self.hl]
             result = a ^ value
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)                    
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0xAF:  # XOR A
             a = (self.af >> 8) & 0xFF
             a ^= a
@@ -1545,7 +1548,7 @@ class Z80:
             c = self.bc & 0xFF
             a |= c
             self.af = (a << 8) | (self.af & 0xFF)
-            self.zero_flag = (a == 0) 
+            self.zero_flag = (a == 0)
         elif opcode == 0xB2:  # OR D
             a = (self.af >> 8) & 0xFF
             d = (self.de >> 8) & 0xFF
@@ -1557,7 +1560,7 @@ class Z80:
             e = self.de & 0xFF
             a |= e
             self.af = (a << 8) | (self.af & 0xFF)
-            self.zero_flag = (a == 0)  
+            self.zero_flag = (a == 0)
         elif opcode == 0xB4:  # OR H
             a = (self.af >> 8) & 0xFF
             h = (self.hl >> 8) & 0xFF
@@ -1569,20 +1572,20 @@ class Z80:
             l = self.hl & 0xFF
             a |= l
             self.af = (a << 8) | (self.af & 0xFF)
-            self.zero_flag = (a == 0)   
+            self.zero_flag = (a == 0)
 
         elif opcode == 0xB6:  # OR (HL)
             a = (self.af >> 8) & 0xFF
             value = self.memory[self.hl]
             a |= value
             self.af = (a << 8) | (self.af & 0xFF)
-            self.zero_flag = (a == 0)      
+            self.zero_flag = (a == 0)
 
         elif opcode == 0xB7:  # OR A
             a = (self.af >> 8) & 0xFF
             a |= a
             self.af = (a << 8) | (self.af & 0xFF)
-            self.zero_flag = (a == 0)                      
+            self.zero_flag = (a == 0)
 
         elif opcode == 0xB8:  # CP B
             a = (self.af >> 8) & 0xFF
@@ -1593,7 +1596,7 @@ class Z80:
             a = (self.af >> 8) & 0xFF
             c = (self.bc ) & 0xFF
             result = a - c
-            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))  
+            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
 
         elif opcode == 0xBA:  # CP D
             a = (self.af >> 8) & 0xFF
@@ -1604,7 +1607,7 @@ class Z80:
             a = (self.af >> 8) & 0xFF
             e = (self.de ) & 0xFF
             result = a - e
-            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))  
+            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
 
         elif opcode == 0xBC:  # CP H
             a = (self.af >> 8) & 0xFF
@@ -1615,13 +1618,13 @@ class Z80:
             a = (self.af >> 8) & 0xFF
             l = (self.hl ) & 0xFF
             result = a - l
-            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))  
+            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
 
         elif opcode == 0xBE:  # CP (HL)
             a = (self.af >> 8) & 0xFF
             value = self.memory[self.hl]
             result = a - value
-            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0)) 
+            self.set_flags(result & 0xFF, subtract=True, carry=(result < 0))
 
 
         elif opcode == 0xBF:  # CP A
@@ -1633,25 +1636,25 @@ class Z80:
             #self.parity_overflow_flag = bin(result).count("1") % 2 == 0
             #self.half_carry_flag = ((a & 0xF) - (a & 0xF)) < 0
             #self.add_subtract_flag = True
-            #self.carry_flag = (a < a)     
+            #self.carry_flag = (a < a)
         elif opcode == 0xC0:  # RET NZ
             if not self.zero_flag:
                 lo = self.memory[self.sp]
                 hi = self.memory[self.sp + 1]
                 self.pc = (hi << 8) | lo
-                self.sp = (self.sp + 2) & 0xFFFF                   
+                self.sp = (self.sp + 2) & 0xFFFF
         elif opcode == 0xC1:  # POP BC
             lo = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
             hi = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
-            self.bc = (hi << 8) | lo   
+            self.bc = (hi << 8) | lo
         elif opcode == 0xC2:  # JP NZ, nn
             nn = self.fetch_word()
             if not self.zero_flag:
-                self.pc = nn          
+                self.pc = nn
         elif opcode == 0xC3:  # JP nn
-            nn = self.fetch_word() 
+            nn = self.fetch_word()
             self.pc = nn
         elif opcode == 0xC4:  # CALL NZ, nn
             if not self.zero_flag:
@@ -1662,7 +1665,7 @@ class Z80:
                 self.memory[self.sp - 1] = (self.pc >> 8)
                 self.memory[self.sp - 2] = (self.pc & 0xFF)
                 self.sp = (self.sp - 2) & 0xFFFF
-                self.pc = nn            
+                self.pc = nn
         elif opcode == 0xC5:  # PUSH BC
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.bc >> 8) & 0xFF
@@ -1688,13 +1691,13 @@ class Z80:
                 self.sp = (self.sp + 1) & 0xFFFF
                 hi = self.memory[self.sp]
                 self.sp = (self.sp + 1) & 0xFFFF
-                self.pc = (hi << 8) | lo            
+                self.pc = (hi << 8) | lo
         elif opcode == 0xC9:  # RET
             lo = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
             hi = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
-            self.pc = (hi << 8) | lo      
+            self.pc = (hi << 8) | lo
         elif opcode == 0xCA: #JP Z,(nn)
             nn = self.fetch_word
             if self.zero_flag:
@@ -1719,7 +1722,7 @@ class Z80:
             self.memory[self.sp] = (self.pc >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = self.pc & 0xFF
-            self.pc = nn                
+            self.pc = nn
         elif opcode == 0xCE:  # ADC A, n
             a = (self.af >> 8) & 0xFF
             n = self.fetch_byte()
@@ -1739,21 +1742,21 @@ class Z80:
                 self.sp = (self.sp + 1) & 0xFFFF
                 hi = self.memory[self.sp]
                 self.sp = (self.sp + 1) & 0xFFFF
-                self.pc = (hi << 8) | lo   
+                self.pc = (hi << 8) | lo
         elif opcode == 0xD1:  # POP DE
             lo = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
             hi = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
-            self.de = (hi << 8) | lo       
+            self.de = (hi << 8) | lo
         elif opcode == 0xD2:  # JP NC, nn
             nn = self.fetch_word()
             if not self.carry_flag:
-                self.pc = nn                               
+                self.pc = nn
         elif opcode == 0xD3:  # OUT (n), A
             n = self.fetch_byte()
             a = (self.af >> 8) & 0xFF
-            self.io_controller.write_port(n, a)          
+            self.io_controller.write_port(n, a)
         elif opcode == 0xD4:  # CALL NC, nn
             if not self.carry_flag:
                 nn = fetch_word()
@@ -1761,12 +1764,12 @@ class Z80:
                 self.memory[self.sp] = (self.pc >> 8) & 0xFF
                 self.sp = (self.sp - 1) & 0xFFFF
                 self.memory[self.sp] = self.pc & 0xFF
-                self.pc = nn       
+                self.pc = nn
         elif opcode == 0xD5:  # PUSH DE
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.de >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
-            self.memory[self.sp] = self.de & 0xFF 
+            self.memory[self.sp] = self.de & 0xFF
         elif opcode == 0xD6:  # SUB n
             a = (self.af >> 8) & 0xFF
             n = self.fetch_byte()
@@ -1787,7 +1790,7 @@ class Z80:
                 self.sp = (self.sp + 1) & 0xFFFF
                 hi = self.memory[self.sp]
                 self.sp = (self.sp + 1) & 0xFFFF
-                self.pc = (hi << 8) | lo   
+                self.pc = (hi << 8) | lo
         elif opcode == 0xD9:  # EXX
             self.bc, self.bc_prime = self.bc_prime, self.bc
             self.de, self.de_prime = self.de_prime, self.de
@@ -1806,7 +1809,7 @@ class Z80:
                 self.sp = (self.sp - 2) & 0xFFFF
                 self.memory[self.sp] = (self.pc & 0xFF)
                 self.memory[self.sp + 1] = (self.pc >> 8)
-                self.pc = nn            
+                self.pc = nn
         elif opcode == 0xDD:  # Prefix for IX
             # Префикс для инструкций с использованием регистра IX
             next_opcode = self.fetch_byte()
@@ -1817,7 +1820,7 @@ class Z80:
             self.memory[self.sp - 1] = (self.pc >> 8)
             self.memory[self.sp - 2] = (self.pc & 0xFF)
             self.sp = (self.sp - 2) & 0xFFFF
-            self.pc = 0x18                     
+            self.pc = 0x18
         elif opcode == 0xE0:  # RET PO
             if not self.parity_overflow_flag:
                 lo = self.memory[self.sp]
@@ -1829,7 +1832,7 @@ class Z80:
             self.sp = (self.sp + 1) & 0xFFFF
             hi = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
-            self.hl = (hi << 8) | lo 
+            self.hl = (hi << 8) | lo
         elif opcode == 0xE2:  # JP PO, nn
             nn = self.fetch_word()
             if not self.parity_overflow_flag:
@@ -1855,7 +1858,7 @@ class Z80:
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.hl >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
-            self.memory[self.sp] = self.hl & 0xFF 
+            self.memory[self.sp] = self.hl & 0xFF
         elif opcode == 0xE6:  # AND n
             n = self.memory[self.pc]
             self.pc = (self.pc + 1) & 0xFFFF
@@ -1868,7 +1871,7 @@ class Z80:
             self.memory[self.sp] = (self.pc >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = self.pc & 0xFF
-            self.pc = 0x20 
+            self.pc = 0x20
         elif opcode == 0xE8:  # RET PE
             if self.parity_overflow_flag:
                 lo = self.memory[self.sp]
@@ -1901,7 +1904,7 @@ class Z80:
             n = self.fetch_byte()
             result = a ^ n
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF) 
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
 
         elif opcode == 0xEF:  # RST 28H
             self.memory[self.sp - 1] = (self.pc >> 8)
@@ -1922,11 +1925,11 @@ class Z80:
             a = self.memory[self.sp]
             self.sp = (self.sp + 1) & 0xFFFF
             self.af = (a << 8) | f
-            self.update_flags_from_byte(f)   
+            self.update_flags_from_byte(f)
         elif opcode == 0xF2:  # JP P, nn
             nn = self.fetch_word()
             if not self.sign_flag:
-                self.pc = nn             
+                self.pc = nn
         elif opcode == 0xF3:  # DI
             self.interrupts_enabled = False
             #print('interrupts_disabled')
@@ -1936,25 +1939,25 @@ class Z80:
                 self.sp = (self.sp - 2) & 0xFFFF
                 self.memory[self.sp] = (self.pc & 0xFF)
                 self.memory[self.sp + 1] = (self.pc >> 8)
-                self.pc = nn 
+                self.pc = nn
         elif opcode == 0xF5:  # PUSH AF
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.af >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
-            self.memory[self.sp] = self.af & 0xFF  
+            self.memory[self.sp] = self.af & 0xFF
         elif opcode == 0xF6:  # OR n
             a = (self.af >> 8) & 0xFF
             n = self.memory[self.pc]
             self.pc = (self.pc + 1) & 0xFFFF
             result = a | n
             self.set_flags(result & 0xFF, subtract=False, carry=None)
-            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)     
+            self.af = ((result & 0xFF) << 8) | (self.af & 0xFF)
         elif opcode == 0xF7:  # RST 30H
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.pc >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = self.pc & 0xFF
-            self.pc = 0x30   
+            self.pc = 0x30
         elif opcode == 0xF8:  # RET M
             if self.sign_flag:
                 lo = self.memory[self.sp]
@@ -1968,15 +1971,15 @@ class Z80:
             if self.sign_flag:
                 self.pc = nn
         elif opcode == 0xFB:  # EI
-            self.interrupts_enabled = True  
-            #print('interrupts_enabled') 
+            self.interrupts_enabled = True
+            #print('interrupts_enabled')
         elif opcode == 0xFC:  # CALL M, nn
             nn = self.fetch_word()
             if self.sign_flag:
                 self.sp = (self.sp - 2) & 0xFFFF
                 self.memory[self.sp] = (self.pc & 0xFF)
                 self.memory[self.sp + 1] = (self.pc >> 8)
-                self.pc = nn         
+                self.pc = nn
         elif opcode == 0xFD:  # Prefix FD (IY instructions)
             #fd_opcode = self.memory[self.pc]
             #self.pc = (self.pc + 1) & 0xFFFF
@@ -1989,13 +1992,13 @@ class Z80:
         elif opcode == 0xFE:  # CP n
             a = (self.af >> 8) & 0xFF
             n = self.fetch_byte()
-            self.zero_flag = (a == n)                
+            self.zero_flag = (a == n)
         elif opcode == 0xFF:  # RST 38H
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = (self.pc >> 8) & 0xFF
             self.sp = (self.sp - 1) & 0xFFFF
             self.memory[self.sp] = self.pc & 0xFF
-            self.pc = 0x38                
+            self.pc = 0x38
 
         else: print(f"opcode: {opcode:02X}" + ' not supported')
         # ... Implement all other opcodes ...

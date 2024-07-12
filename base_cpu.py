@@ -56,33 +56,33 @@ class baseCPUClass:
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"BC: {self.get_register_pair('BC'):04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"DE: {self.get_register_pair('DE'):04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"HL: {self.get_register_pair('HL'):04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"IX: {self.registers['IX']:04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"IY: {self.registers['IY']:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
         text = font.render(f"PC: {self.registers['PC']:04X}", True, (255, 255, 255))
         screen.blit(text, (x, y))
         y += 20
         text = font.render(f"SP: {self.registers['SP']:04X}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
         y += 20
         text = font.render(f"Interrupts enabled: {self.interrupts_enabled}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
         y += 20
         text = font.render(f"Interrupt mode: {self.interrupt_mode}", True, (255, 255, 255))
-        screen.blit(text, (x, y)) 
+        screen.blit(text, (x, y))
 
     def load_memory(self, address, data):
         # Загрузка данных в память по заданному адресу
@@ -91,15 +91,15 @@ class baseCPUClass:
     def im(self, mode):
         """
         Устанавливает режим прерываний (Interrupt Mode).
-        
+
         :param mode: режим прерываний (0, 1 или 2)
         """
         if mode not in [0, 1, 2]:
             raise ValueError(f"Недопустимый режим прерываний: {mode}")
-        
+
         self.interrupt_mode = mode
         self.registers['IM'] = mode
-        
+
         if mode == 0:
             # В режиме 0 внешнее устройство может поместить любую инструкцию на шину данных
             print("Установлен режим прерываний 0")
@@ -108,12 +108,12 @@ class baseCPUClass:
             print("Установлен режим прерываний 1")
         else:  # mode == 2
             # В режиме 2 используется косвенная адресация через таблицу векторов прерываний
-            print("Установлен режим прерываний 2")  
+            print("Установлен режим прерываний 2")
 
     def handle_interrupt(self):
         if not self.interrupts_enabled:
             return
-        
+
         if self.halted:
             self.halted = False  # Выход из HALT
             print("Процессор возобновил выполнение после прерывания.")
@@ -135,7 +135,7 @@ class baseCPUClass:
             #vector = self.io_controller.get_data_bus_value()
             vector = 0
             address = (self.registers['I'] << 8) | vector
-            self.registers['PC'] = (self.memory[address + 1] << 8) | self.memory[address]   
+            self.registers['PC'] = (self.memory[address + 1] << 8) | self.memory[address]
 
         #print("Interrupt 38")
 
@@ -144,7 +144,7 @@ class baseCPUClass:
         self.memory[self.sp] = (self.pc >> 8) & 0xFF
         self.sp = (self.sp - 1) & 0xFFFF
         self.memory[self.sp] = self.pc & 0xFF
-        self.pc = 0x0066 
+        self.pc = 0x0066
 
     def fetch(self):
         value = self.memory[self.registers['PC']]
@@ -188,11 +188,11 @@ class baseCPUClass:
     # Методы ввода-вывода (заглушки, которые нужно реализовать)
     def io_read(self, port):
         # Реализуйте чтение из порта
-        return self.io_controller.read_port(port)   
+        return self.io_controller.read_port(port)
 
     def io_write(self, port, value):
         # Реализуйте запись в порт
-        self.io_controller.write_port(port, value) 
+        self.io_controller.write_port(port, value)
         #pass
 
     def load_register(self, reg, value):
@@ -224,13 +224,13 @@ class baseCPUClass:
     def set_register_pair(self, pair, value):
         """
         Устанавливает значение для пары регистров.
-        
+
         :param pair: строка, обозначающая пару регистров ('BC', 'DE', 'HL', 'AF', 'SP')
         :param value: 16-битное значение для установки
         """
         # Убеждаемся, что значение 16-битное
         value = value & 0xFFFF
-        
+
         if pair == 'SP':
             self.registers['SP'] = value
         elif pair == 'PC':
@@ -251,27 +251,27 @@ class baseCPUClass:
     def store_word(self, address, value):
         """
         Сохраняет 16-битное слово в память по указанному адресу.
-        
+
         :param address: адрес в памяти, куда нужно сохранить слово
         :param value: 16-битное значение для сохранения
         """
         # Убеждаемся, что значение 16-битное
         value = value & 0xFFFF
-        
+
         # Сохраняем младший байт
         self.memory[address] = value & 0xFF
-        
+
         # Сохраняем старший байт
-        self.memory[(address + 1) & 0xFFFF] = (value >> 8) & 0xFF        
+        self.memory[(address + 1) & 0xFFFF] = (value >> 8) & 0xFF
 
     def load_word(self, address):
         """
         Загружает 16-битное слово из памяти по указанному адресу.
-        
+
         :param address: адрес в памяти, куда нужно сохранить слово
         :param value: 16-битное значение для сохранения
         """
-        return self.memory[address] | (self.memory[address + 1] << 8)  
+        return self.memory[address] | (self.memory[address + 1] << 8)
 
     def inc_register(self, reg):
         value = self.registers[reg]
@@ -339,7 +339,7 @@ class baseCPUClass:
         self.set_flag('H',  h_flag)
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20)        
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     #def add_hl(self, pair):
     #    hl = self.get_register_pair('HL')
@@ -398,10 +398,10 @@ class baseCPUClass:
         sp = self.registers['SP']
         l = self.memory[sp]
         h = self.memory[(sp + 1) & 0xFFFF]
-        
+
         self.memory[sp] = self.registers['L']
         self.memory[(sp + 1) & 0xFFFF] = self.registers['H']
-        
+
         self.registers['L'] = l
         self.registers['H'] = h
 
@@ -409,7 +409,7 @@ class baseCPUClass:
         """
         Выполняет операцию XOR между аккумулятором и операндом.
         Результат сохраняется в аккумуляторе.
-        
+
         :param operand: значение для операции XOR (может быть регистром или непосредственным значением)
         """
         # Если операнд - строка, значит это имя регистра
@@ -417,13 +417,13 @@ class baseCPUClass:
             value = self.registers[operand]
         else:
             value = operand
-        
+
         # Выполняем XOR
         result = self.registers['A'] ^ value
-        
+
         # Сохраняем результат в аккумуляторе
         self.registers['A'] = result & 0xFF  # Убеждаемся, что результат 8-битный
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем флаг знака
         self.set_flag('Z', result == 0)    # Устанавливаем флаг нуля
@@ -434,13 +434,13 @@ class baseCPUClass:
 
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20) 
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def or_a(self, operand):
         """
         Выполняет побитовую операцию OR между аккумулятором и операндом.
         Результат сохраняется в аккумуляторе.
-        
+
         :param operand: значение для операции OR (может быть регистром или непосредственным значением)
         """
         # Если операнд - строка, значит это имя регистра
@@ -448,41 +448,41 @@ class baseCPUClass:
             value = self.registers[operand]
         else:
             value = operand
-        
+
         # Выполняем OR
         result = self.registers['A'] | value
-        
+
         # Сохраняем результат в аккумуляторе
         self.registers['A'] = result & 0xFF  # Убеждаемся, что результат 8-битный
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем флаг знака
         self.set_flag('Z', result == 0)    # Устанавливаем флаг нуля
         self.set_flag('H', 0)              # Сбрасываем флаг полупереноса
         self.set_flag('P/V', self.parity(result))  # Устанавливаем флаг четности/переполнения
         self.set_flag('N', 0)              # Сбрасываем флаг вычитания
-        self.set_flag('C', 0)              # Сбрасываем флаг переноса      
+        self.set_flag('C', 0)              # Сбрасываем флаг переноса
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20)           
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def parity(self, value):
         """
         Вычисляет четность значения.
         Возвращает True, если число единичных битов четное, иначе False.
-        
+
         :param value: 8-битное значение для проверки четности
         :return: булево значение, представляющее четность
         """
         # Убеждаемся, что значение 8-битное
         value &= 0xFF
-        
+
         # Подсчитываем количество единичных битов
         ones = 0
         for i in range(8):
             if value & (1 << i):
                 ones += 1
-        
+
         # Возвращаем True, если количество единичных битов четное
         return ones % 2 == 0
 
@@ -501,7 +501,7 @@ class baseCPUClass:
         """
         Сравнение аккумулятора с операндом.
         Инструкция: CP n
-        
+
         :param value: значение для сравнения (может быть регистром или непосредственным значением)
         """
         if isinstance(value, str):
@@ -510,29 +510,29 @@ class baseCPUClass:
         else:
             # Иначе это непосредственное значение
             operand = value
-        
+
         result = (self.registers['A'] - operand) & 0xFF
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем флаг знака
         self.set_flag('Z', result == 0)    # Устанавливаем флаг нуля
         self.set_flag('H', ((self.registers['A'] & 0xF) - (operand & 0xF)) & 0x10)  # Флаг полупереноса
-        
+
         # Флаг переполнения устанавливается, если знак результата неверен
         self.set_flag('P/V', ((self.registers['A'] ^ operand) & (self.registers['A'] ^ result) & 0x80) != 0)
-        
+
         self.set_flag('N', 1)  # Всегда устанавливается, так как это операция вычитания
         self.set_flag('C', self.registers['A'] < operand)  # Устанавливаем флаг переноса
 
         # Установка флагов 3 и 5
         self.set_flag('3', operand & 0x08)
-        self.set_flag('5', operand & 0x20) 
+        self.set_flag('5', operand & 0x20)
 
     def and_a(self, value):
         """
         Выполняет побитовую операцию AND между аккумулятором и операндом.
         Результат сохраняется в аккумуляторе.
-        
+
         :param value: значение для операции AND (может быть регистром или непосредственным значением)
         """
         if isinstance(value, str):
@@ -541,13 +541,13 @@ class baseCPUClass:
         else:
             # Иначе это непосредственное значение
             operand = value
-        
+
         # Выполняем операцию AND
         result = self.registers['A'] & operand
-        
+
         # Сохраняем результат в аккумуляторе
         self.registers['A'] = result
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем флаг знака
         self.set_flag('Z', result == 0)    # Устанавливаем флаг нуля
@@ -558,12 +558,12 @@ class baseCPUClass:
 
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20) 
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def push(self, rr):
         """
         Помещает значение регистровой пары в стек.
-        
+
         :param rr: строка, обозначающая пару регистров ('BC', 'DE', 'HL', 'AF')
         """
         value = self.get_register_pair(rr)
@@ -575,7 +575,7 @@ class baseCPUClass:
     def pop(self, rr):
         """
         Извлекает значение из стека и помещает его в регистровую пару.
-        
+
         :param rr: строка, обозначающая пару регистров ('BC', 'DE', 'HL', 'AF')
         """
         low = self.memory[self.registers['SP']]
@@ -583,87 +583,87 @@ class baseCPUClass:
         high = self.memory[self.registers['SP']]
         self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
         value = (high << 8) | low
-        self.set_register_pair(rr, value)        
+        self.set_register_pair(rr, value)
 
     def sbc(self, operand):
         """
         Выполняет вычитание с заемом (SBC A, operand).
-        
+
         :param operand: значение для вычитания (может быть регистром или непосредственным значением)
         """
         if isinstance(operand, str):
             value = self.registers[operand]
         else:
             value = operand
-        
+
         carry = self.get_flag('C')
         result = self.registers['A'] - value - carry
-        
+
         self.set_flag('H', ((self.registers['A'] & 0xF) - (value & 0xF) - carry) < 0)
         self.set_flag('C', result < 0)
         self.set_flag('P/V', ((self.registers['A'] ^ value) & (self.registers['A'] ^ (result & 0xFF)) & 0x80) != 0)
-        
+
         self.registers['A'] = result & 0xFF
-        
+
         self.set_flag('S', self.registers['A'] & 0x80)
         self.set_flag('Z', self.registers['A'] == 0)
         self.set_flag('N', 1)
 
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20) 
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def sub(self, operand):
         """
         Выполняет вычитание (SUB A, operand).
-        
+
         :param operand: значение для вычитания (может быть регистром или непосредственным значением)
         """
         if isinstance(operand, str):
             value = self.registers[operand]
         else:
             value = operand
-        
+
         result = self.registers['A'] - value
-        
+
         self.set_flag('H', ((self.registers['A'] & 0xF) - (value & 0xF)) < 0)
         self.set_flag('C', result < 0)
         self.set_flag('P/V', ((self.registers['A'] ^ value) & (self.registers['A'] ^ (result & 0xFF)) & 0x80) != 0)
-        
+
         self.registers['A'] = result & 0xFF
-        
+
         self.set_flag('S', self.registers['A'] & 0x80)
         self.set_flag('Z', self.registers['A'] == 0)
         self.set_flag('N', 1)
 
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20) 
+        self.set_flag('5', self.registers['A'] & 0x20)
 
     def adc(self, operand):
         """
         Выполняет сложение с переносом (ADC A, operand).
-        
+
         :param operand: значение для сложения (может быть регистром или непосредственным значением)
         """
         if isinstance(operand, str):
             value = self.registers[operand]
         else:
             value = operand
-        
+
         carry = self.get_flag('C')
         result = self.registers['A'] + value + carry
-        
+
         self.set_flag('H', ((self.registers['A'] & 0xF) + (value & 0xF) + carry) > 0xF)
         self.set_flag('C', result > 0xFF)
         self.set_flag('P/V', ((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0)
-        
+
         self.registers['A'] = result & 0xFF
-        
+
         self.set_flag('S', self.registers['A'] & 0x80)
         self.set_flag('Z', self.registers['A'] == 0)
-        self.set_flag('N', 0)        
+        self.set_flag('N', 0)
 
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
-        self.set_flag('5', self.registers['A'] & 0x20) 
+        self.set_flag('5', self.registers['A'] & 0x20)

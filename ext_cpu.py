@@ -7,7 +7,7 @@ class extCPUClass(baseCPUClass):
     def jp(self, address):
         """
         Безусловный переход на указанный адрес.
-        
+
         :param address: 16-битный адрес для перехода
         """
         self.registers['PC'] = address & 0xFFFF
@@ -15,7 +15,7 @@ class extCPUClass(baseCPUClass):
     def jp_cc(self, condition, address):
         """
         Условный переход на указанный адрес.
-        
+
         :param condition: строка, обозначающая условие ('NZ', 'Z', 'NC', 'C')
         :param address: 16-битный адрес для перехода
         """
@@ -25,7 +25,7 @@ class extCPUClass(baseCPUClass):
     def jr(self, offset):
         """
         Относительный переход на указанное смещение.
-        
+
         :param offset: 8-битное знаковое смещение (-128 до 127)
         """
         # Преобразуем смещение в знаковое число
@@ -38,7 +38,7 @@ class extCPUClass(baseCPUClass):
     def jr_cc(self, condition, offset):
         """
         Условный относительный переход на указанное смещение.
-        
+
         :param condition: строка, обозначающая условие ('NZ', 'Z', 'NC', 'C')
         :param offset: 8-битное знаковое смещение (-128 до 127)
         """
@@ -48,7 +48,7 @@ class extCPUClass(baseCPUClass):
     def djnz(self, offset):
         """
         Декремент B и переход, если не ноль.
-        
+
         :param offset: 8-битное знаковое смещение (-128 до 127)
         """
         self.registers['B'] = (self.registers['B'] - 1) & 0xFF
@@ -58,7 +58,7 @@ class extCPUClass(baseCPUClass):
     def call(self, address):
         """
         Выполняет вызов подпрограммы по указанному адресу.
-        
+
         :param address: 16-битный адрес для перехода
         """
         # Сохраняем текущий адрес возврата (PC) в стеке
@@ -67,24 +67,24 @@ class extCPUClass(baseCPUClass):
         self.memory[self.registers['SP']] = (return_address >> 8) & 0xFF  # Сохраняем старший байт
         self.registers['SP'] = (self.registers['SP'] - 1) & 0xFFFF
         self.memory[self.registers['SP']] = return_address & 0xFF  # Сохраняем младший байт
-        
+
         # Переходим по указанному адресу
         self.registers['PC'] = address
 
     def call_cc(self, condition, address):
         """
         Выполняет условный вызов подпрограммы по указанному адресу.
-        
+
         :param condition: строка, обозначающая условие ('NZ', 'Z', 'NC', 'C')
         :param address: 16-битный адрес для перехода
         """
         if self.check_condition(condition):
-            self.call(address)            
+            self.call(address)
 
     def check_condition(self, condition):
         """
         Проверяет выполнение условия.
-        
+
         :param condition: строка, обозначающая условие ('NZ', 'Z', 'NC', 'C')
         :return: булево значение, указывающее, выполнено ли условие
         """
@@ -117,7 +117,7 @@ class extCPUClass(baseCPUClass):
         self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
         high = self.memory[self.registers['SP']]
         self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
-        
+
         # Устанавливаем PC на адрес возврата
         self.registers['PC'] = (high << 8) | low
 
@@ -125,12 +125,12 @@ class extCPUClass(baseCPUClass):
         """
         Условный возврат из подпрограммы.
         Инструкция: RET cc
-        
+
         :param condition: строка, обозначающая условие ('NZ', 'Z', 'NC', 'C')
         """
         if self.check_condition(condition):
             self.ret()
-        # Если условие не выполнено, продолжаем выполнение следующей инструкции            
+        # Если условие не выполнено, продолжаем выполнение следующей инструкции
 
     # Вспомогательные методы для битовых операций
     def rlc(self, value):
@@ -154,7 +154,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20)        
+        self.set_flag('5', result & 0x20)
         return result
 
     def rlca(self):
@@ -209,7 +209,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20)         
+        self.set_flag('5', result & 0x20)
         return result
 
     def rr(self, value):
@@ -222,7 +222,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20) 
+        self.set_flag('5', result & 0x20)
         return result
 
     def sla(self, value):
@@ -234,7 +234,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20) 
+        self.set_flag('5', result & 0x20)
         return result
 
     def sra(self, value):
@@ -246,7 +246,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20) 
+        self.set_flag('5', result & 0x20)
         return result
 
     def sll(self, value):
@@ -258,7 +258,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20) 
+        self.set_flag('5', result & 0x20)
         return result
 
     def srl(self, value):
@@ -270,7 +270,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)
         # Установка флагов 3 и 5
         self.set_flag('3', result & 0x08)
-        self.set_flag('5', result & 0x20) 
+        self.set_flag('5', result & 0x20)
         return result
 
     def bit(self, bit, value):
@@ -282,7 +282,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('S', bit == 7 and result != 0)
         # Установка флагов 3 и 5
         self.set_flag('3', value & 0x08)
-        self.set_flag('5', value & 0x20) 
+        self.set_flag('5', value & 0x20)
 
     def res(self, bit, value):
         return value & ~(1 << bit)
@@ -404,10 +404,10 @@ class extCPUClass(baseCPUClass):
         hl = self.get_register_pair('HL')
         de = self.get_register_pair('DE')
         bc = self.get_register_pair('BC')
-        
+
         value = self.memory[hl]
         self.memory[de] = value
-        
+
         self.set_register_pair('HL', (hl + direction) & 0xFFFF)
         self.set_register_pair('DE', (de + direction) & 0xFFFF)
         self.set_register_pair('BC', (bc - 1) & 0xFFFF)
@@ -431,7 +431,7 @@ class extCPUClass(baseCPUClass):
         self.set_flag('P/V', value == 0x80)  # Устанавливаем флаг переполнения
         self.set_flag('N', 1)  # Устанавливаем флаг вычитания
         self.set_flag('5', result & 0x20)
-        self.set_flag('3', result & 0x08)        
+        self.set_flag('3', result & 0x08)
 
 
     def inc_index_d(self, index_reg):
@@ -460,7 +460,7 @@ class extCPUClass(baseCPUClass):
         rr_value = self.get_register_pair(rr)
         result = (index_value + rr_value) & 0xFFFF
         self.registers[index_reg] = result
-        
+
         # Update flags
         self.set_flag('N', 0)
         self.set_flag('H', ((index_value & 0xFFF) + (rr_value & 0xFFF)) > 0xFFF)
@@ -469,7 +469,7 @@ class extCPUClass(baseCPUClass):
         # Установка флагов F5 и F3 на основе старшего байта результата
         result_high = (result >> 8) & 0xFF
         self.set_flag('5', result_high & 0x20)  # Бит 5 старшего байта результата
-        self.set_flag('3', result_high & 0x08)  # Бит 3 старшего байта результата        
+        self.set_flag('3', result_high & 0x08)  # Бит 3 старшего байта результата
 
    # Реализация инструкций с префиксами DD и FD
     def execute_dd(self):
@@ -489,7 +489,7 @@ class extCPUClass(baseCPUClass):
             # NOP - No operation
             pass  # Просто игнорируем, как обычный NO
         elif opcode == 0x23:  # DD 23 (INC IX)
-                self.registers[index_reg] = (self.registers[index_reg] + 1) & 0xFFFF    
+                self.registers[index_reg] = (self.registers[index_reg] + 1) & 0xFFFF
         elif opcode == 0x24:  # DD 24: INC IXh
             high_byte = (self.registers[index_reg] >> 8) & 0xFF
             result = (high_byte + 1) & 0xFF
@@ -508,10 +508,10 @@ class extCPUClass(baseCPUClass):
             #value = high_byte
             result = (high_byte - 1) & 0xFF
             self.registers[index_reg] = (self.registers[index_reg] & 0x00FF) | (result << 8)
-            
+
             # Установка флагов
             self.set_flag('N', 1)
-            
+
             # Флаги H, S, Z, P/V устанавливаются на основе старшего байта результата
             result_high = (result) & 0xFF
             prev_high = (value >> 8) & 0xFF
@@ -520,10 +520,10 @@ class extCPUClass(baseCPUClass):
             self.set_flag('S', result_high & 0x80)
             self.set_flag('Z', result_high == 0)
             self.set_flag('P/V', prev_high == 0x80 and result_high == 0x7F)
-            
+
             # Установка флагов 5 и 3
             self.set_flag('5', result_high & 0x20)
-            self.set_flag('3', result_high & 0x08)                        
+            self.set_flag('3', result_high & 0x08)
 
         elif opcode in [0x09, 0x19, 0x29, 0x39]:  # ADD IX/IY, rr
             rr = {0x09: 'BC', 0x19: 'DE', 0x29: index_reg, 0x39: 'SP'}[opcode]
@@ -575,6 +575,62 @@ class extCPUClass(baseCPUClass):
         elif opcode == 0x5D:  # LD C,IXL
             low_byte = self.registers[index_reg] & 0xFF
             self.registers['E'] = low_byte
+        elif opcode == 0x60:  # LD IXh,B
+            self.registers[index_reg] = ( self.registers['B'] << 8 ) | (self.registers[index_reg] & 0xFF)
+        elif opcode == 0x61:  # LD IXh,C
+            self.registers[index_reg] = ( self.registers['C'] << 8 ) | (self.registers[index_reg] & 0xFF)
+        elif opcode == 0x62:  # LD IXh,D
+            self.registers[index_reg] = ( self.registers['D'] << 8 ) | (self.registers[index_reg] & 0xFF)
+        elif opcode == 0x63:  # LD IXh,E
+            self.registers[index_reg] = ( self.registers['E'] << 8 ) | (self.registers[index_reg] & 0xFF)
+        elif opcode == 0x64:  # LD IXh,IXh
+            pass
+        elif opcode == 0x65:  # LD IXh,IXl
+            self.registers[index_reg] = ( (self.registers[index_reg] & 0xFF) << 8 ) | (self.registers[index_reg] & 0xFF)
+        elif opcode == 0x67:  # LD IXh,A
+            self.registers[index_reg] = ( self.registers['A'] << 8 ) | (self.registers[index_reg] & 0xFF)
+
+        elif opcode == 0x68:  # LD IXl,B
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | (self.registers['B'] & 0xFF)
+        elif opcode == 0x69:  # LD IXl,C
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | (self.registers['C'] & 0xFF)
+        elif opcode == 0x6A:  # LD IXl,D
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | (self.registers['D'] & 0xFF)
+        elif opcode == 0x6B:  # LD IXl,E
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | (self.registers['E'] & 0xFF)
+        elif opcode == 0x6C:  # LD IXl,IXh
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | ((self.registers[index_reg] >> 8) & 0xFF)
+            pass
+        elif opcode == 0x6D:  # LD IXl,IXl
+            pass
+        elif opcode == 0x6F:  # LD IXl,A
+            self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | (self.registers['A'] & 0xFF)
+
+        elif opcode == 0x7C:  # LD A,IXH
+            high_byte = (self.registers[index_reg] >> 8) & 0xFF
+            self.registers['A'] = high_byte
+        elif opcode == 0x7D:  # LD A,IXL
+            low_byte = self.registers[index_reg] & 0xFF
+            self.registers['A'] = low_byte
+
+  #DD #84      ADD  A,IXH         #FD #84       ADD  A,IYH
+  #DD #85      ADD  A,IXL         #FD #85       ADD  A,IYL
+  #DD #8C      ADC  A,IXH         #FD #8C       ADC  A,IYH
+  #DD #8D      ADC  A,IXL         #FD #8D       ADC  A,IYL
+  #DD #94      SUB  IXH           #FD #94       SUB  IYH
+  #DD #95      SUB  IXL           #FD #95       SUB  IYL
+  #DD #9C      SBC  A,IXH         #FD #9C       SBC  A,IYH
+  #DD #9D      SBC  A,IXL         #FD #9D       SBC  A,IYL
+  #DD #A4      AND  IXH           #FD #A4       AND  IYH
+  #DD #A5      AND  IXL           #FD #A5       AND  IYL
+  #DD #AC      XOR  IXH           #FD #AC       XOR  IYH
+  #DD #AD      XOR  IXL           #FD #AD       XOR  IYL
+  #DD #B4      OR   IXH           #FD #B4       OR   IYH
+  #DD #B5      OR   IXL           #FD #B5       OR   IYL
+  #DD #BC      CP   IXH           #FD #BC       CP   IYH
+  #DD #BD      CP   IXL           #FD #BD       CP   IYL
+
+
         elif opcode & 0xC0 == 0x40:  # LD instructions
             self._indexed_load(index_reg, opcode)
         elif opcode & 0xC0 == 0x80:  # Arithmetic instructions
@@ -587,12 +643,12 @@ class extCPUClass(baseCPUClass):
         else:
             raise ValueError(f"Unsupported {index_reg} instruction: {opcode:02X}")
 
-    def _indexed_load(self, index_reg, opcode):        
+    def _indexed_load(self, index_reg, opcode):
         #print(f"reg {reg}")
         if opcode & 0x07 == 0x06:  # LD r, (IX/IY+d)
             reg_index = (opcode & 0x38) >> 3
             reg = ['B', 'C', 'D', 'E', 'H', 'L', '(HL)', 'A'][reg_index]
-            offset = self.fetch_signed()            
+            offset = self.fetch_signed()
             #if reg == '(HL)':
             #    if opcode & 0x38 == 0x30:  # Check if it's a store operation
             #    self.memory[address] = self.registers['A']  # Only 'A' can be stored
@@ -611,7 +667,7 @@ class extCPUClass(baseCPUClass):
         offset = self.fetch_signed()
         address = (self.registers[index_reg] + offset) & 0xFFFF
         value = self.memory[address]
-        
+
         if operation == 0:  # ADD A, (IX/IY+d)
             self.add(value)
         elif operation == 1:  # ADC A, (IX/IY+d)
@@ -632,12 +688,12 @@ class extCPUClass(baseCPUClass):
 
     def execute_cb(self):
         opcode = self.fetch()
-        if self.debug:
+        #if self.debug:
             #print(f"{self.registers['PC']-1:04X}: {z80_to_asm[opcode]}")
-            print(f"cb opcode: {opcode:02X}")
-        
+            #print(f"cb opcode: {opcode:02X}")
+
         r = ['B', 'C', 'D', 'E', 'H', 'L', '(HL)', 'A']
-        
+
         if opcode < 0x40:  # Rotation and shift instructions
             operation = [self.rlc, self.rrc, self.rl, self.rr, self.sla, self.sra, self.sll, self.srl][opcode >> 3]
             operand = r[opcode & 0x07]
@@ -778,6 +834,6 @@ class extCPUClass(baseCPUClass):
         self.memory[self.registers['SP']] = (self.registers['PC'] >> 8) & 0xFF
         self.registers['SP'] = (self.registers['SP'] - 1) & 0xFFFF
         self.memory[self.registers['SP']] = self.registers['PC'] & 0xFF
-        
+
         # Jump to the restart address
         self.registers['PC'] = address

@@ -13,7 +13,6 @@ class Z80(extCPUClass):
         self.mem_class = memory
         self.io_controller = io_controller
 
-
     def execute_instruction(self, debug = False):
         opcode = self.fetch()
 
@@ -254,7 +253,7 @@ class Z80(extCPUClass):
         a = self.registers['A']
         cf = self.get_flag('C')
         hf = self.get_flag('H')
-        
+
         if not self.get_flag('N'):
             if cf or a > 0x99:
                 a += 0x60
@@ -266,7 +265,7 @@ class Z80(extCPUClass):
                 a -= 0x60
             if hf:
                 a -= 0x06
-        
+
         self.registers['A'] = a & 0xFF
         self.set_flag('S', a & 0x80)
         self.set_flag('Z', a == 0)
@@ -288,7 +287,7 @@ class Z80(extCPUClass):
         """
         Complement carry flag.
         """
-        self.set_flag('C', not self.get_flag('C'))
+        self. set_flag('C', not self.get_flag('C'))
         self.set_flag('H', not self.get_flag('C'))
         self.set_flag('N', 0)
         # Установка флагов 3 и 5
@@ -312,7 +311,6 @@ class Z80(extCPUClass):
         """
         pass  # Ничего не делает
 
-
     def di(self):
         """
         Disable interrupts.
@@ -335,7 +333,7 @@ class Z80(extCPUClass):
         value = self.io_read(port)  # Читаем из порта
         print(f"value {value:02X}")
         self.registers['A'] = value  # Сохраняем значение в аккумуляторе
-        
+
         # Устанавливаем флаги
         #self.set_flag('S', value & 0x80)  # Знаковый флаг
         #self.set_flag('Z', value == 0)    # Флаг нуля
@@ -358,5 +356,5 @@ class Z80(extCPUClass):
         """
         # Копируем значение из аккумулятора в регистр I
         self.registers['I'] = self.registers['A']
-        
+
         # Эта инструкция не влияет на флаги

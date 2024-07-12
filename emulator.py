@@ -2,7 +2,7 @@
 import logging
 import pygame
 from memory import Memory
-#from cpu import Z80
+# from cpu import Z80
 from new_cpu import Z80
 from interrupt_controller import InterruptController
 from io_controller import IOController
@@ -10,6 +10,7 @@ from graphics import ZX_Spectrum_Graphics
 from keyboard import Keyboard
 import os
 import const
+
 
 class ZX_Spectrum_Emulator:
     def __init__(self):
@@ -22,8 +23,7 @@ class ZX_Spectrum_Emulator:
         self.graphics = ZX_Spectrum_Graphics(self.memory, self.pixel_size)
         self.keyboard = Keyboard()
 
-
-    def load_rom(self, file_path, addr = 0):
+    def load_rom(self, file_path, addr=0):
         self.memory.load_rom(file_path, addr)
 
     def load_scr_file(self, file_path):
@@ -49,10 +49,10 @@ class ZX_Spectrum_Emulator:
         )
         logging.disable()
         log_on = False
-        
+
         # Основное окно
         left_panel_width = 460
-        main_screen = pygame.display.set_mode((self.graphics.screen_width * self.pixel_size + left_panel_width + self.border_size * 2, self.graphics.screen_height * self.pixel_size + self.border_size * 2))        
+        main_screen = pygame.display.set_mode((self.graphics.screen_width * self.pixel_size + left_panel_width + self.border_size * 2, self.graphics.screen_height * self.pixel_size + self.border_size * 2))
         pygame.display.set_caption("ZX Spectrum Emulator")
 
         # Создание поверхностей
@@ -72,8 +72,8 @@ class ZX_Spectrum_Emulator:
 
         # Загрузка .scr файла
         self.graphics.reset_screen(0, 7, 1)
-        #self.load_scr_file('example.scr')        
-        
+        #self.load_scr_file('example.scr')
+
         running = True
         i = 0
         while running:
@@ -102,8 +102,8 @@ class ZX_Spectrum_Emulator:
             # Рендеринг основного окна
             #screen.fill((0, 0, 0))
             i += 1
-            if i > 10000:                
-                i = 0     
+            if i > 10000:
+                i = 0
 
             if self.cpu.registers['PC'] == 0x0C0A: print('init')
             #a = (self.cpu.registers['PC'] >> 8) & 0xFF
@@ -138,7 +138,7 @@ class ZX_Spectrum_Emulator:
             # Отрисовка на основном экране
             main_screen.blit(border, (0, 0))
             main_screen.blit(screen, (self.border_size, self.border_size))
-            main_screen.blit(state_window, (self.graphics.screen_width * self.pixel_size + self.border_size * 2, 0))            
+            main_screen.blit(state_window, (self.graphics.screen_width * self.pixel_size + self.border_size * 2, 0))
 
             pygame.display.flip()
             #clock.tick(50)
@@ -162,4 +162,3 @@ if __name__ == "__main__":
 
     # Запуск эмуляции
     zx_emulator.emulate()
-
