@@ -22,9 +22,15 @@ class Keyboard:
         for key, (row, col) in self.keymap.items():
             self.keyboard_matrix[row, col] = not pressed_keys[key]
         # Объединяем все строки клавиш в один байт для порта 0xFE
+        # Получаем состояние каждой строки и объединяем в один байт
         result = 0xFF
         for row in range(8):
-            result &= self.keyboard_matrix[row].all()
+            row_state = 0x1F  # каждая строка имеет 5 битов
+            for col in range(5):
+                if not self.keyboard_matrix[row, col]:
+                    row_state &= ~(1 << col)
+            result &= row_state << (row * 5)
+        print(result)
         return result
 
     def get_matrix(self):
