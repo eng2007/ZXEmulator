@@ -154,6 +154,7 @@ class baseCPUClass:
     def fetch_word(self):
         low = self.fetch()
         high = self.fetch()
+        #print(f"word {(high << 8) | low:04X}")
         return (high << 8) | low
 
     # Вспомогательные методы
@@ -201,6 +202,8 @@ class baseCPUClass:
             self.update_flags(value)
 
     def load_register_pair(self, pair, value):
+        #print(f'pair {pair}')
+        #print(f'value {value:04X}')
         if pair == 'SP':
             self.registers['SP'] = value
         else:
@@ -334,9 +337,14 @@ class baseCPUClass:
         value = self.registers[operand] if isinstance(operand, str) else operand
         result = self.registers['A'] + value
         h_flag = ((self.registers['A'] & 0xF) + (value & 0xF)) & 0x10 == 0x10
+        overflow = ((self.registers['A'] ^ result) & (value ^ result) & 0x80) != 0
         self.registers['A'] = result & 0xFF
         self.update_flags(result, zero=True, sign=True, carry=True, halfcarry=True)
         self.set_flag('H',  h_flag)
+        #self.set_flag('P/V', self.registers['A'] == 0x80)        
+        #self.set_flag('P/V', ((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0)        
+        self.set_flag('P/V', overflow)
+        #print(f"PV {((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0}")
         # Установка флагов 3 и 5
         self.set_flag('3', self.registers['A'] & 0x08)
         self.set_flag('5', self.registers['A'] & 0x20)

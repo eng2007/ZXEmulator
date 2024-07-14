@@ -14,8 +14,8 @@ import const
 
 class ZX_Spectrum_Emulator:
     def __init__(self):
-        self.pixel_size = 4  # Увеличение пикселей для визуализации
-        self.border_size = 40
+        self.pixel_size = 3  # Увеличение пикселей для визуализации
+        self.border_size = 80
         self.memory = Memory()
         self.io_controller = IOController(self)
         self.cpu = Z80(self.memory, self.io_controller, 0x0000)
