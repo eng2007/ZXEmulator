@@ -1,0 +1,7 @@
+Lap Of The Gods
+Mastertronic Ltd, 1986
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Changed the start so it goes into the text scroll sequence instead of demo mode.
+

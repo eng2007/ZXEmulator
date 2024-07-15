@@ -1,0 +1,21 @@
+Zolyx
+(C) 1987 Firebird
+A 48K Spectrum game
+
+ROM v1.04 - Compressed using standard RLE
+
+Uses the following original ZX routines:
+None
+
+https://worldofspectrum.org/archive/software/games/zolyx-firebird-software-ltd
+https://spectrumcomputing.co.uk/entry/5862/ZX-Spectrum/Zolyx
+
+Game improvements
+1) High score entries fixed so all entries are in descending order
+2) Swap Sinclair and Protek joystick options so they work correctly
+3) Fix cheat where you could finish a level by drawing a box one pixel wide/high
+4) Scan for Fuller joystick interface and use that if no Kempston interface is detected
+
+Change History
+v1.03 - Initial release
+v1.04 - Address one pixel square cheat. Regenerate ROM using current techniques.

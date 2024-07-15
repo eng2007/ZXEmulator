@@ -1,0 +1,24 @@
+Xeno
+(c) 1986 A'n'F
+A ZX Spectrum 48K game
+
+ROM v1.0 - packed using ZX0 (old format)
+
+Uses the following original ZX routines:
+Charset
+
+https://www.spectrumcomputing.co.uk/entry/5787/ZX-Spectrum/Xeno
+https://worldofspectrum.org/archive/software/games/xeno-anf-software
+
+Game Improvements
+1) If you immediately start the game without redefining keys then you realise that you can't control either player. The original game instructions don't mention this, but the Bug-Byte re-release ones do. The game has been changed to default to QAZXC for player 1 and PLNMB for player 2.
+2) Provide Spanish language option. Hold down 'S' whilst resetting the computer.
+
+Tech Notes
+>This game was originally too big to fit into 16K. The playing area is a wide bitmap which is 85 bytes per row, divided into 3 sections. I tried to RCS this bitmap but the savings weren't enough. Then one day I realised that the bitmap is symmetrical down the middle - the right hand side is a mirror of the left, so it could be wiped and regenerated programatically. Doing this shrunk the ZX0 by over 2K which was more than enough to even include the original ZX character set (which the game uses and thickens up when printing)
+>The original game used IM2, but this ROM uses IM1 to save space.
+>The game performs a checksum on an unused part of the 48K ROM to see if it is running on 48 or 128 hardware, and adjusts a timing loop accordingly (to reduce screen flicker). This version looks for 128 style memory paging hardware instead.
+>In order to fit the Spanish text into the image, another part of the game had to be shrunk. As the bytes at $E66A onwards go up in ascending order, but not always +1, it is easy to reproduce via delta values and some code.
+
+Change History
+v1.0 - First release

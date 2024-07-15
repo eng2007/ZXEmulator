@@ -1,0 +1,6 @@
+Flight Simulation
+Sinclair Research Ltd, 1983
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+The game has been improved to support multiple joystick variants. It also tells you what the keys are and a minor tweak to the display code has been made for a tiny speed boost. There were 2 versions of this game - the original had a substantial BASIC program. The second (used here) is all machine code and makes no ROM calls at all. It compressed so well that the loading screen has been included.

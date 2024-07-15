@@ -1,0 +1,26 @@
+Zzoom
+(c) 1983 Imagine Software Ltd.
+A ZX Spectrum 48K game
+
+ROM v1.0 - packed using ZX0 in classic, backwards format
+
+Uses the following original ZX routines:
+Charset
+
+https://worldofspectrum.org/archive/software/games/zzoom-imagine-software-ltd
+https://spectrumcomputing.co.uk/entry/5894/ZX-Spectrum/Zzoom
+
+Game improvements
+1) Removed bright attribute squares around hostages
+2) Hold down 'F' key during reset until a beep is heard to speed
+   up drawing routines (slightly)
+3) Hold down 'S' key during reset until a beep is heard to
+   swap up/down keys so it feels more like a flight simulator!
+   (The joystick options in the original already swap up/down)
+
+Tech notes
+This game doesn't use the ROM beeper routine as it contains it's own copy.
+The game uses the original ZX charset only at the start. As the game font doesn't contain lower case letters or punctuation, the original ZX charset has been imported. Thankfully there's enough space in the ROM to do this.
+
+Change History
+v1.0 - first release

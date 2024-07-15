@@ -1,0 +1,7 @@
+Adventure D: Espionage Island
+Artic Computing Ltd, 1982
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Text compression has been used so the whole game can run on a 16K Spectrum. Changed the text colour to blue and delayed some of the messages so they can actually be read (an example is early on in the game when you PULL CORD).
+

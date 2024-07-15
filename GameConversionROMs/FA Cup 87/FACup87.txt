@@ -1,0 +1,8 @@
+FA Cup 87
+Virgin Games Ltd, 1986
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+The original release was called "FA Cup Football" and is marked (c) 1986. The later release is marked (c) 1987 and seems to be called "FA Cup Football" and "FA Cup 87" depending on where you look. This image is based on the later release and has been called "FA Cup 87" for clarity.
+
+The only enhancement made to this game is to speed up the teleprinter by holding down "F" during a reset until the border flashes blue.

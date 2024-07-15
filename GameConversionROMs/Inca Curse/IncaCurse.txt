@@ -1,0 +1,6 @@
+Adventure B: Inca Curse
+Artic Computing Ltd, 1982
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+This ROM includes the ZX SAVE/LOAD routines in their original locations, so should work with interfaces that hook into these. It also includes a large font routine which was borrowed from a Nascom but the attributes get messy and so the standard ZX font is the default instead.

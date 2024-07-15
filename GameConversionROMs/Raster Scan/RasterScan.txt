@@ -1,0 +1,6 @@
+Raster Scan
+Mastertronic Ltd, 1987
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+Improved to support Fuller joystick. The break check has been enhanced to also include checking for the CAPS SHIFT key.

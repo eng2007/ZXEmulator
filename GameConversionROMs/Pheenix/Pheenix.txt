@@ -1,0 +1,7 @@
+Pheenix
+Megadodo Software, 1983
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Improved by changing the AGF joystick option to ZX Interface 2. Also squeezed both the English and Spanish versions in 
+(press CAPS SHIFT at reset to select Spanish). This ROM is based on the original release and not the re-release under the Alternative Software label.

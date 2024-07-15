@@ -1,0 +1,6 @@
+Blind Alley
+Sunshine Books Ltd, 1983
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+This game was changed slightly for the Timex TS2068, in that it supported Timex joysticks and had a different hi-score routine and attract screens. These have been imported into the original ZX release. Also added other joystick options and changed the speed of text printing.

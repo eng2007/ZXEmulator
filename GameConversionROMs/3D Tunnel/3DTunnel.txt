@@ -1,0 +1,6 @@
+3D Tunnel
+New Generation Software, 1983
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+This was available in both 16K and 48K versions. This one is the 48K version which has the underground tube "phase 5" at the end. The game itself only takes 20K, but using a simple RLE compressor brings it down to 15.5K. This unfortunately means there isn't enough room for all the character set so some of the letters have been juggled around (pound sign becomes copyright, up arrow becomes 'w' etc.). Also changed the main menu to take less space and to support Interface 2 (code was already there but unused) and Fuller joysticks. At $728D in the original it checksums the '(c) message' and gets stuck in a loop filling up the stack if the total isn't right. This version displays the same message, but because the (c) symbol has been removed the checksum no longer matches so the the code has just been rem'd the code out.

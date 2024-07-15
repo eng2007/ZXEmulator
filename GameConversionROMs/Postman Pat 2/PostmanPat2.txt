@@ -1,0 +1,22 @@
+Postman Pat 2
+(c) 1989 Alternative Software Ltd.
+A ZX Spectrum 48K game
+
+ROM v1 - compressed using double ZX0 forward classic compression
+
+Uses the following original ZX routines:
+None
+
+https://worldofspectrum.org/archive/software/games/postman-pat-2-alternative-software-ltd
+https://spectrumcomputing.co.uk/entry/3846/ZX-Spectrum/Postman_Pat_2
+
+Game Improvements
+None
+
+Tech notes
+>The game relies on the dashboard being loaded in as a second screen$, it will never redraw it. The original map was too complex to compress well so it has been redrawn using simple block characters.
+>This is the largest game to be compressed onto a cartridge - the original game code is 40881 bytes long, and the dashboard screen (bottom half of screen - not just a third!) is also required.
+>There are no spare bytes in this image! The new map goes right up to $3FFF.
+
+Change History
+v1 - first release

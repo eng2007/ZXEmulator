@@ -1,0 +1,6 @@
+Adventure A: Planet Of Death
+Artic Computing Ltd, 1982
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+The game has been extended to support the large font mode.

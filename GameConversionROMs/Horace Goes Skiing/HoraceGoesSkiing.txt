@@ -1,0 +1,6 @@
+Horace Goes Skiing
+Sinclair Research Ltd, 1982
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Enhanced to support English and Spanish messages, and Fuller and Kempston joysticks. Hold CAPS SHIFT when powering on to select Spanish messages.

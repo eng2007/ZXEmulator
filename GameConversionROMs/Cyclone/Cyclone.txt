@@ -1,0 +1,6 @@
+Cyclone
+1985 Vortex Software Ltd, 1985
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+Surprised this game managed to fit - it starts from the printer buffer and is 42134 bytes long! There was still space to fit in the ZX keyboard and beeper routines, space to include a new menu and Fuller/Timex joystick routines.

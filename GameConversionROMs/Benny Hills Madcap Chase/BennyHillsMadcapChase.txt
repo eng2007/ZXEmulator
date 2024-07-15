@@ -1,0 +1,16 @@
+Benny Hill's Madcap Chase!
+DK'Tronics Ltd, 1986
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+Improvements to the game:
+1) Fuller joystick support replaces Dk'Tronics support (to support a DK'Tronics joystick, simply select to redefine the keys and move the joystick).
+2) Joystick fire no longer aborts the game! This was a serious design flaw. To abort the game just press "H" (default key) for Cursor/Sinclair joysticks or press whatever key is defined for abort for Kempston/Fuller joysticks.
+3) Slight speed-up. LDIR replaced with LDI block and another part changed to use alternate register set. The game uses HALT so it won't run faster, but shouldn't slow down as much when the screen is busy.
+4) Cheat mode - press 1 or 2 when resetting the computer to start the game at level 2 or 3 respectively.
+
+Tips when playing game:
+1) Move diagonally when changing depth planes.
+2) You can get all 6 apples from the tree in level 2. Getting the middle two is really tricky, but if you jump around the tree trunk you should get them.
+3) Not all jumble sale items in level 3 are collectable.
+4) If you bump into something then don't change depth plane - you should be able to just walk past the item. This might be intentional or a bug.

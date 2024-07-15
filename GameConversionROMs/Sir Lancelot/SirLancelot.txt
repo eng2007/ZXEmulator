@@ -1,0 +1,6 @@
+Sir Lancelot
+Melbourne House, 1984
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+It has been modified to support Fuller joysticks and also to cut short the annoying death anthem every time you died (it only plays when all lives are gone). The game is not that big and it only needs 2 ROM routines - the beeper and funnily enough the mosaic character routine for the title screen.

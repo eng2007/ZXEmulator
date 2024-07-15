@@ -1,0 +1,26 @@
+Glug-Glug
+(C) 1984 Computer Rentals Limited (CRL)
+A ZX Spectrum 48K game
+
+ROM v1.0 - Packed using ZX0 (old format)
+
+Uses the following original ZX routines:
+Beeper, Print_BC ($1A1B), Charset
+
+https://worldofspectrum.org/archive/software/games/glug-glug-crl-group-plc
+https://spectrumcomputing.co.uk/entry/2062/ZX-Spectrum/Glug_Glug
+
+This game has been described as Jetpac underwater.
+
+Game Improvements
+1) Keys changed to N,M instead of M,SymShift for ease of use
+2) Protek support changed to Sinclair joystick support
+3) Bug when selecting joystick with no Kempston attached now fixed.
+   This was required to support improvement #2
+
+Tech Notes
+1) The game relies on sysvar TV_FLAG bit 0 being set when started, so
+ the green seabed is printed at bottom of screen (channel #0;AT 1,0).
+ This gets cleared at $822C, which means future prints go to #2.
+ This has been changed to PRINT AT 23,0 which works with the miniROM.
+2) The original also does a dummy fire when starting a level!

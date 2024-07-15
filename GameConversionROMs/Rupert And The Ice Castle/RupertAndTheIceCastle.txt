@@ -1,0 +1,8 @@
+Rupert And The Ice Castle
+War On Want, 1986
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+Despite being just under 32K long, this was originally slightly too big after compression. However there is an entire monitor program in there! The game developers (Taskset) have left it in their other games too ("Yabba Dabba Doo" and "Souls of Darkon"). To start it just CALL $F800. The ZX ROM's NMI handler can be modified to point here.
+
+The monitor includes routines to transfer bytes over the ZX Interface 1 serial port - via the "R" command. The other command letters are C, D, G, T, I and B. It is sensitive over whitespace though. As an example to Poke 4 bytes on the screen, use: C4000 AA 55 AA 55

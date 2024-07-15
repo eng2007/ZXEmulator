@@ -1,0 +1,21 @@
+Pipe Mania
+(C) 1990 Empire Software
+A 48K ZX Spectrum game
+
+ROM v1.0 - packed using ZX0 compression
+Uses the following original ZX routines:
+BEEPER (note original game also used FP calculator)
+
+https://worldofspectrum.org/archive/software/games/pipe-mania-empire-software
+https://www.spectrumcomputing.co.uk/entry/3729/ZX-Spectrum/Pipe_Mania
+
+Game improvements:
+None
+
+Tech Notes
+>This game originally used the FP calculator to feed BEEP with
+>values found in BASIC BEEP commands. These have been converted to
+>BEEPER values instead.
+
+Change History
+v1.0 - first release

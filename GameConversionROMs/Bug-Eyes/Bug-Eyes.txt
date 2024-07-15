@@ -1,0 +1,21 @@
+Bug Eyes
+(c) 1985 Icon Software Ltd.
+A ZX Spectrum 48K game
+
+ROM v1.1 - uses ZX0 classic compression
+Uses the following original ZX routines:
+CHARSET, BEEPER and SCROLL ($0E00) routine
+
+https://worldofspectrum.org/archive/software/games/bug-eyes-icon-software-ltd
+https://www.spectrumcomputing.co.uk/entry/742/ZX-Spectrum/Bug-Eyes
+
+Game improvements
+None
+
+Tech Notes
+There is space to include a cheat option, but all of them leave the player
+liable to get stuck at some point.
+
+Change history
+v1.0 - Initial release
+v1.1 - Fixed scrolling attributes before selecting keys/joystick

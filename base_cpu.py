@@ -116,7 +116,7 @@ class baseCPUClass:
 
         if self.halted:
             self.halted = False  # Выход из HALT
-            print("Процессор возобновил выполнение после прерывания.")
+            #print("Процессор возобновил выполнение после прерывания.")
 
         self.interrupts_enabled = False
 

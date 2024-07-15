@@ -1,0 +1,30 @@
+Gyroscope
+(c) 1985 Melbourne House Ltd.
+A ZX Spectrum 48K game
+
+ROM v1.0 - Uses classic ZX0 compression
+
+Uses the following ROM routines:
+Keyscan, Scroll, TEMPS
+(Calls to OPENCHAN $1601 have been removed)
+
+https://spectrumcomputing.co.uk/entry/2196/ZX-Spectrum/Gyroscope
+https://worldofspectrum.org/archive/software/games/gyroscope-melbourne-house
+
+Game improvments:
+1) Includes cheat options. Reset the computer, hold down one or more of the
+following keys to activate the cheat. Release the keys once the main menu appears.
+"L" - infinite lives
+"T" - infinite time
+"I" - immunity - note this can cause screen corruption. If you scroll past the bottom
+ of one level you will enter the next, and eventually start displaying the game code!
+ It is also possible to get stuck in one location.
+
+Game tips:
+1) If you can't get past level 1 and are at the bottom of the slope,
+then try touching the magenta diamonds at the bottom left of the screen
+2) Pressing fire when using Sinclair or Cursor joysticks will abort
+the game as the '0' key is the hard-coded abort key.
+
+Change History:
+v1.0 - initial release

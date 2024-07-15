@@ -1,0 +1,6 @@
+Panic
+Mikro-Gen Ltd, 1983
+16K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Modified the game to support Fuller joysticks as well as rearranging the keys to support Interface II port 1 joystick by default. The hi-score routine now also supports joystick input. There are several versions of the game - both Mikro-Gen and Visions releases. This ROM is based of the main Visions version.

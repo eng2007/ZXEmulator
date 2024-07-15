@@ -1,0 +1,23 @@
+Brainstorm
+(C) 1987 Firebird Software Ltd
+A ZX Spectrum 48K game
+
+ROM v1.0 - Packed using ZX0 (old format)
+
+Uses the following original ZX routines:
+TAPELOAD,TAPESAVE (but uses non-standard entry points)
+
+https://worldofspectrum.org/archive/software/games/brainstorm-firebird-software-ltd
+https://www.spectrumcomputing.co.uk/entry/678/ZX-Spectrum/Brainstorm
+
+Game Improvements
+1) The hidden extras of the level editor and "blocks" mini-game have been enabled.
+ The main menu has been extended to include them.
+2) The Sinclair/Protek joystick options have been swapped to work correctly
+
+Tech Notes
+1) It is possible to get into the hidden extras in the original game using keys 1+3+5 or 2+4
+ when selecting a menu entry
+
+Version history
+v1.0 - Initial release

@@ -1,0 +1,6 @@
+Sooty & Sweep
+Alternative Software Ltd, 1990
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+The original game is 40085 bytes long but ZX0 compresses it to 16198 bytes.

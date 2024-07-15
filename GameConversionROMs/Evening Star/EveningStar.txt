@@ -1,0 +1,8 @@
+Evening Star
+Hewson Consultants Ltd, 1987
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2021
+
+Enhancements:
+- Sped up some of the graphics routines (mainly LDIR sections). However as the game is frame-rate limited so the difference won't be noticed.
+- Improved the tape loading routines as if there was an error (or a random block of code was loaded) the game would generally malfunction. Now it loops until a correct size block has loaded without error.

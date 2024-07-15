@@ -1,0 +1,7 @@
+Aquaplane
+Quicksilva Ltd, 1983
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Modified the border timing so it works on 128 machines and even 60Hz machines (this is the bit that proved interesting because 
+the scrolling routines were too slow). Also added Fuller joystick routines and the joystick can now be used whilst entering a hi-score.

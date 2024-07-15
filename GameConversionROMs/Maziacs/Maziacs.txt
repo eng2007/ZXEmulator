@@ -1,0 +1,37 @@
+Maziacs
+(c) 1983 DK'Tronics Ltd.
+A ZX Spectrum 48K game
+
+ROM v1.2 - Some parts packed using ZX0 (old format)
+
+Uses the following original ZX routines:
+Beeper, Keyscan (via LAST_K), Charset
+
+https://worldofspectrum.org/archive/software/games/maziacs-dktronics-ltd
+https://www.spectrumcomputing.co.uk/entry/3100/ZX-Spectrum/Maziacs
+
+Game Improvements
+1) BASIC now compiled
+2) Cheat options included.
+ At the start of the game, the DK'tronics logo will flash.
+ Hold down one or more of the following keys to enable cheats:
+"F" - always win fights. You can still starve to death though.
+"S" - increase game speed (unfortunately the Maziacs also move faster)
+3) Pressing BREAK doesn't crash the machine
+
+Bug Fixes
+1) Trying to continue a game when one hasn't been started is captured,
+ but sends you back into the keys/level menu. If you press K or G then
+ you will select the redefine keys/level option, but there'll be no text
+ on the screen.
+
+Tech Notes
+1) The game contained m/c in BASIC REM statements. These are kept at the
+same address for compatability.
+2) The game has the value of CHARS hardcoded into it. As CHARS has been
+moved for ZXC2/3 compatability, the values have also been changed.
+
+Change history
+1.0 - Initial release
+1.1 - Modified for ZXC2/3 compatibility
+1.2 - Bugfix involving inkey$ and joystick option

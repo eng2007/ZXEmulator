@@ -1,0 +1,6 @@
+Vector Ball
+Mastertronic Added Dimension, 1987
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+Squeezed in the loading SCREEN$.Changed the start to inform the user to wait instead of just looking at a blank screen.

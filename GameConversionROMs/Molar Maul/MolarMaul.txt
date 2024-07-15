@@ -1,0 +1,20 @@
+Molar Maul
+(c) 1983 Imagine Software Ltd.
+A ZX Spectrum 16K game
+
+v1.0 - No compression was used to make this ROM
+
+Uses the following original ZX routines:
+Charset, Beeper
+
+https://worldofspectrum.org/archive/software/games/molar-maul-imagine-software-ltd
+https://spectrumcomputing.co.uk/entry/3241/ZX-Spectrum/Molar_Maul
+
+Game improvements
+1) Hold down a key during intro sequence to speed things up and quieten things down!
+
+Tech Notes
+The game is so small that no compression is required.
+
+Change History
+v1.0 - first release

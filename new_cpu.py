@@ -9,7 +9,8 @@ class Z80(extCPUClass):
 
         # Память на 128KB (банки памяти ZX Spectrum 128)
         #self.memory = [0] * 128 * 1024  # 128KB памяти
-        self.memory = memory.memory
+        #self.memory = memory.memory
+        self.memory = memory
         self.mem_class = memory
         self.io_controller = io_controller
 

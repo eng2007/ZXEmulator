@@ -1,0 +1,6 @@
+Stop The Express
+Sinclair Research Ltd, 1983
+48K Spectrum
+Converted to 16K ROM cartridge by Jimmy Smith, 2020
+
+This game has been modified to support Kempston and Fuller joysticks. Also changed how the game starts and fixed the bug that showed 'game over' at the start instead of 'demo mode' on first use. Added an extra option in Stop the Express to use a faster character printing routine - just press "F" at reset and when the border goes red release all keys. It saves around 90 T-cycles per character printed, so is slightly quicker.

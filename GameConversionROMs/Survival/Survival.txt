@@ -1,0 +1,22 @@
+Survival
+(c) 1984 Macmillan Education/Five Ways/Sinclair
+A ZX Spectrum 48K game
+
+ROM v1.0 - uses ZX0 compression
+Uses the following original ZX routines:
+Keyscan, Beeper, ZX Printer COPY
+
+https://www.spectrumcomputing.co.uk/entry/5080/ZX-Spectrum/Survival
+https://worldofspectrum.org/archive/software/educational/survival-macmillan-software-ltdsinclair-research-ltd
+
+Game improvements
+1) Show keys to restart game at start menu and at end of game (yes it is listed in the manual)
+
+Tech Notes
+>The ZX Printer screen copy has only been tested on an emulator.
+>The COPY routine has been slightly modified from the original ZX-ROM routine.
+>The screen print routine in the game is extremely complex! (It draws the picture boxes as well as the proportional font text)
+>The code loaded from tape is encrypted. It immediately decrypts a smaller subset of itself before running, and it is this subset which is used to make the ROM image.
+
+Change History
+v1.0 - first release
