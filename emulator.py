@@ -21,7 +21,7 @@ class ZX_Spectrum_Emulator:
         self.cpu = Z80(self.memory, self.io_controller, 0x0000)
         self.interrupt_controller = InterruptController(self.cpu)
         self.graphics = ZX_Spectrum_Graphics(self.memory, self.pixel_size)
-        self.keyboard = Keyboard()
+        self.keyboard = Keyboard(self.io_controller)
 
     def load_rom(self, file_path, addr=0):
         self.memory.load_rom(file_path, addr)
@@ -34,6 +34,8 @@ class ZX_Spectrum_Emulator:
         print(f"Цвет границы установлен на {color}")
 
     def emulate(self):
+
+
         pygame.init()
 
         # Удаление файла, если он существует
@@ -95,6 +97,7 @@ class ZX_Spectrum_Emulator:
                 #prev_pc = self.cpu.pc
                 prev_pc = self.cpu.registers['PC']
                 self.cpu.execute_instruction()  # обработка инструкций
+
             # Условие для вызова прерываний, например, каждые 20 мс
             self.interrupt_controller.check_and_trigger_interrupt()
 
@@ -102,7 +105,7 @@ class ZX_Spectrum_Emulator:
             # Рендеринг основного окна
             #screen.fill((0, 0, 0))
             i += 1
-            if i > 10000:
+            if i > 70000:
                 i = 0
 
             if self.cpu.registers['PC'] == 0x0C0A: print('init')
@@ -110,17 +113,17 @@ class ZX_Spectrum_Emulator:
             a = self.cpu.registers['A']
             if self.cpu.registers['PC'] == 0x0010: print(const.spectrum_characters[a])
 
-            if self.cpu.registers['PC'] == 0x09F4:
-                logging.disable(logging.NOTSET)
-                log_on = True
-            if prev_pc == 0x0052:
-                logging.disable(logging.NOTSET)
-                logging.info('========== Finish interrupt ==========')
-                logging.disable()
-                if log_on: logging.disable(logging.NOTSET)
+            #if self.cpu.registers['PC'] == 0x09F4:
+            #    logging.disable(logging.NOTSET)
+            #    log_on = True
+            #if prev_pc == 0x0052:
+            #    logging.disable(logging.NOTSET)
+            #    logging.info('========== Finish interrupt ==========')
+            #    logging.disable()
+            #    if log_on: logging.disable(logging.NOTSET)
 
 
-            if self.cpu.interrupts_enabled == False and i > 0 : continue
+            #if self.cpu.interrupts_enabled == False and i > 0 : continue
             if i > 0: continue
 
             self.graphics.render_screen_fast()
@@ -156,9 +159,14 @@ if __name__ == "__main__":
     #zx_emulator.load_rom('TEST48K.rom')
     #zx_emulator.load_rom('ZX Test Rom.rom')
     #zx_emulator.load_rom('zexdoc', 0x8000)
-    ##zx_emulator.load_rom('vrcpwins.rom')
+    #zx_emulator.load_rom('vrcpwins.rom')
     #zx_emulator.load_rom('zxsemenu.rom')
+    #zx_emulator.load_rom('G9R_ROM.bin')
     #zx_emulator.load_rom('G10R_ROM.bin')
+    #zx_emulator.load_rom('DiagROMv.171')
+    #zx_emulator.load_rom('Globe_ROM.bin')
+    #zx_emulator.load_rom('DeathStar_ROM.bin')
+    zx_emulator.load_rom('testrom.bin')
 
     # Запуск эмуляции
     zx_emulator.emulate()

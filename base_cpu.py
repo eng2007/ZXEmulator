@@ -147,6 +147,8 @@ class baseCPUClass:
         self.pc = 0x0066
 
     def fetch(self):
+        self.registers['R'] = (self.registers['R'] + 1) & 0x7F | (self.registers['R'] & 0x80)
+    
         value = self.memory[self.registers['PC']]
         self.registers['PC'] = (self.registers['PC'] + 1) & 0xFFFF
         return value
@@ -186,7 +188,7 @@ class baseCPUClass:
             self.set_flag('C', result > 0xFF)
         self.set_flag('N', 0)  # Reset N flag for most arithmetic operations
 
-    # Методы ввода-вывода (заглушки, которые нужно реализовать)
+    # Методы ввода-вывода
     def io_read(self, port):
         # Реализуйте чтение из порта
         return self.io_controller.read_port(port)

@@ -310,7 +310,8 @@ class extCPUClass(baseCPUClass):
 
     # Методы для ввода/вывода
     def in_r_c(self, reg):
-        port = self.registers['C']
+        #port = self.registers['C']
+        port = self.get_register_pair('BC')
         value = self.io_read(port)
         self.registers[reg] = value
         self.update_flags(value, zero=True, sign=True, parity=True)
@@ -327,7 +328,8 @@ class extCPUClass(baseCPUClass):
         self.set_flag('5', value & 0x20)        
 
     def out_c_r(self, reg):
-        port = self.registers['C']
+        #port = self.registers['C']
+        port = self.get_register_pair('BC')
         value = self.registers[reg]
         self.io_write(port, value)
 
@@ -916,4 +918,79 @@ class extCPUClass(baseCPUClass):
         self.registers['SP'] = (self.registers['SP'] - 1) & 0xFFFF
         
         # Сохраняем младший байт IX
-        self.memory[self.registers['SP']] = self.registers[index_reg] & 0xFF        
+        self.memory[self.registers['SP']] = self.registers[index_reg] & 0xFF
+
+    def ld_a_r(self):
+        # Загрузка значения R в A
+        self.registers['A'] = self.registers['R']
+
+        # Установка флагов
+        result = self.registers['A']
+
+        # Флаг S устанавливается, если результат отрицательный
+        self.set_flag('S', result & 0x80 != 0)
+
+        # Флаг Z устанавливается, если результат равен нулю
+        self.set_flag('Z', result == 0)
+
+        # Флаг H всегда сбрасывается
+        self.set_flag('H', 0)
+
+        # Флаг P/V устанавливается в значение IFF2
+        self.set_flag('P/V', self.iff2)
+
+        # Флаг N всегда сбрасывается
+        self.set_flag('N', 0)
+
+        # Флаги 3 и 5 копируются из соответствующих битов результата
+        self.set_flag('3', result & 0x08 != 0)
+        self.set_flag('5', result & 0x20 != 0)
+
+        # Флаг C не изменяется
+
+    def ld_r_a(self):
+        # Загрузка значения A в R
+        self.registers['R'] = self.registers['A']
+        
+        # Обратите внимание, что только 7 младших битов R изменяются
+        # Бит 7 R сохраняет свое предыдущее значение
+        self.registers['R'] &= 0x7F  # Очищаем бит 7
+        self.registers['R'] |= self.registers['R'] & 0x80  # Восстанавливаем бит 7
+        
+        # Эта инструкция не влияет на флаги
+
+    def ld_a_i(self):
+        # Загрузка значения из регистра I в регистр A
+        self.registers['A'] = self.registers['I']
+        
+        # Установка флагов
+        self.set_flag('S', self.registers['A'] & 0x80)  # Устанавливаем, если бит 7 установлен
+        self.set_flag('Z', self.registers['A'] == 0)    # Устанавливаем, если A == 0
+        self.set_flag('H', 0)  # Всегда сбрасывается
+        self.set_flag('N', 0)  # Всегда сбрасывается
+        
+        # P/V флаг устанавливается в значение IFF2 (второй флип-флоп прерываний)
+        self.set_flag('P/V', self.iff2)
+        
+        # Флаги 3 и 5 копируются из соответствующих битов в A
+        self.set_flag('3', self.registers['A'] & 0x08)
+        self.set_flag('5', self.registers['A'] & 0x20)
+
+    def reti(self):
+        # Восстанавливаем PC из стека
+        low = self.memory[self.registers['SP']]
+        self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
+        high = self.memory[self.registers['SP']]
+        self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
+        
+        self.registers['PC'] = (high << 8) | low
+        
+        # Восстанавливаем прерывания
+        self.interrupts_enabled = True
+        
+        # Сигнализируем внешним устройствам о завершении обработки прерывания
+        # Это может быть реализовано различными способами в зависимости от вашей архитектуры
+        #self.signal_end_of_interrupt()
+        
+        # Обновляем счетчик циклов
+        self.cycles += 14  # RETI занимает 14 T-циклов

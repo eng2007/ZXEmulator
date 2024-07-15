@@ -4,8 +4,10 @@ import pygame
 import numpy as np
 
 class Keyboard:
-    def __init__(self):
-        self.keyboard_matrix = np.ones((8, 5), dtype=bool)
+    def __init__(self, io_controler):
+        self.io_controller = io_controler
+        # True теперь означает нажатую клавишу для согласованности
+        self.keyboard_matrix = np.zeros((8, 5), dtype=bool)
         self.keymap = {
             pygame.K_1: (0, 0), pygame.K_2: (0, 1), pygame.K_3: (0, 2), pygame.K_4: (0, 3), pygame.K_5: (0, 4),
             pygame.K_0: (1, 0), pygame.K_9: (1, 1), pygame.K_8: (1, 2), pygame.K_7: (1, 3), pygame.K_6: (1, 4),
@@ -14,23 +16,33 @@ class Keyboard:
             pygame.K_a: (4, 0), pygame.K_s: (4, 1), pygame.K_d: (4, 2), pygame.K_f: (4, 3), pygame.K_g: (4, 4),
             pygame.K_RETURN: (5, 0), pygame.K_l: (5, 1), pygame.K_k: (5, 2), pygame.K_j: (5, 3), pygame.K_h: (5, 4),
             pygame.K_LSHIFT: (6, 0), pygame.K_z: (6, 1), pygame.K_x: (6, 2), pygame.K_c: (6, 3), pygame.K_v: (6, 4),
-            pygame.K_SPACE: (7, 0), pygame.K_RSHIFT: (7, 1), pygame.K_m: (7, 2), pygame.K_n: (7, 3), pygame.K_b: (7, 4),            
+            pygame.K_SPACE: (7, 0), pygame.K_RSHIFT: (7, 1), pygame.K_m: (7, 2), pygame.K_n: (7, 3), pygame.K_b: (7, 4),
         }
+        self.port = [0xf7fe, 0xeffe, 0xfbfe, 0xdffe, 0xfdfe, 0xbffe, 0xfefe, 0x7ffe]
 
     def read_keyboard(self):
         pressed_keys = pygame.key.get_pressed()
         for key, (row, col) in self.keymap.items():
-            self.keyboard_matrix[row, col] = not pressed_keys[key]
-        # Объединяем все строки клавиш в один байт для порта 0xFE
-        # Получаем состояние каждой строки и объединяем в один байт
+            self.keyboard_matrix[row, col] = pressed_keys[key]
+
+    def read_port_fe(self, port):
+        # Инвертируем значение порта, так как 0 означает выбранную строку
+        #active_rows = ~port_fe_value & 0xFF
+        keyboard_line = ~port & 0xFF00
+
         result = 0xFF
         for row in range(8):
-            row_state = 0x1F  # каждая строка имеет 5 битов
-            for col in range(5):
-                if not self.keyboard_matrix[row, col]:
-                    row_state &= ~(1 << col)
-            result &= row_state << (row * 5)
-        print(result)
+            cur_line = ~self.port[row] & 0xFF00
+            if keyboard_line & cur_line != 0:
+            #if active_rows & (1 << row) == 0:
+                row_value = 0
+                for col in range(5):
+                    if self.keyboard_matrix[row, col]:
+                        row_value |= (1 << col)
+                # Инвертируем результат, так как 0 означает нажатую клавишу
+                result &= ~row_value & 0x1F
+                result |= 0xE0 # выставляем 3 старших бита
+                result &= 0x1F # убираем 3 старших бита
         return result
 
     def get_matrix(self):
@@ -40,10 +52,13 @@ class Keyboard:
         x, y = 10, 10 + offset
         row_text = "KEYBOARD"
         text = font.render(row_text, True, (255, 255, 255))
-        screen.blit(text, (x, y))        
+        screen.blit(text, (x, y))
         y += 20
+        
         for row_index, row in enumerate(self.keyboard_matrix):
-            row_text = f"Row {row_index}: " + " ".join("P" if not pressed else "." for pressed in row)
+            row_text = f"Row {row_index}: " + " ".join("P" if pressed else "." for pressed in row)
+            #row_text += f'{self.port[row_index]:04X} {self.io_controller.read_port(self.port[row_index]):08b}'
+            row_text += f'{self.port[row_index]:04X} {self.read_port_fe(self.port[row_index]):08b}'
             text = font.render(row_text, True, (255, 255, 255))
             screen.blit(text, (x, y))
             y += 20

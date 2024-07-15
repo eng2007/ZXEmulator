@@ -1,8 +1,5 @@
 
-*.rom
 *.pyc
 *.bak
 ZXseMenu.zip
-G10R_ROM.bin
-*.bin
 example.log

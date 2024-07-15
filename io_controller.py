@@ -13,10 +13,17 @@ class IOController:
             self.emulator.set_border(self.border_color)
 
     def read_port(self, port):
-        #print(f"Input from port {port:02X}")  
-        if port == 0xFE:
+        if (port & 0xFF) == 0xFE:
             # Чтение состояния клавиатуры
-            return self.emulator.keyboard.read_keyboard()
+            
+            self.emulator.keyboard.read_keyboard()  # Обновляем состояние клавиатуры
+            #keyboard_line = (port >> 8) & 0xFF  # Получаем старший байт для выбора строки
+            #result = self.emulator.keyboard.read_port_fe(keyboard_line)
+            result = self.emulator.keyboard.read_port_fe(port)
+            #if (~result & 0xFF) != 0:
+            #    print(f'Port:{port:04X} Key pressed {result:08b}')
+            #print(f'Read keyboard port {port:04X}, result:{result:08b}')    
+            return result
         if port == 0x1B: return 0x7D            
         if port == 0xE3: return 0xC1
         if port == 0xE2: return 0x71

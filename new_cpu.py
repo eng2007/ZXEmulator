@@ -329,9 +329,9 @@ class Z80(extCPUClass):
         Инструкция: IN A, (n)
         """
         port = self.fetch()  # Получаем номер порта из следующего байта
-        print(f"port {port:02X}")
+        #print(f"port {port:02X}")
         value = self.io_read(port)  # Читаем из порта
-        print(f"value {value:02X}")
+        #print(f"value {value:02X}")
         self.registers['A'] = value  # Сохраняем значение в аккумуляторе
 
         # Устанавливаем флаги
