@@ -1,4 +1,5 @@
 import const
+import struct
 
 class Memory:
     def __init__(self, total_size=128 * 1024):
@@ -79,3 +80,76 @@ class Memory:
             text = font.render(f"{start_address + i:04X}: {word:04X} {const.spectrum_characters[memory_dump[i]]} {const.spectrum_characters[memory_dump[i+1]]}", True, (255, 255, 255))
             screen.blit(text, (x, y))
             x += 210
+
+
+    def load_snapshot(self, file_path, cpu):
+        with open(file_path, 'rb') as file:
+            # Чтение начального заголовка
+            header = file.read(30)
+            (
+                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, af_, iy, ix, 
+                iff1, iff2, im
+            ) = struct.unpack('<B B H H H H B B B H H H H H H H B B B', header)
+
+            # Установка регистров CPU
+            cpu.set_register_pair('AF', (a << 8) | f)
+            cpu.set_register_pair('BC', bc)
+            cpu.set_register_pair('HL', hl)
+            cpu.set_register_pair('PC', pc)
+            cpu.set_register_pair('SP', sp)
+            cpu.registers['I'] = i
+            cpu.registers['R'] = r
+            cpu.iff1 = iff1
+            cpu.iff2 = iff2
+            cpu.interrupt_mode = im
+            cpu.set_register_pair('DE', de)
+            cpu.set_register_pair('BC_', bc_)
+            cpu.set_register_pair('DE_', de_)
+            cpu.set_register_pair('HL_', hl_)
+            cpu.set_register_pair('AF_', af_)
+            cpu.set_register_pair('IY', iy)
+            cpu.set_register_pair('IX', ix)
+
+            # Проверка на расширение 2.01 или 3.0
+            if pc == 0:
+                len_ext, newpc = struct.unpack('<H H', file.read(4))
+                extension = file.read(len_ext)
+
+                model, p7FFD, r1, r2, p7FFD_1 = struct.unpack('<B B B B B', extension[:5])
+                AY = list(struct.unpack('<16B', extension[5:21]))
+
+                if len_ext > 23:
+                    LowT, HighT, ReservedFlag, MgtRom, MultifaceRom, RamRom0, RamRom1 = struct.unpack('<H B B B B B B', extension[21:29])
+                    KbMap1 = list(struct.unpack('<10B', extension[30:40]))
+                    KbMap2 = list(struct.unpack('<10B', extension[40:50]))
+                    MgtType, Disciple1, Disciple2, p1FFD = struct.unpack('<B B B B', extension[50:54])
+
+                # Установка расширенных регистров и флагов
+                cpu.set_register_pair('PC', newpc)
+
+            # Вывод информации о регистрах
+            print("Registers after loading snapshot:")
+            for reg, val in cpu.registers.items():
+                print(f"{reg}: {val:04X}")
+            print(f"IFF1: {cpu.iff1}, IFF2: {cpu.iff2}, IM: {cpu.interrupt_mode}")
+
+            # Чтение и установка памяти
+            while True:
+                block_header = file.read(3)
+                if len(block_header) < 3:
+                    break
+
+                page, block_size = struct.unpack('<B H', block_header)
+                block_data = file.read(block_size)
+
+                # Загрузка блока в соответствующую страницу памяти
+                if page <= 7:
+                    self.memory[page * 0x4000:(page + 1) * 0x4000] = block_data
+                else:
+                    # Handle extended pages for 128K and higher models
+                    self.memory[(page - 8) * 0x4000:(page - 7) * 0x4000] = block_data
+
+                # Вывод информации о блоках
+                print(f"Loaded block: Page={page}, Size={block_size}")
+
+        print("Snapshot loaded successfully.")

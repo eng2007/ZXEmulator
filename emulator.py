@@ -278,7 +278,12 @@ def main_loop():
                 print("Using load_rom method")
                 zx_emulator.load_rom(file_path)
 
+
+            zx_emulator.memory.load_snapshot('DizzyMainDay_Demo.z80', zx_emulator.cpu)
+
             result = zx_emulator.emulate()
+
+
             if result != "OPEN_MENU":
                 break  # Выход из цикла, если эмуляция завершилась не по F1
         else:
