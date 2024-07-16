@@ -1,7 +1,0 @@
-Winged Warlords
-CDS Microsystems, 1983
-16K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-This conversion uses a "mini OS" replacement to provide the RST 10 and keyboard services. Included support for various joystick options that the original game never did. Translated the BASIC program that handled the menu code and drew 
-the game screen into machine code.

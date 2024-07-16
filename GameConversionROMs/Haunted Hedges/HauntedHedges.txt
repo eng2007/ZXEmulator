@@ -1,6 +1,0 @@
-Haunted Hedges
-Micromega, 1983
-16K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-Improved the game to support joysticks and not to do an IN 0 when viewing the instructions.

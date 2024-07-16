@@ -1,6 +1,0 @@
-Highway Encounter
-Vortex Software Ltd, 1985
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-Improved to support Fuller joystick.

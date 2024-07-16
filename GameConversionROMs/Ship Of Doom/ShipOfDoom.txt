@@ -1,6 +1,0 @@
-Adventure C: Ship Of Doom
-Artic Computing Ltd, 1982
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-The game uses a "mini OS" developed when converting "Inca Curse". Adventure C "Ship of Doom" is bigger so the large font code/data has been dropped.

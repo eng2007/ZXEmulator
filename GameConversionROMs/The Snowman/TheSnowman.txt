@@ -1,6 +1,0 @@
-The Snowman
-Quicksilva Ltd, 1984
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-The game has been improved to support Fuller and Sinclair joysticks, which required modification to the game because at some locations in the game you couldn't use up/down with left/right, which meant you had to be pixel perfect to move across onto some platforms. Since the game compressed well, the loading screen in also been included.

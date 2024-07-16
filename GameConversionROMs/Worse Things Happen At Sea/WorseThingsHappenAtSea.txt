@@ -1,6 +1,0 @@
-Worse Things Happen At Sea
-Silversoft Ltd, 1984
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-Implemented replacement floating point routines to divide by 10 and 100 as well as print the result.

@@ -1,6 +1,0 @@
-Bear Bovver
-Artic Computing Ltd, 1983
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-The game has been enhanced to support Sinclair joysticks.

@@ -1,7 +1,7 @@
 class InterruptController:
     def __init__(self, cpu):
         self.cpu = cpu
-        self.interrupt_period = 100  # Примерное значение для частоты прерываний
+        self.interrupt_period = 1000  # Примерное значение для частоты прерываний
         self.elapsed_cycles = 0
 
     def check_and_trigger_interrupt(self):

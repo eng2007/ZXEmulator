@@ -3,10 +3,13 @@ import const
 class Memory:
     def __init__(self, total_size=128 * 1024):
         self.total_size = total_size
-        self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
         self.rom = [bytearray(16 * 1024) for _ in range(2)]  # 2 ROM банка по 16KB
+        self.reset()
+
+    def reset(self):
+        self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
         self.current_rom = 0
-        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков
+        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков 
 
     def load_rom(self, file_path, rom_number):
         with open(file_path, 'rb') as f:

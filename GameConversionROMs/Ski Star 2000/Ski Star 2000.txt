@@ -1,6 +1,0 @@
-Ski Star 2000
-Richard Shepherd Software Ltd, 1985
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-It now uses the ROM save/load routines, so external storage devices should work. It also beeps between selecting the load option and actually trying to load (as the fire key is 'space', you'd end up doing a 'break' into the loader as soon as it started).
