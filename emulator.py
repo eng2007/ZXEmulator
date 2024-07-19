@@ -231,7 +231,7 @@ class ZX_Spectrum_Emulator:
             #if self.cpu.interrupts_enabled == False and i > 0 : continue
             if i % 5000 == 0:
 
-                if i % 30000 == 0:
+                if i % 10000 == 0:
                     self.graphics.render_screen_fast4()
 
                 # Рендеринг окна состояния
@@ -279,7 +279,9 @@ def main_loop():
                 zx_emulator.load_rom(file_path)
 
 
-            zx_emulator.memory.load_snapshot('DizzyMainDay_Demo.z80', zx_emulator.cpu)
+            #zx_emulator.memory.load_snapshot('DizzyMainDay_Demo.z80', zx_emulator.cpu)
+            #zx_emulator.memory.load_snapshot('Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters).z80', zx_emulator.cpu)
+            #zx_emulator.memory.load_sna_snapshot('Dizzy-1 Extended 48K ENG v1.0.sna', zx_emulator.cpu)
 
             result = zx_emulator.emulate()
 
