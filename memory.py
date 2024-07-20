@@ -1,12 +1,16 @@
 import const
+import struct
 
 class Memory:
     def __init__(self, total_size=128 * 1024):
         self.total_size = total_size
-        self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
         self.rom = [bytearray(16 * 1024) for _ in range(2)]  # 2 ROM банка по 16KB
+        self.reset()
+
+    def reset(self):
+        self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
         self.current_rom = 0
-        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков
+        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков 
 
     def load_rom(self, file_path, rom_number):
         with open(file_path, 'rb') as f:
@@ -76,3 +80,172 @@ class Memory:
             text = font.render(f"{start_address + i:04X}: {word:04X} {const.spectrum_characters[memory_dump[i]]} {const.spectrum_characters[memory_dump[i+1]]}", True, (255, 255, 255))
             screen.blit(text, (x, y))
             x += 210
+
+    def load_sna_snapshot(self, file_path, cpu):
+        with open(file_path, 'rb') as file:
+            # Чтение заголовка SNA (27 байт)
+            header = file.read(27)
+            
+            # Распаковка заголовка
+            (i, hl_, de_, bc_, af_, hl, de, bc, iy, ix, 
+             iff1, r, af, sp, im, border) = struct.unpack('<B H H H H H H H H H B B H H B B', header)
+            
+            # Установка регистров CPU
+            cpu.registers['I'] = i
+            cpu.set_register_pair('HL_', hl_)
+            cpu.set_register_pair('DE_', de_)
+            cpu.set_register_pair('BC_', bc_)
+            cpu.set_register_pair('AF_', af_)
+            cpu.set_register_pair('HL', hl)
+            cpu.set_register_pair('DE', de)
+            cpu.set_register_pair('BC', bc)
+            cpu.set_register_pair('IY', iy)
+            cpu.set_register_pair('IX', ix)
+            cpu.iff1 = cpu.iff2 = bool(iff1 & 0x04)
+            cpu.registers['R'] = r
+            cpu.set_register_pair('AF', af)
+            cpu.set_register_pair('SP', sp)
+            cpu.interrupt_mode = im
+            
+            # Чтение 48KB памяти
+            memory_data = file.read(48 * 1024)
+            
+            # Загрузка памяти в соответствующие банки
+            self.memory[5] = memory_data[:16384]  # Bank 5 (16384-32767)
+            self.memory[2] = memory_data[16384:32768]  # Bank 2 (32768-49151)
+            self.memory[0] = memory_data[32768:]  # Bank 0 (49152-65535)
+            
+            # Установка начальной конфигурации банков памяти
+            self.paged_banks = [5, 2, 0, 0]
+            self.current_rom = 0  # SNA всегда загружается в режиме 48K
+            
+            # Восстановление PC из стека
+            pc_low = self.read(sp)
+            pc_high = self.read(sp + 1)
+            pc = (pc_high << 8) | pc_low
+            cpu.set_register_pair('PC', pc)
+            
+            # Корректировка SP
+            cpu.set_register_pair('SP', sp + 2)
+            
+            print("SNA snapshot loaded successfully.")
+            print("Registers after loading snapshot:")
+            for reg, val in cpu.registers.items():
+                print(f"{reg}: {val:04X}")
+            print(f"IFF1: {cpu.iff1}, IFF2: {cpu.iff2}, IM: {cpu.interrupt_mode}")
+
+
+    def unpack_block(self, compressed_data):
+        unpacked_data = bytearray()
+        i = 0
+        while i < len(compressed_data):
+            byte = compressed_data[i]
+            if byte == 0xED and i + 1 < len(compressed_data) and compressed_data[i + 1] == 0xED:
+                repeat_count = compressed_data[i + 2]
+                value = compressed_data[i + 3]
+                unpacked_data.extend([value] * repeat_count)
+                i += 4
+            else:
+                unpacked_data.append(byte)
+                i += 1
+        return unpacked_data
+
+    def load_snapshot(self, file_path, cpu):
+        with open(file_path, 'rb') as file:
+            # Чтение начального заголовка
+            header = file.read(30)
+            (
+                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, af_, iy, ix, 
+                iff1, iff2, im
+            ) = struct.unpack('<B B H H H H B B B H H H H H H H B B B', header)
+
+            # Установка регистров CPU
+            cpu.set_register_pair('AF', (a << 8) | f)
+            cpu.set_register_pair('BC', bc)
+            cpu.set_register_pair('HL', hl)
+            cpu.set_register_pair('SP', sp)
+            cpu.registers['I'] = i
+            cpu.registers['R'] = r
+            cpu.iff1 = bool(iff1)
+            cpu.iff2 = bool(iff2)
+            cpu.interrupt_mode = im
+            cpu.set_register_pair('DE', de)
+            cpu.set_register_pair('BC_', bc_)
+            cpu.set_register_pair('DE_', de_)
+            cpu.set_register_pair('HL_', hl_)
+            cpu.set_register_pair('AF_', af_)
+            cpu.set_register_pair('IY', iy)
+            cpu.set_register_pair('IX', ix)
+
+            # Определение версии формата
+            version = 1
+            if pc == 0:
+                version = 2
+                len_ext, newpc = struct.unpack('<H H', file.read(4))
+                if len_ext == 54 or len_ext == 55:
+                    version = 3
+
+            if version >= 2:
+                extension = file.read(len_ext)
+                hw_mode, out_7ffd, _ = struct.unpack('<B B B', extension[:3])
+                cpu.set_register_pair('PC', newpc)
+
+                if version == 3:
+                    out_fffd, _ = struct.unpack('<B B', extension[3:5])
+                    # Обработка дополнительных полей версии 3.0
+
+            print(f"Z80 version: {version}")
+            print("Registers after loading snapshot:")
+            for reg, val in cpu.registers.items():
+                print(f"{reg}: {val:04X}")
+            print(f"IFF1: {cpu.iff1}, IFF2: {cpu.iff2}, IM: {cpu.interrupt_mode}")
+
+            # Чтение и установка памяти
+            if version == 1:
+                compressed = (flags & 0x20) != 0
+                memory_data = file.read()
+                if compressed:
+                    memory_data = self.unpack_block(memory_data)
+                self.memory[5] = memory_data[:16384]  # Bank 5 (16384-32767)
+                self.memory[2] = memory_data[16384:32768]  # Bank 2 (32768-49151)
+                self.memory[0] = memory_data[32768:]  # Bank 0 (49152-65535)
+            else:
+                while True:
+                    block_header = file.read(3)
+                    if len(block_header) < 3:
+                        break
+
+                    page, block_size = struct.unpack('<B H', block_header)
+                    if block_size == 0xFFFF:
+                        block_size = 16384
+                        block_data = file.read(block_size)
+                    else:
+                        compressed_data = file.read(block_size)
+                        block_data = self.unpack_block(compressed_data)
+
+                    # Проверка и обрезка данных, если они превышают 16 КБ
+                    if len(block_data) > 16384:
+                        print(f"Warning: Block size exceeds 16KB for page {page}. Truncating.")
+                        block_data = block_data[:16384]
+                    elif len(block_data) < 16384:
+                        print(f"Warning: Block size is less than 16KB for page {page}. Padding.")
+                        block_data = block_data.ljust(16384, b'\x00')
+
+                    # Загрузка блока в соответствующую страницу памяти
+                    if page <= 7:
+                        self.memory[page] = block_data
+                    elif page == 8:
+                        self.rom[0] = block_data  # ROM 0
+                    elif page == 9:
+                        self.rom[1] = block_data  # ROM 1
+                    else:
+                        print(f"Warning: Unknown page number {page}. Skipping.")
+
+                    print(f"Loaded block: Page={page}, Size={len(block_data)}")
+
+            # Установка начальной конфигурации банков памяти
+            if version >= 2:
+                self.paged_banks = [5, 2, hw_mode & 0x07, 0]
+                self.current_rom = (hw_mode >> 4) & 0x01
+
+            print("Snapshot loaded successfully.")

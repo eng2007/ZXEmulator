@@ -1,6 +1,0 @@
-Pinball
-Sagittarian Software Ltd, 1983
-16K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-There's little to no modification to this game.

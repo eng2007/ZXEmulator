@@ -246,7 +246,11 @@ class baseCPUClass:
             self.registers['IY'] = value
         else:
             # Для остальных пар регистров
-            high, low = pair
+            if len(pair) == 2:
+                high, low = pair
+            else:
+                high = pair[0] + '_'
+                low = pair[1] + '_'
             self.registers[high] = (value >> 8) & 0xFF  # Старший байт
             self.registers[low] = value & 0xFF  # Младший байт
 

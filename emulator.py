@@ -108,6 +108,7 @@ class ZX_Spectrum_Emulator:
         self.interrupt_controller = InterruptController(self.cpu)
         self.graphics = ZX_Spectrum_Graphics(self.memory, self.pixel_size)
         self.keyboard = Keyboard(self.io_controller)
+        self.reset_requested = False
 
     def load_rom(self, file_path, addr=0):
         self.memory.load_rom(file_path, addr)
@@ -123,6 +124,12 @@ class ZX_Spectrum_Emulator:
         # Визуализация установки цвета границы
         #print(f"Цвет границы установлен на {color}")
         pass
+
+    def reset(self):
+        self.cpu.reset()
+        self.memory.reset()
+        self.reset_requested = False
+        print("CPU reset performed")
 
     def emulate(self):
 
@@ -175,7 +182,12 @@ class ZX_Spectrum_Emulator:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_F1:
-                        return "OPEN_MENU"  # Сигнал для открытия меню                    
+                        return "OPEN_MENU"  # Сигнал для открытия меню
+                    elif event.key == pygame.K_F2:
+                        self.reset_requested = True                  
+
+            if self.reset_requested:
+                self.reset()
 
             self.keyboard.read_keyboard()
             # Для демонстрации клавиатурного ввода:
@@ -199,7 +211,7 @@ class ZX_Spectrum_Emulator:
             # Рендеринг основного окна
             #screen.fill((0, 0, 0))
             i += 1
-            if i > 10000:
+            if i > 100000:
                 i = 0
 
             #if self.cpu.registers['PC'] == 0x0C0A: print('init')
@@ -217,26 +229,27 @@ class ZX_Spectrum_Emulator:
 
 
             #if self.cpu.interrupts_enabled == False and i > 0 : continue
-            if i > 0: continue
+            if i % 5000 == 0:
 
-            self.graphics.render_screen_fast()
+                if i % 10000 == 0:
+                    self.graphics.render_screen_fast4()
 
-            # Рендеринг окна состояния
-            state_window.fill((0, 0, 0))
-            self.cpu.display_registers(state_window, font, 0)
-            self.keyboard.display_keyboard(state_window, font, 200)
-            self.memory.display_memory_dump(0x5CA6, 32, state_window, font, 400)
-            #pygame.display.update(state_window.get_rect())
+                # Рендеринг окна состояния
+                state_window.fill((0, 0, 0))
+                self.cpu.display_registers(state_window, font, 0)
+                self.keyboard.display_keyboard(state_window, font, 200)
+                self.memory.display_memory_dump(0x5CA6, 32, state_window, font, 400)
+                #pygame.display.update(state_window.get_rect())
 
-            #заливка бордера
-            pygame.draw.rect(border, self.graphics.colors[self.io_controller.border_color] , (0, 0, border.get_width(), border.get_height()))
+                #заливка бордера
+                pygame.draw.rect(border, self.graphics.colors[self.io_controller.border_color] , (0, 0, border.get_width(), border.get_height()))
 
-            # Отрисовка на основном экране
-            main_screen.blit(border, (0, 0))
-            main_screen.blit(screen, (self.border_size, self.border_size))
-            main_screen.blit(state_window, (self.graphics.screen_width * self.pixel_size + self.border_size * 2, 0))
+                # Отрисовка на основном экране
+                main_screen.blit(border, (0, 0))
+                main_screen.blit(screen, (self.border_size, self.border_size))
+                main_screen.blit(state_window, (self.graphics.screen_width * self.pixel_size + self.border_size * 2, 0))
 
-            pygame.display.flip()
+                pygame.display.flip()
             #clock.tick(50)
 
         pygame.quit()
@@ -250,6 +263,7 @@ def main_loop():
 
         if selected_file:
             zx_emulator.cpu.reset()
+            zx_emulator.memory.reset()
 
             file_name, file_path = selected_file
             file_size = os.path.getsize(file_path)
@@ -264,7 +278,14 @@ def main_loop():
                 print("Using load_rom method")
                 zx_emulator.load_rom(file_path)
 
+
+            #zx_emulator.memory.load_snapshot('DizzyMainDay_Demo.z80', zx_emulator.cpu)
+            #zx_emulator.memory.load_snapshot('Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters).z80', zx_emulator.cpu)
+            #zx_emulator.memory.load_sna_snapshot('Dizzy-1 Extended 48K ENG v1.0.sna', zx_emulator.cpu)
+
             result = zx_emulator.emulate()
+
+
             if result != "OPEN_MENU":
                 break  # Выход из цикла, если эмуляция завершилась не по F1
         else:

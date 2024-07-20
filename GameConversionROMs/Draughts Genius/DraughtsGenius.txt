@@ -1,6 +1,0 @@
-Draughts Genius
-Rack-It, 1987
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-The game originally wouldn't fit into 16K, so the intro sequence has been removed. The main game itself is complete. A start-up page has been added giving publisher info and listing which keys to use, with clarification that a double-click is required to confirm a move whilst playing.

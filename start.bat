@@ -1,2 +1,0 @@
-python graphics.py
-pause

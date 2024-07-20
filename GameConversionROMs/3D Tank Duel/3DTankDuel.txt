@@ -1,6 +1,0 @@
-3D Tank Duel
-Realtime Games Software Ltd, 1984
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-Fixed a bug when printing the hi-score table to the ZX Printer. The author put in OUT 254,4 when they really meant OUT 251,4. Fixing this means the printer doesn't continually feed paper through at the end. Also changed the menu to inform the user what the keys are.

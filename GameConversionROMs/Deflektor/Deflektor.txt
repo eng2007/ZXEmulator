@@ -1,6 +1,0 @@
-Deflektor
-Vortex Software Ltd, 1987
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-This image is a tight fit - the game itself wouldn't compress down enough - however there is a SCREEN$ in there which has been compressed using Einar's RCS tool. Changes to this game include a Fuller joystick option, listing the keys used and changing the default control option to keyboard.

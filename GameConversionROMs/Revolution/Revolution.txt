@@ -1,6 +1,0 @@
-Revolution
-U.S. Gold Ltd, 1986
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-Bit 7 of the R register had to be set for the game to work.

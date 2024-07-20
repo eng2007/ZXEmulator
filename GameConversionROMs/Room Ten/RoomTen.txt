@@ -1,6 +1,0 @@
-Room Ten
-CRL Group PLC, 1986
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2020
-
-Dropped the French and German texts, removed the alien character script and implemented some OS routines to support 'rst 10' and key presses via system variables. For some reason this game has it's own print routines apart from the hi-score routine which uses classic ZX ROM routines.

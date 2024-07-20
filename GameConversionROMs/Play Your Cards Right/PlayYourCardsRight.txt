@@ -1,6 +1,0 @@
-Play Your Cards Right
-Britannia Software Ltd, 1986
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-When a question gets very long it left behind a character at the bottom right of the screen. This is now cleared correctly.

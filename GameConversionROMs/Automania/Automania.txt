@@ -1,6 +1,0 @@
-Automania
-Mikro-Gen Ltd, 1984
-48K Spectrum
-Converted to 16K ROM cartridge by Jimmy Smith, 2021
-
-The loading screen has been included.
