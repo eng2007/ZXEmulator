@@ -573,13 +573,16 @@ class extCPUClass(baseCPUClass):
         elif opcode in [0x09, 0x19, 0x29, 0x39]:  # ADD IX/IY, rr
             rr = {0x09: 'BC', 0x19: 'DE', 0x29: index_reg, 0x39: 'SP'}[opcode]
             self.add_index(index_reg, rr)
-        elif opcode in [0x21, 0x22, 0x2A, 0x2B, 0x2C, 0x34, 0x35, 0x36, 0xE9, 0xF9]:
+        elif opcode in [0x21, 0x22, 0x26, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x34, 0x35, 0x36, 0xE9, 0xF9]:
             # Специальные случаи для LD IX/IY, nn и LD (nn), IX/IY
             if opcode == 0x21:  # LD IX/IY, nn
                 self.registers[index_reg] = self.fetch_word()
             elif opcode == 0x22:  # LD (nn), IX/IY
                 address = self.fetch_word()
                 self.store_word(address, self.registers[index_reg])
+            elif opcode == 0x26:  # ld ixh,*
+                value = self.fetch()
+                self.registers[index_reg] = (self.registers[index_reg] & 0x00FF) | (value << 8)
             elif opcode == 0x2A:  # LD IX/IY, (nn)
                 address = self.fetch_word()
                 self.registers[index_reg] = self.memory[address] | (self.memory[address + 1] << 8)
@@ -588,6 +591,11 @@ class extCPUClass(baseCPUClass):
                 self.registers[index_reg] = (self.registers[index_reg] - 1) & 0xFFFF
             elif opcode == 0x2C: # INC IXl/IYl
                 self.inc_index_l(index_reg)
+            elif opcode == 0x2D: # DEC IXl/IYl
+                self.dec_index_l(index_reg)
+            elif opcode == 0x2E:  # ld ixl,*
+                value = self.fetch()
+                self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | value
             elif opcode == 0x34:  # INC (IX/IY+d)
                 self.inc_index_d(index_reg)
             elif opcode == 0x35:  # DEC (IX/IY+d)
@@ -1020,3 +1028,63 @@ class extCPUClass(baseCPUClass):
         # Устанавливаем флаги 3 и 5 в соответствии с результатом
         self.set_flag('3', result & 0x08)
         self.set_flag('5', result & 0x20)
+
+    def dec_index_l(self, index_reg):
+        # Получаем текущее значение IYl (младший байт IY)
+        value = self.registers[index_reg] & 0xFF
+        
+        # Увеличиваем значение на 1
+        result = (value - 1) & 0xFF
+        
+        # Обновляем младший байт IY, сохраняя старший байт неизменным
+        self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | result
+        
+        # Устанавливаем флаги
+        self.set_flag('S', result & 0x80)  # Устанавливаем, если результат отрицательный
+        self.set_flag('Z', result == 0)    # Устанавливаем, если результат нулевой
+        self.set_flag('H', (value & 0x0F) == 0x0F)  # Устанавливаем, если был перенос из бита 3 в бит 4
+        self.set_flag('P/V', value == 0x7F)  # Устанавливаем, если было переполнение (из 7F в 80)
+        self.set_flag('N', 1)  # Всегда устанавливаем для операции уменьшения
+        
+        # Устанавливаем флаги 3 и 5 в соответствии с результатом
+        self.set_flag('3', result & 0x08)
+        self.set_flag('5', result & 0x20)
+
+    def cpir(self):
+        # Получаем текущие значения
+        hl = self.get_register_pair('HL')
+        bc = self.get_register_pair('BC')
+        a = self.registers['A']
+
+        # Сравниваем значение в памяти по адресу (HL) с A
+        value = self.memory[hl]
+        result = (a - value) & 0xFF
+
+        # Увеличиваем HL
+        hl = (hl + 1) & 0xFFFF
+        self.set_register_pair('HL', hl)
+
+        # Уменьшаем BC
+        bc = (bc - 1) & 0xFFFF
+        self.set_register_pair('BC', bc)
+
+        # Устанавливаем флаги
+        self.set_flag('S', result & 0x80)
+        self.set_flag('Z', result == 0)
+        self.set_flag('H', ((a & 0x0F) - (value & 0x0F)) & 0x10)
+        self.set_flag('P/V', bc != 0)
+        self.set_flag('N', 1)
+
+        # Устанавливаем флаги 3 и 5 на основе результата
+        self.set_flag('3', result & 0x08)
+        self.set_flag('5', result & 0x20)
+
+        # Если BC != 0 и Z = 0, повторяем операцию
+        if bc != 0 and result != 0:
+            self.registers['PC'] -= 2  # Возвращаемся к началу инструкции
+            self.cycles += 21  # CPIR занимает 21 цикл при повторении
+        else:
+            self.cycles += 16  # CPIR занимает 16 циклов при завершении
+
+        # Обновляем флаг переноса
+        self.set_flag('C', a < value)

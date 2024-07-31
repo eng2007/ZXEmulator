@@ -6,6 +6,7 @@ class Memory:
         self.total_size = total_size
         self.rom = [bytearray(16 * 1024) for _ in range(2)]  # 2 ROM банка по 16KB
         self.reset()
+        self.temp_files = []
 
     def reset(self):
         self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
@@ -81,7 +82,7 @@ class Memory:
             screen.blit(text, (x, y))
             x += 210
 
-    def load_sna_snapshot(self, file_path, cpu):
+    def load_snapshot_sna(self, file_path, cpu):
         with open(file_path, 'rb') as file:
             # Чтение заголовка SNA (27 байт)
             header = file.read(27)
@@ -139,30 +140,43 @@ class Memory:
         unpacked_data = bytearray()
         i = 0
         while i < len(compressed_data):
-            byte = compressed_data[i]
-            if byte == 0xED and i + 1 < len(compressed_data) and compressed_data[i + 1] == 0xED:
-                repeat_count = compressed_data[i + 2]
-                value = compressed_data[i + 3]
-                unpacked_data.extend([value] * repeat_count)
-                i += 4
+            if compressed_data[i] == 0xED:
+                if i + 1 < len(compressed_data) and compressed_data[i + 1] == 0xED:
+                    if i + 3 < len(compressed_data):
+                        repeat_count = compressed_data[i + 2]
+                        value = compressed_data[i + 3]
+                        unpacked_data.extend([value] * repeat_count)
+                        i += 4
+                    else:
+                        # End of block marker
+                        break
+                else:
+                    # Single ED byte followed by any other byte
+                    unpacked_data.append(0xED)
+                    i += 1
+                    if i < len(compressed_data):
+                        unpacked_data.append(compressed_data[i])
+                        i += 1
             else:
-                unpacked_data.append(byte)
+                unpacked_data.append(compressed_data[i])
                 i += 1
+
         return unpacked_data
 
-    def load_snapshot(self, file_path, cpu):
+    def load_snapshot_z80(self, file_path, cpu):
         with open(file_path, 'rb') as file:
             # Чтение начального заголовка
             header = file.read(30)
             (
-                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, af_, iy, ix, 
+                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, a_, f_, iy, ix, 
                 iff1, iff2, im
-            ) = struct.unpack('<B B H H H H B B B H H H H H H H B B B', header)
+            ) = struct.unpack('<B B H H H H B B B H H H H B B H H B B B', header)
 
             # Установка регистров CPU
             cpu.set_register_pair('AF', (a << 8) | f)
             cpu.set_register_pair('BC', bc)
             cpu.set_register_pair('HL', hl)
+            cpu.set_register_pair('PC', pc)
             cpu.set_register_pair('SP', sp)
             cpu.registers['I'] = i
             cpu.registers['R'] = r
@@ -173,7 +187,9 @@ class Memory:
             cpu.set_register_pair('BC_', bc_)
             cpu.set_register_pair('DE_', de_)
             cpu.set_register_pair('HL_', hl_)
-            cpu.set_register_pair('AF_', af_)
+            #cpu.set_register_pair('AF_', af_)
+            cpu.registers['A_'] = a_
+            cpu.registers['F_'] = f_
             cpu.set_register_pair('IY', iy)
             cpu.set_register_pair('IX', ix)
 
@@ -206,6 +222,14 @@ class Memory:
                 memory_data = file.read()
                 if compressed:
                     memory_data = self.unpack_block(memory_data)
+                else:
+                    memory_data = bytearray(memory_data)
+                
+                # Ensure we have exactly 48KB of data
+                #if len(memory_data) > 48 * 1024:
+                #    memory_data = memory_data[:48 * 1024]
+                #elif len(memory_data) < 48 * 1024:
+                #    memory_data.extend([0] * (48 * 1024 - len(memory_data)))
                 self.memory[5] = memory_data[:16384]  # Bank 5 (16384-32767)
                 self.memory[2] = memory_data[16384:32768]  # Bank 2 (32768-49151)
                 self.memory[0] = memory_data[32768:]  # Bank 0 (49152-65535)

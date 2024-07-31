@@ -219,25 +219,12 @@ class ZX_Spectrum_Graphics:
                     ys = y + y_offs
                     address = self.scr_addr[x, ys][0]
                     value = self.memory.read(address)
-
                     # Создаем массив цветов для 8 пикселей сразу
-                    #pixel_colors = np.where(np.unpackbits(np.array([value], dtype=np.uint8))[:8], color_ink, color_paper)
-
-                    bits = np.unpackbits(np.array([value], dtype=np.uint8))[:8]
-                    
+                    bits = np.unpackbits(np.array([value], dtype=np.uint8))[:8]                    
                     # Создаем массив цветов для 8 пикселей
                     pixel_colors = np.array([color_ink if bit else color_paper for bit in bits])
                     # Копируем весь массив цветов в буфер
                     self.buffer[x:x+8, ys] = pixel_colors
-
-                    #for bit in range(8):
-                    #    xs = x + bit
-                    #    pixel_value = (value >> (7 - bit)) & 1
-
-                    #    if pixel_value:
-                    #        self.buffer[xs, ys] = color_ink
-                    #    else:
-                    #        self.buffer[xs, ys] = color_paper
 
         pygame.surfarray.blit_array(self.screen, np.kron(self.buffer, np.ones((self.pixel_size, self.pixel_size, 1), dtype=np.uint8)))
         # Обновление окна

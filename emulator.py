@@ -10,6 +10,8 @@ from graphics import ZX_Spectrum_Graphics
 from keyboard import Keyboard
 import os
 import const
+import zipfile
+import tempfile
 
 def draw_text(surface, text, pos, font, color):
     rendered_text = font.render(text, True, color)
@@ -28,13 +30,27 @@ def draw_rainbow_stripe(surface, height):
     for i, color in enumerate(colors):
         pygame.draw.rect(surface, color, (0, i * stripe_height, surface.get_width(), stripe_height))
 
+def process_zip_file(zip_path):
+    zip_files = []
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        for file in zip_ref.namelist():
+            if file.lower().endswith('.z80'):
+                # Создаем временный файл для распакованного содержимого
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.z80') as temp_file:
+                    temp_file.write(zip_ref.read(file))
+                    zip_files.append((f"{os.path.basename(zip_path)}:{file}", temp_file.name))
+    return zip_files
+
 def get_rom_files(directory):
     rom_files = []
     for root, dirs, files in os.walk(directory):
         for file in files:
-            if file.endswith(('.rom', '.bin')):
+            if file.lower().endswith(('.rom', '.bin', '.z80', '.zip', '.scr')):
                 full_path = os.path.join(root, file)
-                rom_files.append((file, full_path))
+                if file.lower().endswith('.zip'):
+                    rom_files.extend(process_zip_file(full_path))
+                else:
+                    rom_files.append((file, full_path))
     return rom_files
 
 def zx_spectrum_menu():
@@ -50,6 +66,10 @@ def zx_spectrum_menu():
     font = pygame.font.Font(None, 32)
     
     files = get_rom_files('.')
+
+    # Найти путь к файлу '48.rom'
+    rom48 = next((i for i, (file_name, file_path) in enumerate(files) if file_name == '48.rom'), None)
+    rom128 = next((i for i, (file_name, file_path) in enumerate(files) if file_name == '128k.rom'), None)
     
     selected = 0
     scroll_offset = 0
@@ -92,7 +112,7 @@ def zx_spectrum_menu():
                         scroll_offset = selected
                 elif event.key == pygame.K_RETURN:
                     pygame.quit()
-                    return files[selected]
+                    return files[selected], files[rom48], files[rom128]
     
     pygame.quit()
     return None
@@ -259,13 +279,28 @@ def main_loop():
     zx_emulator = ZX_Spectrum_Emulator()
 
     while True:
-        selected_file = zx_spectrum_menu()
+        selected_file, rom48, rom128 = zx_spectrum_menu()
 
         if selected_file:
             zx_emulator.cpu.reset()
             zx_emulator.memory.reset()
 
             file_name, file_path = selected_file
+
+            # Проверяем, является ли файл ZIP-архивом
+            if file_name.lower().endswith('.zip'):
+                # Если это ZIP, то file_path уже будет указывать на временный распакованный .z80 файл
+                file_name = os.path.basename(file_path)
+                zx_emulator.memory.temp_files.append(("snapshot", file_path))
+
+            #Если грузим снапшот, то принужительно выбираем ПЗУ 48 для загрузки
+            if file_name.lower().endswith('z80'):
+                file_name, file_path = rom48
+
+            if file_name.lower().endswith('scr'):
+                zx_emulator.load_scr_file(file_path)
+
+
             file_size = os.path.getsize(file_path)
             
             print(f"Loading file: {file_name}")
@@ -278,11 +313,16 @@ def main_loop():
                 print("Using load_rom method")
                 zx_emulator.load_rom(file_path)
 
+            file_name, file_path = selected_file
+            #Если грузим снапшот, то принудительно выбираем ПЗУ 48 для загрузки
+            if file_name.lower().endswith('z80'):
+                zx_emulator.memory.load_snapshot_z80(file_path, zx_emulator.cpu)
 
-            #zx_emulator.memory.load_snapshot('DizzyMainDay_Demo.z80', zx_emulator.cpu)
-            #zx_emulator.memory.load_snapshot('Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters).z80', zx_emulator.cpu)
-            #zx_emulator.memory.load_sna_snapshot('Dizzy-1 Extended 48K ENG v1.0.sna', zx_emulator.cpu)
-
+            # Очистка временных файлов
+            for _, path in zx_emulator.memory.temp_files:
+                if os.path.exists(path):
+                    os.unlink(path)
+            
             result = zx_emulator.emulate()
 
 
