@@ -11,7 +11,7 @@ class Memory:
     def reset(self):
         self.memory = [bytearray(16 * 1024) for _ in range(8)]  # 8 банков по 16KB
         self.current_rom = 0
-        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков 
+        self.paged_banks = [0, 5, 2, 0]  # Начальная конфигурация банков
 
     def load_rom(self, file_path, rom_number):
         with open(file_path, 'rb') as f:
@@ -29,13 +29,13 @@ class Memory:
             self.rom[1][:len(rom_48_data)] = rom_48_data
 
         print(f"ROM 128K loaded: {len(rom_128_data)} bytes")
-        print(f"ROM 48K loaded: {len(rom_48_data)} bytes")       
+        print(f"ROM 48K loaded: {len(rom_48_data)} bytes")
 
     def __getitem__(self, address):
         return self.read(address)
 
     def __setitem__(self, address, value):
-        self.write(address, value)             
+        self.write(address, value)
 
     def read(self, address):
         bank = self.get_bank(address)
@@ -86,11 +86,11 @@ class Memory:
         with open(file_path, 'rb') as file:
             # Чтение заголовка SNA (27 байт)
             header = file.read(27)
-            
+
             # Распаковка заголовка
-            (i, hl_, de_, bc_, af_, hl, de, bc, iy, ix, 
+            (i, hl_, de_, bc_, af_, hl, de, bc, iy, ix,
              iff1, r, af, sp, im, border) = struct.unpack('<B H H H H H H H H H B B H H B B', header)
-            
+
             # Установка регистров CPU
             cpu.registers['I'] = i
             cpu.set_register_pair('HL_', hl_)
@@ -107,28 +107,28 @@ class Memory:
             cpu.set_register_pair('AF', af)
             cpu.set_register_pair('SP', sp)
             cpu.interrupt_mode = im
-            
+
             # Чтение 48KB памяти
             memory_data = file.read(48 * 1024)
-            
+
             # Загрузка памяти в соответствующие банки
             self.memory[5] = memory_data[:16384]  # Bank 5 (16384-32767)
             self.memory[2] = memory_data[16384:32768]  # Bank 2 (32768-49151)
             self.memory[0] = memory_data[32768:]  # Bank 0 (49152-65535)
-            
+
             # Установка начальной конфигурации банков памяти
             self.paged_banks = [5, 2, 0, 0]
             self.current_rom = 0  # SNA всегда загружается в режиме 48K
-            
+
             # Восстановление PC из стека
             pc_low = self.read(sp)
             pc_high = self.read(sp + 1)
             pc = (pc_high << 8) | pc_low
             cpu.set_register_pair('PC', pc)
-            
+
             # Корректировка SP
             cpu.set_register_pair('SP', sp + 2)
-            
+
             print("SNA snapshot loaded successfully.")
             print("Registers after loading snapshot:")
             for reg, val in cpu.registers.items():
@@ -168,7 +168,7 @@ class Memory:
             # Чтение начального заголовка
             header = file.read(30)
             (
-                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, a_, f_, iy, ix, 
+                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, a_, f_, iy, ix,
                 iff1, iff2, im
             ) = struct.unpack('<B B H H H H B B B H H H H B B H H B B B', header)
 
@@ -224,7 +224,7 @@ class Memory:
                     memory_data = self.unpack_block(memory_data)
                 else:
                     memory_data = bytearray(memory_data)
-                
+
                 # Ensure we have exactly 48KB of data
                 #if len(memory_data) > 48 * 1024:
                 #    memory_data = memory_data[:48 * 1024]

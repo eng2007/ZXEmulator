@@ -199,12 +199,10 @@ class ZX_Spectrum_Graphics:
 
         pygame.surfarray.blit_array(self.screen, np.kron(buffer, np.ones(
             (self.pixel_size, self.pixel_size, 1), dtype=np.uint8)))
-        # Обновление окна
-        pygame.display.flip()
 
     def render_screen_fast4(self):
         #buffer = np.zeros((self.screen_width, self.screen_height, 3), dtype=np.uint8)
-        for y in range(0, self.screen_height,8):
+        for y in range(0, self.screen_height, 8):
             for x in range(0, self.screen_width, 8):
                 attribute_address = self.scr_addr[x, y][1]
                 attribute = self.memory.read(attribute_address)
@@ -220,15 +218,13 @@ class ZX_Spectrum_Graphics:
                     address = self.scr_addr[x, ys][0]
                     value = self.memory.read(address)
                     # Создаем массив цветов для 8 пикселей сразу
-                    bits = np.unpackbits(np.array([value], dtype=np.uint8))[:8]                    
+                    bits = np.unpackbits(np.array([value], dtype=np.uint8))[:8]
                     # Создаем массив цветов для 8 пикселей
                     pixel_colors = np.array([color_ink if bit else color_paper for bit in bits])
                     # Копируем весь массив цветов в буфер
                     self.buffer[x:x+8, ys] = pixel_colors
 
         pygame.surfarray.blit_array(self.screen, np.kron(self.buffer, np.ones((self.pixel_size, self.pixel_size, 1), dtype=np.uint8)))
-        # Обновление окна
-        pygame.display.flip()
 
     def render_screen_fast(self):
         buffer = np.zeros((self.screen_width, self.screen_height, 3), dtype=np.uint8)
@@ -255,8 +251,6 @@ class ZX_Spectrum_Graphics:
                     buffer[xs, y] = color
 
         pygame.surfarray.blit_array(self.screen, np.kron(buffer, np.ones((self.pixel_size, self.pixel_size, 1), dtype=np.uint8)))
-        # Обновление окна
-        pygame.display.flip()
 
     def render_screen_fast3(self):
         buffer = np.zeros((self.screen_height, self.screen_width, 3), dtype=np.uint8)
@@ -290,10 +284,7 @@ class ZX_Spectrum_Graphics:
         # Отображаем буфер на экран
         pygame.surfarray.blit_array(self.screen, scaled_buffer)
 
-        # Обновляем окно
-        pygame.display.flip()
-
-    def render_screen(self):
+    def render_screen_slow(self):
         #screen = np.zeros((self.screen_height, self.screen_width, 3), dtype=np.uint8)
         # Отрисовка экрана
 
@@ -317,8 +308,17 @@ class ZX_Spectrum_Graphics:
         #        color = self.get_pixel_color(x, y)
         #        #color = (255, 255, 255) if screen_data[y][x] == 1 else (0, 0, 0)
         #        pygame.draw.rect(self.screen, color, (x * self.pixel_size, y * self.pixel_size, self.pixel_size, self.pixel_size))
+
+
+    def render_screen(self):
+        #self.render_screen_slow()
+        #self.render_screen_fast()
+        #self.render_screen_fast2()
+        #self.render_screen_fast3()
+        self.render_screen_fast4()
         # Обновление окна
-        pygame.display.flip()
+        # обновляется в цикле эмулятора
+        #pygame.display.flip()
 
     def load_screen(self, pixel_data, attribute_data):
         assert len(pixel_data) == 6144, "Invalid pixel data size"
@@ -334,15 +334,16 @@ class ZX_Spectrum_Graphics:
             #self.memory = np.frombuffer(scr_data, dtype=np.uint8)
             for i, _ in enumerate(scr_data):
                 #self.memory.memory[:i] = np.frombuffer(scr_data[:i], dtype=np.uint8)
-                self.memory.memory[self.scr_base_address:
-                                   self.scr_base_address + i] = scr_data[:i]
+                #self.memory.memory[self.scr_base_address:
+                #                   self.scr_base_address + i] = scr_data[:i]
+                self.memory[self.scr_base_address + i] = scr_data[i]
 
                 if i % 512 != 0 and i < 6144:
                     continue
                 if i % 32 != 0:
                     continue
-                self.render_screen_fast()
-            self.render_screen_fast()
+                #self.render_screen_fast4()
+            #self.render_screen_fast4()
 
 
 # Инициализация Pygame

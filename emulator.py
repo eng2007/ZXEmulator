@@ -64,36 +64,36 @@ def zx_spectrum_menu():
     MAGENTA = (255, 0, 255)
 
     font = pygame.font.Font(None, 32)
-    
+
     files = get_rom_files('.')
 
     # Найти путь к файлу '48.rom'
     rom48 = next((i for i, (file_name, file_path) in enumerate(files) if file_name == '48.rom'), None)
     rom128 = next((i for i, (file_name, file_path) in enumerate(files) if file_name == '128k.rom'), None)
-    
+
     selected = 0
     scroll_offset = 0
     max_visible = 11
     rainbow_height = 30
-    
+
     running = True
     while running:
         screen.fill(BLACK)
-        
+
         # Draw rainbow stripe
         draw_rainbow_stripe(screen, rainbow_height)
-        
+
         draw_text(screen, "ZX Spectrum ROM Selector", (20, rainbow_height + 10), font, CYAN)
         draw_text(screen, "Use UP/DOWN to select, ENTER to load", (20, rainbow_height + 50), font, WHITE)
-        
+
         for i in range(max_visible):
             index = scroll_offset + i
             if index < len(files):
                 color = MAGENTA if index == selected else WHITE
                 draw_text(screen, files[index][0], (40, rainbow_height + 90 + i * 30), font, color)
-        
+
         pygame.display.flip()
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return None
@@ -113,7 +113,7 @@ def zx_spectrum_menu():
                 elif event.key == pygame.K_RETURN:
                     pygame.quit()
                     return files[selected], files[rom48], files[rom128]
-    
+
     pygame.quit()
     return None
 
@@ -135,7 +135,6 @@ class ZX_Spectrum_Emulator:
 
     def load_rom128(self, file_path, addr=0):
         self.memory.load_rom128(file_path)
-        #self.memory.load_rom(file_path, addr)        
 
     def load_scr_file(self, file_path):
         self.graphics.load_scr_file(file_path)
@@ -151,9 +150,35 @@ class ZX_Spectrum_Emulator:
         self.reset_requested = False
         print("CPU reset performed")
 
+    def emulate_load_screen(self, file_path):
+        pygame.init()
+        # Основное окно
+        main_screen = pygame.display.set_mode((self.graphics.screen_width * self.pixel_size + self.border_size * 2, self.graphics.screen_height * self.pixel_size + self.border_size * 2))
+        pygame.display.set_caption("ZX Spectrum Emulator")
+        # Создание поверхностей
+        screen = pygame.Surface((self.graphics.screen_width * self.pixel_size, self.graphics.screen_height * self.pixel_size))
+        border = pygame.Surface((self.graphics.screen_width * self.pixel_size + self.border_size * 2, self.graphics.screen_height * self.pixel_size + self.border_size * 2))
+
+        self.graphics.set_screen(screen)
+        # Загрузка .scr файла
+        self.load_scr_file(file_path)
+
+        clock = pygame.time.Clock()
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            # Отрисовка на основном экране
+            self.graphics.render_screen()
+            pygame.draw.rect(border, self.graphics.colors[1] , (0, 0, border.get_width(), border.get_height()))
+            main_screen.blit(border, (0, 0))
+            main_screen.blit(screen, (self.border_size, self.border_size))
+
+            pygame.display.flip()
+        pygame.quit()
+
     def emulate(self):
-
-
         pygame.init()
 
         # Удаление файла, если он существует
@@ -204,7 +229,7 @@ class ZX_Spectrum_Emulator:
                     if event.key == pygame.K_F1:
                         return "OPEN_MENU"  # Сигнал для открытия меню
                     elif event.key == pygame.K_F2:
-                        self.reset_requested = True                  
+                        self.reset_requested = True
 
             if self.reset_requested:
                 self.reset()
@@ -252,7 +277,7 @@ class ZX_Spectrum_Emulator:
             if i % 5000 == 0:
 
                 if i % 10000 == 0:
-                    self.graphics.render_screen_fast4()
+                    self.graphics.render_screen()
 
                 # Рендеринг окна состояния
                 state_window.fill((0, 0, 0))
@@ -298,11 +323,13 @@ def main_loop():
                 file_name, file_path = rom48
 
             if file_name.lower().endswith('scr'):
-                zx_emulator.load_scr_file(file_path)
+                zx_emulator.emulate_load_screen(file_path)
+                #zx_emulator.load_scr_file(file_path)
+                break
 
 
             file_size = os.path.getsize(file_path)
-            
+
             print(f"Loading file: {file_name}")
             print(f"File size: {file_size} bytes")
 
@@ -322,7 +349,7 @@ def main_loop():
             for _, path in zx_emulator.memory.temp_files:
                 if os.path.exists(path):
                     os.unlink(path)
-            
+
             result = zx_emulator.emulate()
 
 
@@ -330,7 +357,7 @@ def main_loop():
                 break  # Выход из цикла, если эмуляция завершилась не по F1
         else:
             print("No ROM file selected. Exiting.")
-            break        
+            break
 
 # Пример использования
 if __name__ == "__main__":
@@ -340,7 +367,7 @@ if __name__ == "__main__":
     #zx_emulator.load_rom('48.rom')
     #zx_emulator.load_rom('spectr_bk001bios.bin') #48K с русской надписью
     #zx_emulator.load_rom('pentagon_128_test.rom')  #Тест, моргает бордюром, Unsupported IY instruction: 2C
-    #zx_emulator.load_rom('pentagon_128.rom') #64 KB    
+    #zx_emulator.load_rom('pentagon_128.rom') #64 KB
     #zx_emulator.load_rom('128k.rom')
     #zx_emulator.load_rom128("128k.rom")
     #zx_emulator.load_rom128("pentagon_128bios.bin")
@@ -360,4 +387,4 @@ if __name__ == "__main__":
     # Запуск эмуляции
     #zx_emulator.emulate()
 
-    main_loop()    
+    main_loop()
