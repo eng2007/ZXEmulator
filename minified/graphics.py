@@ -32,13 +32,13 @@ class ZX_Spectrum_Graphics:
 					xs=x+x_offs;pixel_value=self.memory[address]>>7-x_offs&1
 					if pixel_value:buffer[(xs,y)]=self.bright_colors[ink]if bright else self.colors[ink]
 					else:buffer[(xs,y)]=self.bright_colors[paper]if bright else self.colors[paper]
-		pygame.surfarray.blit_array(self.screen,np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)));pygame.display.flip()
+		pygame.surfarray.blit_array(self.screen,np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)))
 	def render_screen_fast4(self):
 		for y in range(0,self.screen_height,8):
 			for x in range(0,self.screen_width,8):
 				attribute_address=self.scr_addr[(x,y)][1];attribute=self.memory.read(attribute_address);bright=(attribute&64)>>6;ink=attribute&7;paper=(attribute&56)>>3;color_ink=self.bright_colors[ink]if bright else self.colors[ink];color_paper=self.bright_colors[paper]if bright else self.colors[paper]
 				for y_offs in range(8):ys=y+y_offs;address=self.scr_addr[(x,ys)][0];value=self.memory.read(address);bits=np.unpackbits(np.array([value],dtype=np.uint8))[:8];pixel_colors=np.array([color_ink if bit else color_paper for bit in bits]);self.buffer[x:x+8,ys]=pixel_colors
-		pygame.surfarray.blit_array(self.screen,np.kron(self.buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)));pygame.display.flip()
+		pygame.surfarray.blit_array(self.screen,np.kron(self.buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)))
 	def render_screen_fast(self):
 		buffer=np.zeros((self.screen_width,self.screen_height,3),dtype=np.uint8)
 		for y in range(self.screen_height):
@@ -49,23 +49,21 @@ class ZX_Spectrum_Graphics:
 					if pixel_value:color=self.bright_colors[ink]if bright else self.colors[ink]
 					else:color=self.bright_colors[paper]if bright else self.colors[paper]
 					buffer[(xs,y)]=color
-		pygame.surfarray.blit_array(self.screen,np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)));pygame.display.flip()
+		pygame.surfarray.blit_array(self.screen,np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8)))
 	def render_screen_fast3(self):
 		buffer=np.zeros((self.screen_height,self.screen_width,3),dtype=np.uint8);attr_addresses=self.scr_addr[:,:,1].reshape(-1);pixel_addresses=self.scr_addr[:,:,0].reshape(-1);attributes=np.array([self.memory.read(addr)for addr in attr_addresses]);pixels=np.array([self.memory.read(addr)for addr in pixel_addresses]);bright=(attributes&64)>>6;ink=attributes&7;paper=(attributes&56)>>3;ink_colors=np.where(bright[:,np.newaxis],self.bright_colors[ink],self.colors[ink]);paper_colors=np.where(bright[:,np.newaxis],self.bright_colors[paper],self.colors[paper])
 		for i in range(8):mask=pixels>>7-i&1;buffer[:,i::8]=np.where(mask[:,np.newaxis],ink_colors,paper_colors).reshape(self.screen_height,-1,3)
-		scaled_buffer=np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8));pygame.surfarray.blit_array(self.screen,scaled_buffer);pygame.display.flip()
-	def render_screen(self):
+		scaled_buffer=np.kron(buffer,np.ones((self.pixel_size,self.pixel_size,1),dtype=np.uint8));pygame.surfarray.blit_array(self.screen,scaled_buffer)
+	def render_screen_slow(self):
 		buffer=np.zeros((self.screen_width,self.screen_height,3),dtype=np.uint8)
 		for y in range(self.screen_height):
 			for x in range(self.screen_width):buffer[(x,y)]=self.get_pixel_color(x,y)
-		pygame.display.flip()
+	def render_screen(self):self.render_screen_fast4()
 	def load_screen(self,pixel_data,attribute_data):assert len(pixel_data)==6144,'Invalid pixel data size';assert len(attribute_data)==768,'Invalid attribute data size';self.memory[self.scr_base_address:self.scr_base_address+6144]=pixel_data;self.memory[self.scr_base_address+6144:]=attribute_data
 	def load_scr_file(self,file_path):
 		with open(file_path,'rb')as f:
 			scr_data=f.read();assert len(scr_data)==6912,'Invalid .scr file size'
 			for(i,_)in enumerate(scr_data):
-				self.memory.memory[self.scr_base_address:self.scr_base_address+i]=scr_data[:i]
+				self.memory[self.scr_base_address+i]=scr_data[i]
 				if i%512!=0 and i<6144:continue
 				if i%32!=0:continue
-				self.render_screen_fast()
-			self.render_screen_fast()

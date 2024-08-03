@@ -72,12 +72,15 @@ class extCPUClass(baseCPUClass):
 		elif opcode==36:high_byte=self.registers[index_reg]>>8&255;result=high_byte+1&255;self.registers[index_reg]=self.registers[index_reg]&255|result<<8;self.set_flag('S',result&128);self.set_flag('Z',result==0);self.set_flag('H',high_byte&15==15);self.set_flag('P/V',result==128);self.set_flag('N',0);self.set_flag('5',result&32);self.set_flag('3',result&8)
 		elif opcode==37:value=self.registers[index_reg];high_byte=self.registers[index_reg]>>8&255;result=high_byte-1&255;self.registers[index_reg]=self.registers[index_reg]&255|result<<8;self.set_flag('N',1);result_high=result&255;prev_high=value>>8&255;self.set_flag('H',result_high&15==15);self.set_flag('S',result_high&128);self.set_flag('Z',result_high==0);self.set_flag('P/V',prev_high==128 and result_high==127);self.set_flag('5',result_high&32);self.set_flag('3',result_high&8)
 		elif opcode in[9,25,41,57]:rr={9:'BC',25:'DE',41:index_reg,57:'SP'}[opcode];self.add_index(index_reg,rr)
-		elif opcode in[33,34,42,43,44,52,53,54,233,249]:
+		elif opcode in[33,34,38,42,43,44,45,46,52,53,54,233,249]:
 			if opcode==33:self.registers[index_reg]=self.fetch_word()
 			elif opcode==34:address=self.fetch_word();self.store_word(address,self.registers[index_reg])
+			elif opcode==38:value=self.fetch();self.registers[index_reg]=self.registers[index_reg]&255|value<<8
 			elif opcode==42:address=self.fetch_word();self.registers[index_reg]=self.memory[address]|self.memory[address+1]<<8
 			elif opcode==43:self.registers[index_reg]=self.registers[index_reg]-1&65535
 			elif opcode==44:self.inc_index_l(index_reg)
+			elif opcode==45:self.dec_index_l(index_reg)
+			elif opcode==46:value=self.fetch();self.registers[index_reg]=self.registers[index_reg]&65280|value
 			elif opcode==52:self.inc_index_d(index_reg)
 			elif opcode==53:self.dec_index_d(index_reg)
 			elif opcode==54:offset=self.fetch_signed();value=self.fetch();address=self.registers[index_reg]+offset&65535;self.memory[address]=value
@@ -173,8 +176,11 @@ class extCPUClass(baseCPUClass):
 	def ld_a_i(self):self.registers['A']=self.registers['I'];self.set_flag('S',self.registers['A']&128);self.set_flag('Z',self.registers['A']==0);self.set_flag('H',0);self.set_flag('N',0);self.set_flag('P/V',self.iff2);self.set_flag('3',self.registers['A']&8);self.set_flag('5',self.registers['A']&32)
 	def reti(self):low=self.memory[self.registers['SP']];self.registers['SP']=self.registers['SP']+1&65535;high=self.memory[self.registers['SP']];self.registers['SP']=self.registers['SP']+1&65535;self.registers['PC']=high<<8|low;self.interrupts_enabled=True;self.cycles+=14
 	def inc_index_l(self,index_reg):value=self.registers[index_reg]&255;result=value+1&255;self.registers[index_reg]=self.registers[index_reg]&65280|result;self.set_flag('S',result&128);self.set_flag('Z',result==0);self.set_flag('H',value&15==15);self.set_flag('P/V',value==127);self.set_flag('N',0);self.set_flag('3',result&8);self.set_flag('5',result&32)
+	def dec_index_l(self,index_reg):value=self.registers[index_reg]&255;result=value-1&255;self.registers[index_reg]=self.registers[index_reg]&65280|result;self.set_flag('S',result&128);self.set_flag('Z',result==0);self.set_flag('H',value&15==15);self.set_flag('P/V',value==127);self.set_flag('N',1);self.set_flag('3',result&8);self.set_flag('5',result&32)
 	def cpir(self):
 		hl=self.get_register_pair('HL');bc=self.get_register_pair('BC');a=self.registers['A'];value=self.memory[hl];result=a-value&255;hl=hl+1&65535;self.set_register_pair('HL',hl);bc=bc-1&65535;self.set_register_pair('BC',bc);self.set_flag('S',result&128);self.set_flag('Z',result==0);self.set_flag('H',(a&15)-(value&15)&16);self.set_flag('P/V',bc!=0);self.set_flag('N',1);self.set_flag('3',result&8);self.set_flag('5',result&32)
 		if bc!=0 and result!=0:self.registers['PC']-=2;self.cycles+=21
 		else:self.cycles+=16
 		self.set_flag('C',a<value)
+	def outd(self):value=self.memory[self.get_register_pair('HL')];port=self.registers['C'];self.io_write(port,value);hl=self.get_register_pair('HL');self.set_register_pair('HL',hl-1&65535);self.registers['B']=self.registers['B']-1&255;self.set_flag('N',1);self.set_flag('Z',self.registers['B']==0);self.cycles+=16
+	def outi(self):value=self.memory[self.get_register_pair('HL')];port=self.registers['C'];self.io_write(port,value);hl=self.get_register_pair('HL');self.set_register_pair('HL',hl+1&65535);self.registers['B']=self.registers['B']-1&255;self.set_flag('N',0);self.set_flag('Z',self.registers['B']==0);self.cycles+=16

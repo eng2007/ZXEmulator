@@ -137,7 +137,7 @@ class extCPUClass(baseCPUClass):
         self.interrupts_enabled = self.iff1
 
         print("RETN выполнен. PC установлен на", hex(self.registers['PC']))
-        print("IFF1 установлен в", self.iff1)        
+        print("IFF1 установлен в", self.iff1)
 
     def ret_cc(self, condition):
         """
@@ -322,10 +322,10 @@ class extCPUClass(baseCPUClass):
         self.set_flag('H', 0)             # Всегда сбрасывается
         #self.set_flag('P/V', self.parity(value))  # Устанавливается, если четный паритет
         #self.set_flag('N', 0)             # Всегда сбрасывается
-        
+
         # Флаги 3 и 5 устанавливаются в соответствии с битами 3 и 5 входного значения
         self.set_flag('3', value & 0x08)
-        self.set_flag('5', value & 0x20)        
+        self.set_flag('5', value & 0x20)
 
     def out_c_r(self, reg):
         #port = self.registers['C']
@@ -362,24 +362,24 @@ class extCPUClass(baseCPUClass):
         overflow = ((hl ^ ~value) & (hl ^ result) & 0x8000) != 0
         self.set_flag('P/V', overflow)
         # Флаг Z (нуль)
-        self.set_flag('Z', (result & 0xFFFF) == 0)        
+        self.set_flag('Z', (result & 0xFFFF) == 0)
         # Флаг S (знак) - берется из бита 15 результата
         self.set_flag('S', (result & 0x8000) != 0)
         # Флаги F5 и F3 копируются из битов 13 и 11 результата соответственно
         self.set_flag('5', (result & 0x2000) != 0)
-        self.set_flag('3', (result & 0x0800) != 0)          
+        self.set_flag('3', (result & 0x0800) != 0)
 
     def sbc_hl(self, rp):
         hl = self.get_register_pair('HL')
         value = self.get_register_pair(rp)
         carry = self.get_flag('C')
         result = hl - value - carry
-        self.set_register_pair('HL', result & 0xFFFF)        
+        self.set_register_pair('HL', result & 0xFFFF)
         self.set_flag('C', result < 0)
         self.set_flag('H', (hl & 0xFFF) - (value & 0xFFF) - carry < 0)
         self.update_flags(result & 0xFFFF, zero=True, sign=True, parity=True)
         self.set_flag('N', 1)
-        self.set_flag('S', (result & 0x8000) != 0)  # Проверяем 15-й бит (знаковый бит для 16-битного результата)      
+        self.set_flag('S', (result & 0x8000) != 0)  # Проверяем 15-й бит (знаковый бит для 16-битного результата)
 
     # Специальные инструкции
     def neg(self):
@@ -909,7 +909,7 @@ class extCPUClass(baseCPUClass):
 
         # Меняем местами значения
         self.registers[index_reg] = stack_value
-        
+
         # Записываем значение IX в стек
         self.memory[sp] = ix_value & 0xFF
         self.memory[(sp + 1) & 0xFFFF] = (ix_value >> 8) & 0xFF
@@ -918,18 +918,18 @@ class extCPUClass(baseCPUClass):
         #self.set_flag('3', high & 0x08)  # Бит 3 старшего байта нового значения IX
         #self.set_flag('5', high & 0x20)  # Бит 5 старшего байта нового значения IX
 
-        # Другие флаги не изменяются        
+        # Другие флаги не изменяются
 
     def push_index_reg(self,index_reg):
         # Уменьшаем указатель стека
         self.registers['SP'] = (self.registers['SP'] - 1) & 0xFFFF
-    
+
         # Сохраняем старший байт IX
         self.memory[self.registers['SP']] = (self.registers[index_reg] >> 8) & 0xFF
-        
+
         # Снова уменьшаем указатель стека
         self.registers['SP'] = (self.registers['SP'] - 1) & 0xFFFF
-        
+
         # Сохраняем младший байт IX
         self.memory[self.registers['SP']] = self.registers[index_reg] & 0xFF
 
@@ -964,27 +964,27 @@ class extCPUClass(baseCPUClass):
     def ld_r_a(self):
         # Загрузка значения A в R
         self.registers['R'] = self.registers['A']
-        
+
         # Обратите внимание, что только 7 младших битов R изменяются
         # Бит 7 R сохраняет свое предыдущее значение
         self.registers['R'] &= 0x7F  # Очищаем бит 7
         self.registers['R'] |= self.registers['R'] & 0x80  # Восстанавливаем бит 7
-        
+
         # Эта инструкция не влияет на флаги
 
     def ld_a_i(self):
         # Загрузка значения из регистра I в регистр A
         self.registers['A'] = self.registers['I']
-        
+
         # Установка флагов
         self.set_flag('S', self.registers['A'] & 0x80)  # Устанавливаем, если бит 7 установлен
         self.set_flag('Z', self.registers['A'] == 0)    # Устанавливаем, если A == 0
         self.set_flag('H', 0)  # Всегда сбрасывается
         self.set_flag('N', 0)  # Всегда сбрасывается
-        
+
         # P/V флаг устанавливается в значение IFF2 (второй флип-флоп прерываний)
         self.set_flag('P/V', self.iff2)
-        
+
         # Флаги 3 и 5 копируются из соответствующих битов в A
         self.set_flag('3', self.registers['A'] & 0x08)
         self.set_flag('5', self.registers['A'] & 0x20)
@@ -995,36 +995,36 @@ class extCPUClass(baseCPUClass):
         self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
         high = self.memory[self.registers['SP']]
         self.registers['SP'] = (self.registers['SP'] + 1) & 0xFFFF
-        
+
         self.registers['PC'] = (high << 8) | low
-        
+
         # Восстанавливаем прерывания
         self.interrupts_enabled = True
-        
+
         # Сигнализируем внешним устройствам о завершении обработки прерывания
         # Это может быть реализовано различными способами в зависимости от вашей архитектуры
         #self.signal_end_of_interrupt()
-        
+
         # Обновляем счетчик циклов
         self.cycles += 14  # RETI занимает 14 T-циклов
 
     def inc_index_l(self, index_reg):
         # Получаем текущее значение IYl (младший байт IY)
         value = self.registers[index_reg] & 0xFF
-        
+
         # Увеличиваем значение на 1
         result = (value + 1) & 0xFF
-        
+
         # Обновляем младший байт IY, сохраняя старший байт неизменным
         self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | result
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем, если результат отрицательный
         self.set_flag('Z', result == 0)    # Устанавливаем, если результат нулевой
         self.set_flag('H', (value & 0x0F) == 0x0F)  # Устанавливаем, если был перенос из бита 3 в бит 4
         self.set_flag('P/V', value == 0x7F)  # Устанавливаем, если было переполнение (из 7F в 80)
         self.set_flag('N', 0)  # Всегда сбрасываем для операции увеличения
-        
+
         # Устанавливаем флаги 3 и 5 в соответствии с результатом
         self.set_flag('3', result & 0x08)
         self.set_flag('5', result & 0x20)
@@ -1032,20 +1032,20 @@ class extCPUClass(baseCPUClass):
     def dec_index_l(self, index_reg):
         # Получаем текущее значение IYl (младший байт IY)
         value = self.registers[index_reg] & 0xFF
-        
+
         # Увеличиваем значение на 1
         result = (value - 1) & 0xFF
-        
+
         # Обновляем младший байт IY, сохраняя старший байт неизменным
         self.registers[index_reg] = (self.registers[index_reg] & 0xFF00) | result
-        
+
         # Устанавливаем флаги
         self.set_flag('S', result & 0x80)  # Устанавливаем, если результат отрицательный
         self.set_flag('Z', result == 0)    # Устанавливаем, если результат нулевой
         self.set_flag('H', (value & 0x0F) == 0x0F)  # Устанавливаем, если был перенос из бита 3 в бит 4
         self.set_flag('P/V', value == 0x7F)  # Устанавливаем, если было переполнение (из 7F в 80)
         self.set_flag('N', 1)  # Всегда устанавливаем для операции уменьшения
-        
+
         # Устанавливаем флаги 3 и 5 в соответствии с результатом
         self.set_flag('3', result & 0x08)
         self.set_flag('5', result & 0x20)
@@ -1088,3 +1088,81 @@ class extCPUClass(baseCPUClass):
 
         # Обновляем флаг переноса
         self.set_flag('C', a < value)
+
+    def outd(self):
+        # Получаем значение из памяти по адресу (HL)
+        value = self.memory[self.get_register_pair('HL')]
+
+        # Выводим значение в порт (C)
+        port = self.registers['C']
+        self.io_write(port, value)
+
+        # Уменьшаем HL
+        hl = self.get_register_pair('HL')
+        self.set_register_pair('HL', (hl - 1) & 0xFFFF)
+
+        # Уменьшаем B
+        self.registers['B'] = (self.registers['B'] - 1) & 0xFF
+
+        # Устанавливаем флаги
+        self.set_flag('N', 1)
+        self.set_flag('Z', self.registers['B'] == 0)
+
+        # Обновляем флаг H (не совсем ясно, как он должен обновляться для OUTD)
+        # Обычно оставляют его без изменений
+
+        # Обновляем флаг C (зависит от реализации)
+        # В некоторых реализациях он не меняется, в других - устанавливается по определенным правилам
+
+        # Увеличиваем счетчик циклов
+        self.cycles += 16
+
+    def outi(self):
+        # Получаем значение из памяти по адресу (HL)
+        value = self.memory[self.get_register_pair('HL')]
+
+        # Выводим значение в порт (C)
+        port = self.registers['C']
+        self.io_write(port, value)
+
+        # Уменьшаем HL
+        hl = self.get_register_pair('HL')
+        self.set_register_pair('HL', (hl + 1) & 0xFFFF)
+
+        # Уменьшаем B
+        self.registers['B'] = (self.registers['B'] - 1) & 0xFF
+
+        # Устанавливаем флаги
+        self.set_flag('N', 0)
+        self.set_flag('Z', self.registers['B'] == 0)
+
+        # Обновляем флаг H (не совсем ясно, как он должен обновляться для OUTD)
+        # Обычно оставляют его без изменений
+
+        # Обновляем флаг C (зависит от реализации)
+        # В некоторых реализациях он не меняется, в других - устанавливается по определенным правилам
+
+        # Увеличиваем счетчик циклов
+        self.cycles += 16
+
+    def cpi(self):
+        hl = self.get_register_pair('HL')
+        bc = self.get_register_pair('BC')
+        a = self.registers['A']
+        value = self.memory[hl]
+        
+        result = a - value
+        
+        self.set_register_pair('HL', hl + 1 & 0xFFFF)
+        self.set_register_pair('BC', bc - 1 & 0xFFFF)
+        
+        self.set_flag('S', result & 0x80)
+        self.set_flag('Z', result == 0)
+        self.set_flag('H', (a & 0xF) - (value & 0xF) < 0)
+        self.set_flag('P/V', bc != 1)  # Set P/V if BC-1 != 0
+        self.set_flag('N', 1)
+        
+        self.set_flag('3', result & 0x08)
+        self.set_flag('5', result & 0x20)
+        
+        self.cycles += 16

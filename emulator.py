@@ -45,7 +45,7 @@ def get_rom_files(directory):
     rom_files = []
     for root, dirs, files in os.walk(directory):
         for file in files:
-            if file.lower().endswith(('.rom', '.bin', '.z80', '.zip', '.scr')):
+            if file.lower().endswith(('.rom', '.bin', '.z80', '.zip', '.scr', '.sna')):
                 full_path = os.path.join(root, file)
                 if file.lower().endswith('.zip'):
                     rom_files.extend(process_zip_file(full_path))
@@ -131,7 +131,7 @@ class ZX_Spectrum_Emulator:
         self.reset_requested = False
 
     def load_rom(self, file_path, addr=0):
-        self.memory.load_rom(file_path, addr)
+        self.memory.load_rom(file_path, 0)
 
     def load_rom128(self, file_path, addr=0):
         self.memory.load_rom128(file_path)
@@ -216,7 +216,7 @@ class ZX_Spectrum_Emulator:
         clock = pygame.time.Clock()
 
         # Загрузка .scr файла
-        self.graphics.reset_screen(0, 7, 1)
+        #self.graphics.reset_screen(0, 7, 1)
         #self.load_scr_file('example.scr')
 
         running = True
@@ -274,7 +274,7 @@ class ZX_Spectrum_Emulator:
 
 
             #if self.cpu.interrupts_enabled == False and i > 0 : continue
-            if i % 5000 == 0:
+            if i % 10000 == 0:
 
                 if i % 10000 == 0:
                     self.graphics.render_screen()
@@ -320,12 +320,19 @@ def main_loop():
 
             #Если грузим снапшот, то принужительно выбираем ПЗУ 48 для загрузки
             if file_name.lower().endswith('z80'):
+                if zx_emulator.memory.load_snapshot_z80_check48(file_path):
+                    file_name, file_path = rom48
+                else:
+                    file_name, file_path = rom128
+
+            #Если грузим снапшот, то принудительно выбираем ПЗУ 48 для загрузки
+            if file_name.lower().endswith('sna'):
                 file_name, file_path = rom48
 
             if file_name.lower().endswith('scr'):
                 zx_emulator.emulate_load_screen(file_path)
                 #zx_emulator.load_scr_file(file_path)
-                break
+                continue
 
 
             file_size = os.path.getsize(file_path)
@@ -344,6 +351,8 @@ def main_loop():
             #Если грузим снапшот, то принудительно выбираем ПЗУ 48 для загрузки
             if file_name.lower().endswith('z80'):
                 zx_emulator.memory.load_snapshot_z80(file_path, zx_emulator.cpu)
+            if file_name.lower().endswith('sna'):
+                zx_emulator.memory.load_snapshot_sna(file_path, zx_emulator.cpu)
 
             # Очистка временных файлов
             for _, path in zx_emulator.memory.temp_files:

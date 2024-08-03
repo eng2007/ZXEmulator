@@ -38,10 +38,10 @@ class Memory:
         self.write(address, value)
 
     def read(self, address):
-        bank = self.get_bank(address)
         offset = address % 16384
         if address < 16384:
             return self.rom[self.current_rom][offset]
+        bank = self.get_bank(address)
         return self.memory[bank][offset]
 
     def write(self, address, value):
@@ -110,6 +110,7 @@ class Memory:
 
             # Чтение 48KB памяти
             memory_data = file.read(48 * 1024)
+            memory_data = bytearray(memory_data)
 
             # Загрузка памяти в соответствующие банки
             self.memory[5] = memory_data[:16384]  # Bank 5 (16384-32767)
@@ -117,7 +118,7 @@ class Memory:
             self.memory[0] = memory_data[32768:]  # Bank 0 (49152-65535)
 
             # Установка начальной конфигурации банков памяти
-            self.paged_banks = [5, 2, 0, 0]
+            self.paged_banks = [0, 5, 2, 0]
             self.current_rom = 0  # SNA всегда загружается в режиме 48K
 
             # Восстановление PC из стека
@@ -163,7 +164,36 @@ class Memory:
 
         return unpacked_data
 
+    def load_snapshot_z80_check48(self, file_path):
+        with open(file_path, 'rb') as file:
+            # Чтение начального заголовка
+            header = file.read(30)
+            (
+                a, f, bc, hl, pc, sp, i, r, flags, de, bc_, de_, hl_, a_, f_, iy, ix,
+                iff1, iff2, im
+            ) = struct.unpack('<B B H H H H B B B H H H H B B H H B B B', header)
+            # Определение версии формата
+            version = 1
+            if pc == 0:
+                version = 2
+                len_ext, newpc, hw_mode = struct.unpack('<H H B', file.read(5))
+                #print(f'Additional block length {len_ext}')
+                if len_ext == 54 or len_ext == 55:
+                    version = 3
+        load48k = True
+        if version == 2:
+            if hw_mode == 3 or hw_mode == 4:
+                load48k = False
+        if version == 3:
+            if hw_mode == 4 or hw_mode == 5 or hw_mode == 6:
+                load48k = False
+        return load48k
+
     def load_snapshot_z80(self, file_path, cpu):
+        hardware_v2 = ['48k','48k + If.1','SamRam','128k','128k + If.1']
+        hardware_v3 = ['48k','48k + If.1','SamRam','48k + M.G.T.','128k','128k + If.1','128k + M.G.T.']
+        load48k = True
+
         with open(file_path, 'rb') as file:
             # Чтение начального заголовка
             header = file.read(30)
@@ -182,7 +212,8 @@ class Memory:
             cpu.registers['R'] = r
             cpu.iff1 = bool(iff1)
             cpu.iff2 = bool(iff2)
-            cpu.interrupt_mode = im
+            cpu.interrupt_mode = im & 3
+            cpu.interrupts_enabled = bool(iff1)
             cpu.set_register_pair('DE', de)
             cpu.set_register_pair('BC_', bc_)
             cpu.set_register_pair('DE_', de_)
@@ -192,25 +223,83 @@ class Memory:
             cpu.registers['F_'] = f_
             cpu.set_register_pair('IY', iy)
             cpu.set_register_pair('IX', ix)
+            border_color = (flags >> 1) & 0x07
 
             # Определение версии формата
             version = 1
             if pc == 0:
                 version = 2
                 len_ext, newpc = struct.unpack('<H H', file.read(4))
+                print(f'Additional block length {len_ext}')
                 if len_ext == 54 or len_ext == 55:
                     version = 3
 
             if version >= 2:
-                extension = file.read(len_ext)
-                hw_mode, out_7ffd, _ = struct.unpack('<B B B', extension[:3])
+                extension = struct.pack('<H H', len_ext, pc) + file.read(len_ext - 4 + 2)
+                print(len(extension))
+                print(extension)
+                #extension = file.read(len_ext)
+                hw_mode, out_7ffd, Interface1_rom_paged = struct.unpack('<B B B', extension[4:7])
                 cpu.set_register_pair('PC', newpc)
 
+                if version == 2:
+                    config_bit, out_fffd = struct.unpack('<B B', extension[7:9])
+
+                    ay_sound_registers = list(extension[9:25])
+
+                    print("\nAdditional header information:")
+                    print(f"Header Length: {len_ext}")
+                    print(f"PC: {newpc:04X}")
+                    print(f"Hardware Mode: {hw_mode:02X} - {hardware_v2[hw_mode]}")
+                    print(f"OUT to 0x7FFD: {out_7ffd:02X}")
+                    print(f"Interface1_rom_paged: {Interface1_rom_paged}")
+                    print(f"OUT to 0xFFFD: {out_fffd:02X}")
+                    print(f"AY Sound Registers: {ay_sound_registers}")
+
+
                 if version == 3:
-                    out_fffd, _ = struct.unpack('<B B', extension[3:5])
-                    # Обработка дополнительных полей версии 3.0
+                    config_bit, out_fffd = struct.unpack('<B B', extension[7:9])
+
+                    ay_sound_registers = list(extension[9:25])
+                    
+                    #joystick_settings = extension[41]
+                    #mgt_rom_paged = bool(extension[42] & 1)
+                    #multiface_rom_paged = bool(extension[42] & 2)
+                    #rom_128_0 = bool(extension[42] & 4)
+                    #rom_48 = bool(extension[42] & 8)
+                    #modify_hardware = bool(extension[42] & 16)
+              
+                    joystick_mappings = list(extension[33:43])
+                    joystick_keys = list(extension[43:53])
+                    MGT_type = extension[53]
+                    disciple_inhibitor_in = extension[54]
+                    dicsicple_pageable = extension[55]
+
+                    print("\nAdditional header information:")
+                    print(f"Header Length: {len_ext}")
+                    print(f"PC: {newpc:04X}")
+                    print(f"Hardware Mode: {hw_mode:02X} - {hardware_v3[hw_mode]}")
+                    print(f"OUT to 0x7FFD: {out_7ffd:02X}")
+                    print(f"Interface1_rom_paged: {Interface1_rom_paged}")
+                    print(f"OUT to 0xFFFD: {out_fffd:02X}")
+                    print(f"AY Sound Registers: {ay_sound_registers}")
+
+                    print(f"Joystick mappings: {joystick_mappings}")
+                    print(f"Joystick keys: {joystick_keys}")
+                    print(f"MGT type: {MGT_type}")
+                    print(f"Disciple inhibitor in: {disciple_inhibitor_in}")
+                    print(f"Dicsicple pageable: {dicsicple_pageable}")
+
+                    #print(f"Joystick Settings: {joystick_settings}")
+                    #print(f"MGT ROM Paged: {mgt_rom_paged}")
+                    #print(f"Multiface ROM Paged: {multiface_rom_paged}")
+                    #print(f"ROM 128 (0) Paged: {rom_128_0}")
+                    #print(f"ROM 48 Paged: {rom_48}")
+                    #print(f"Modify Hardware: {modify_hardware}")
+                    #print(f"Last OUT to 0xFFFD: {last_out_fffd}")
 
             print(f"Z80 version: {version}")
+            print(f"Border color {border_color}")
             print("Registers after loading snapshot:")
             for reg, val in cpu.registers.items():
                 print(f"{reg}: {val:04X}")
@@ -236,10 +325,13 @@ class Memory:
             else:
                 while True:
                     block_header = file.read(3)
+                    # print(f"Block header {block_header[0]:02X} {block_header[1]:02X} {block_header[2]:02X}")
                     if len(block_header) < 3:
                         break
 
-                    page, block_size = struct.unpack('<B H', block_header)
+                    block_size, page = struct.unpack('<H B', block_header)
+                    print(f'page: {page}')
+                    print(f'block size: {block_size}')
                     if block_size == 0xFFFF:
                         block_size = 16384
                         block_data = file.read(block_size)
@@ -256,20 +348,39 @@ class Memory:
                         block_data = block_data.ljust(16384, b'\x00')
 
                     # Загрузка блока в соответствующую страницу памяти
-                    if page <= 7:
-                        self.memory[page] = block_data
-                    elif page == 8:
-                        self.rom[0] = block_data  # ROM 0
-                    elif page == 9:
-                        self.rom[1] = block_data  # ROM 1
+                    if version == 2:
+                        if hw_mode == 3 or hw_mode == 4:
+                            load48k = False
+                    if version == 3:
+                        if hw_mode == 4 or hw_mode == 5 or hw_mode == 6:
+                            load48k = False
+
+
+                    if load48k:
+                        if page == 4:   self.memory[5] = block_data[:16384]
+                        elif page == 5: self.memory[2] = block_data[:16384]
+                        elif page == 8: self.memory[0] = block_data[:16384]
                     else:
-                        print(f"Warning: Unknown page number {page}. Skipping.")
+                        self.memory[page-3] = block_data[:16384]
+
+
+                    #if page <= 7:
+                    #    self.memory[page] = block_data
+                    #elif page == 8:
+                    #    self.rom[0] = block_data  # ROM 0
+                    #elif page == 9:
+                    #    self.rom[1] = block_data  # ROM 1
+                    #else:
+                    #    print(f"Warning: Unknown page number {page}. Skipping.")
 
                     print(f"Loaded block: Page={page}, Size={len(block_data)}")
 
+            #Цвет бордюра
             # Установка начальной конфигурации банков памяти
-            if version >= 2:
-                self.paged_banks = [5, 2, hw_mode & 0x07, 0]
-                self.current_rom = (hw_mode >> 4) & 0x01
+            cpu.io_controller.write_port(0xFE, border_color)
+            #if version >= 2 and not load48k:
+            #    cpu.io_controller.write_port(0x7FFD, out_7ffd)
+            #    self.paged_banks = [5, 2, hw_mode & 0x07, 0]
+            #    self.current_rom = (hw_mode >> 4) & 0x01
 
             print("Snapshot loaded successfully.")
