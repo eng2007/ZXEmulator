@@ -96,6 +96,4 @@ class Memory:
 						elif page==8:self.memory[0]=block_data[:16384]
 					else:self.memory[page-3]=block_data[:16384]
 					print(f"Loaded block: Page={page}, Size={len(block_data)}")
-			cpu.io_controller.write_port(254,border_color)
-			if version>=2 and not load48k:cpu.io_controller.write_port(32765,out_7ffd)
-			print('Snapshot loaded successfully.')
+			cpu.io_controller.write_port(254,border_color);print('Snapshot loaded successfully.')

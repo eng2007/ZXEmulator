@@ -48,7 +48,7 @@ def zx_spectrum_menu():
 				elif event.key==pygame.K_RETURN:pygame.quit();return files[selected],files[rom48],files[rom128]
 	pygame.quit()
 class ZX_Spectrum_Emulator:
-	def __init__(self):self.pixel_size=2;self.border_size=80;self.memory=Memory();self.io_controller=IOController(self);self.cpu=Z80(self.memory,self.io_controller,0);self.interrupt_controller=InterruptController(self.cpu);self.graphics=ZX_Spectrum_Graphics(self.memory,self.pixel_size);self.keyboard=Keyboard(self.io_controller);self.reset_requested=False
+	def __init__(self):self.pixel_size=3;self.border_size=80;self.memory=Memory();self.io_controller=IOController(self);self.cpu=Z80(self.memory,self.io_controller,0);self.interrupt_controller=InterruptController(self.cpu);self.graphics=ZX_Spectrum_Graphics(self.memory,self.pixel_size);self.keyboard=Keyboard(self.io_controller);self.reset_requested=False
 	def load_rom(self,file_path,addr=0):self.memory.load_rom(file_path,0)
 	def load_rom128(self,file_path,addr=0):self.memory.load_rom128(file_path)
 	def load_scr_file(self,file_path):self.graphics.load_scr_file(file_path)

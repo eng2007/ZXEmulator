@@ -1166,3 +1166,44 @@ class extCPUClass(baseCPUClass):
         self.set_flag('5', result & 0x20)
         
         self.cycles += 16
+
+    def cpdr(self):
+        while True:
+            # Выполняем операцию сравнения
+            hl = self.get_register_pair('HL')
+            bc = self.get_register_pair('BC')
+            a = self.registers['A']
+            value = self.memory[hl]
+            result = a - value
+
+            # Уменьшаем HL и BC
+            hl = (hl - 1) & 0xFFFF
+            bc = (bc - 1) & 0xFFFF
+            self.set_register_pair('HL', hl)
+            self.set_register_pair('BC', bc)
+
+            # Устанавливаем флаги
+            self.set_flag('S', result & 0x80)
+            self.set_flag('Z', result == 0)
+            self.set_flag('H', (a & 0xF) - (value & 0xF) < 0)
+            self.set_flag('P/V', bc != 0)
+            self.set_flag('N', 1)
+            
+            # Устанавливаем флаги 3 и 5 на основе результата
+            self.set_flag('3', result & 0x08)
+            self.set_flag('5', result & 0x20)
+
+            # Добавляем 21 цикл за каждую итерацию
+            self.cycles += 21
+
+            # Проверяем условие выхода
+            if bc == 0 or result == 0:
+                break
+
+        # Устанавливаем флаг переноса
+        self.set_flag('C', a < value)
+
+        # Если BC != 0 и результат не равен 0, уменьшаем PC на 2
+        if bc != 0 and result != 0:
+            self.registers['PC'] = (self.registers['PC'] - 2) & 0xFFFF
+            self.cycles += 5  # Добавляем 5 циклов, если происходит повтор
