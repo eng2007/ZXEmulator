@@ -46,6 +46,7 @@ class Memory:
 
     def write(self, address, value):
         if address >= 16384:  # Запрещаем запись в ROM
+        #if address >= 0:  # Запрещаем запись в ROM
             bank = self.get_bank(address)
             offset = address % 16384
             self.memory[bank][offset] = value
