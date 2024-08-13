@@ -9,7 +9,7 @@ WIDTH, HEIGHT = 1000, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("ZX Spectrum Keyboard")
 
-current_scheme = "rainbow"  # Можно изменить на "light" или "dark"
+current_scheme = "light"  # Можно изменить на "light" или "dark"
 
 def get_color(color_name):
     color_scheme = schemes[current_scheme]
@@ -51,7 +51,7 @@ def draw_keyboard(highlighted_key=None):
         if current_scheme == "rainbow":
             color = get_color("KEY")[key["color"]]
         else:
-        color = get_color("KEY") if key["color"] != "SPECIAL_KEY" else get_color("SPECIAL_KEY")
+            color = get_color("KEY") if key["color"] != "SPECIAL_KEY" else get_color("SPECIAL_KEY")
 
         texts = key["texts"]
         text_colors = [get_color("TEXT")["main"]]
