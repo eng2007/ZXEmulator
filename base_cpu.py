@@ -148,7 +148,7 @@ class baseCPUClass:
 
     def fetch(self):
         self.registers['R'] = (self.registers['R'] + 1) & 0x7F | (self.registers['R'] & 0x80)
-    
+
         value = self.memory[self.registers['PC']]
         self.registers['PC'] = (self.registers['PC'] + 1) & 0xFFFF
         return value
@@ -347,8 +347,8 @@ class baseCPUClass:
         self.registers['A'] = result & 0xFF
         self.update_flags(result, zero=True, sign=True, carry=True, halfcarry=True)
         self.set_flag('H',  h_flag)
-        #self.set_flag('P/V', self.registers['A'] == 0x80)        
-        #self.set_flag('P/V', ((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0)        
+        #self.set_flag('P/V', self.registers['A'] == 0x80)
+        #self.set_flag('P/V', ((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0)
         self.set_flag('P/V', overflow)
         #print(f"PV {((self.registers['A'] ^ ~value) & (self.registers['A'] ^ result) & 0x80) != 0}")
         # Установка флагов 3 и 5

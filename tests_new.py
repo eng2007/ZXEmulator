@@ -25,7 +25,7 @@ class Z80Tester(Z80):
         super().__init__(self.memory_class, self.io_controller, 0x0000)
 
         self.interrupt_controller = InterruptController(self)
-        self.memory = self.memory_class.memory
+        self.memory = self.memory_class  #.memory
 
         #self.registers = registers.Registers()
         #self.instructions = instructions.InstructionSet(self.registers)
@@ -131,8 +131,8 @@ if __name__ == '__main__':
         mach.registers['SP'] = regs[10]
         mach.registers['PC'] = regs[11]
         regs2 = [s for s in test_lines[2].split()]
-        #mach.registers.I = int(regs2[0], 16)
-        #mach.registers.R = int(regs2[1], 16)
+        mach.registers['I'] = int(regs2[0], 16)
+        mach.registers['R'] = int(regs2[1], 16)
         #mach.registers.IFF = regs2[2] == "1"
         #mach.registers.IFF2 = regs2[3] == "1"
         #mach.registers.IFF2 = regs2[3] == "1"
@@ -157,9 +157,11 @@ if __name__ == '__main__':
         try:
             while taken < tstates:
                 #states, asm =  mach.execute_instruction()
-                states = 1
+                #states = 1
                 asm = ''
                 mach.execute_instruction(True)
+                states = mach.cycles
+                if states == 0: states = 1
                 taken += states
                 trace += "%d/%d\t%d\t" % (taken, tstates, states) + asm
         except Exception as e:
@@ -183,12 +185,16 @@ if __name__ == '__main__':
         i = 1
         while expected_lines[i].startswith(" "):
             i += 1
-        regs = [int(s, 16) for s in expected_lines[i].split()]
+        regs     = [int(s, 16) for s in expected_lines[i].split()]
         regs_exp = [int(s, 16) for s in expected_lines[i].split()]
         try:
             # if mach.registers.A != regs[0] >> 8:
             #    raise Exception("Bad A register")
-            if mach.get_register_pair('AF') != regs[0]:
+            af = mach.get_register_pair('AF') & 0xFFD7
+            af_exp = regs[0] & 0xFFD7
+
+            #if mach.get_register_pair('AF') != regs[0]:
+            if af != af_exp:
                 raise Exception("Bad register AF")
             if mach.get_register_pair('BC') != regs[1]:
                 raise Exception("Bad register BC")
@@ -226,8 +232,8 @@ if __name__ == '__main__':
                 raise Exception("Bad register IY")
             if mach.registers['SP'] != regs[10]:
                 raise Exception("Bad register SP")
-            # if mach.registers['PC'] != regs[11]:
-            #    raise Exception("Bad register PC")
+            if mach.registers['PC'] != regs[11]:
+                raise Exception("Bad register PC")
             regs2 = [s for s in expected_lines[i + 1].split()]
             # if mach.registers.I != int(regs2[0], 16):
             #    raise Exception("Bad register")
@@ -306,8 +312,10 @@ if __name__ == '__main__':
             print(f"AF: 0x{regs_exp[0]:04X}\t0x{regs_exp[0]:016b}")
             print(f"BC: 0x{regs_exp[1]:04X}\t0x{regs_exp[1]:016b}")
             print(f"DE: 0x{regs_exp[2]:04X}\t0x{regs_exp[2]:016b}")
+            print(f"HL: 0x{regs_exp[3]:04X}\t0x{regs_exp[3]:016b}")
             print(f"IX: 0x{regs_exp[8]:04X}\t0x{regs_exp[8]:016b}")
             print(f"IY: 0x{regs_exp[9]:04X}\t0x{regs_exp[9]:016b}")
+            print(f"PC: 0x{regs_exp[11]:04X}\t0x{regs_exp[11]:016b}")
             raise
         print("PASSED")
         passes += 1

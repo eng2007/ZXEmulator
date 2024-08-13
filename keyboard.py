@@ -25,7 +25,8 @@ class Keyboard:
             pygame.K_CAPSLOCK: (4, 5), pygame.K_LCTRL: (4, 6), pygame.K_LALT: (4, 7),
             pygame.K_F6: (5, 5), pygame.K_F7: (5, 6), pygame.K_F8: (5, 7),
             pygame.K_F9: (6, 5), pygame.K_F10: (6, 6), pygame.K_F11: (6, 7),
-            pygame.K_F12: (7, 5), pygame.K_RCTRL: (7, 6), pygame.K_RALT: (7, 7),
+            pygame.K_F12: (7, 5), pygame.K_RCTRL: (7, 6), pygame.K_RALT: (7, 7)
+
         }
         self.port = [0xf7fe, 0xeffe, 0xfbfe, 0xdffe, 0xfdfe, 0xbffe, 0xfefe, 0x7ffe]
 
@@ -33,6 +34,9 @@ class Keyboard:
         pressed_keys = pygame.key.get_pressed()
         for key, (row, col) in self.keymap.items():
             self.keyboard_matrix[row, col] = pressed_keys[key]
+        #if pressed_keys[pygame.K_BACKSPACE]:
+        #    self.keyboard_matrix[row, col] = (6,0)
+        #    self.keyboard_matrix[row, col] = (1,0)
 
     def read_port_fe(self, port):
         keyboard_line = ~port & 0xFF00
