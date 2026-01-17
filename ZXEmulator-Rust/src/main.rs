@@ -82,7 +82,7 @@ fn main() {
         KB_WIDTH,
         KB_HEIGHT,
         WindowOptions {
-            scale: Scale::X2,
+            scale: Scale::X1,
             resize: false,
             ..WindowOptions::default()
         },
