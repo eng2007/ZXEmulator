@@ -128,8 +128,17 @@ impl DebugDisplay {
 
             self.draw_text(sys_x, sys_y, "Map:", COLOR_LABEL);
             sys_y += 10;
-            self.draw_text(sys_x, sys_y, &format!("ROM: {}", memory.get_current_rom()), COLOR_TEXT);
+            
+            let rom_num = memory.get_current_rom();
+            let rom_text = if memory.is_trdos_rom_active() {
+                "ROM: TR-DOS"
+            } else {
+                if rom_num == 0 { "ROM: 0 (48)" } else { "ROM: 1 (128)" }
+            };
+            self.draw_text(sys_x, sys_y, rom_text, 
+                if memory.is_trdos_rom_active() { 0xFF00FF00 } else { COLOR_TEXT });
             sys_y += 10;
+            
             self.draw_text(sys_x, sys_y, "Bnk5", COLOR_LABEL); // 4000
             sys_y += 10;
             self.draw_text(sys_x, sys_y, "Bnk2", COLOR_LABEL); // 8000

@@ -60,8 +60,6 @@ fn load_sna_from_bytes(data: &[u8], cpu: &mut Z80, memory: &mut Memory) -> io::R
         return Err(io::Error::new(io::ErrorKind::InvalidData, "SNA file too small"));
     }
 
-    memory.reset();
-
     // If we are in 128K mode, we need to switch to 48K mode (ROM 1) and lock paging
     if memory.is_128k_mode() {
         memory.write_7ffd(0x30); // ROM 1, Disable Paging, Bank 0, Screen 5

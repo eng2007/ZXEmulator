@@ -75,9 +75,59 @@ impl Keyboard {
         self.matrix = [0xFF; 8];
 
         for key in keys {
-            if let Some((row, col)) = self.map_key(*key) {
-                self.matrix[row] &= !(1 << col);
+            // Handle extended keys that map to multiple ZX Spectrum keys
+            match self.map_extended_key(*key) {
+                Some(key_positions) => {
+                    // Press multiple keys at once (e.g., Caps Shift + 6 for DOWN)
+                    for (row, col) in key_positions {
+                        self.matrix[row] &= !(1 << col);
+                    }
+                }
+                None => {
+                    // Handle regular single key mapping
+                    if let Some((row, col)) = self.map_key(*key) {
+                        self.matrix[row] &= !(1 << col);
+                    }
+                }
             }
+        }
+    }
+
+    /// Map extended PC keys to multiple ZX Spectrum keys (for combinations)
+    /// Returns None if key is not an extended key
+    fn map_extended_key(&self, key: Key) -> Option<Vec<(usize, usize)>> {
+        match key {
+            // Cursor keys: Caps Shift + 5/6/7/8
+            Key::Left => Some(vec![
+                (0, 0), // Caps Shift
+                (3, 4), // 5
+            ]),
+            Key::Down => Some(vec![
+                (0, 0), // Caps Shift
+                (4, 4), // 6
+            ]),
+            Key::Up => Some(vec![
+                (0, 0), // Caps Shift
+                (4, 3), // 7
+            ]),
+            Key::Right => Some(vec![
+                (0, 0), // Caps Shift
+                (4, 2), // 8
+            ]),
+            
+            // Backspace: Caps Shift + 0 (DELETE)
+            Key::Backspace => Some(vec![
+                (0, 0), // Caps Shift
+                (4, 0), // 0
+            ]),
+            
+            // Caps Lock: Caps Shift + 2 (CAPS LOCK)
+            Key::CapsLock => Some(vec![
+                (0, 0), // Caps Shift
+                (3, 1), // 2
+            ]),
+            
+            _ => None,
         }
     }
 
@@ -149,9 +199,6 @@ impl Keyboard {
             Key::M => Some((7, 2)),
             Key::N => Some((7, 3)),
             Key::B => Some((7, 4)),
-
-            // Extended mappings
-            Key::Backspace => Some((0, 0)), // Caps Shift (needs +0 for Delete)
 
             _ => None,
         }

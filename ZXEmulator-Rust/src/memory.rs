@@ -233,11 +233,17 @@ impl Memory {
 
     /// Enable TR-DOS ROM (switch to ROM bank 2)
     pub fn enable_trdos_rom(&mut self) {
+        if !self.trdos_rom_active {
+            println!("[MEMORY] TR-DOS ROM enabled (ROM bank 2 active)");
+        }
         self.trdos_rom_active = true;
     }
 
     /// Disable TR-DOS ROM (return to normal ROM banking)
     pub fn disable_trdos_rom(&mut self) {
+        if self.trdos_rom_active {
+            println!("[MEMORY] TR-DOS ROM disabled (back to ROM bank {})", self.current_rom);
+        }
         self.trdos_rom_active = false;
     }
 
