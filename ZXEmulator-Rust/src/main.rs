@@ -14,6 +14,8 @@ mod io;
 mod snapshot;
 mod debug_display;
 mod config;
+mod trd;
+mod fdc;
 
 use cpu::Z80;
 use memory::Memory;
@@ -22,6 +24,7 @@ use keyboard::Keyboard;
 use keyboard_display::{KeyboardDisplay, KB_WIDTH, KB_HEIGHT};
 use debug_display::{DebugDisplay, DBG_WIDTH, DBG_HEIGHT};
 use io::IoController;
+use fdc::FDC;
 
 /// Cycles per frame (3.5MHz / 50Hz)
 const CYCLES_PER_FRAME: u64 = 69888;
@@ -43,7 +46,8 @@ fn main() {
     // Create emulator components
     let mut memory = Memory::new(config.clone());
     let mut keyboard = Keyboard::new();
-    let mut io = IoController::new(&mut keyboard, &mut memory, config.clone());
+    let mut fdc = FDC::new();
+    let mut io = IoController::new(&mut keyboard, &mut memory, &mut fdc, config.clone());
     let mut cpu = Z80::new(&mut memory, &mut io);
     let mut graphics = Graphics::new();
     let mut kb_display = KeyboardDisplay::new();
@@ -134,7 +138,7 @@ fn main() {
     dbg_window.limit_update_rate(Some(FRAME_DURATION));
 
     println!("ZX Spectrum Emulator started");
-    println!("Controls: ESC = Exit, F2 = Reset, F3 = Load Snapshot");
+    println!("Controls: ESC = Exit, F2 = Reset, F3 = Load Snapshot, F4 = Load ROM, F5 = Load TRD, F6 = Load TR-DOS ROM");
 
     // Main loop - continue while main window is open
     while window.is_open() && !window.is_key_down(Key::Escape) {
@@ -189,7 +193,47 @@ fn main() {
                             io.reset();
                             println!("Emulator reset with new ROM");
                         }
-                        Err(e) => eprintln!("Failed to load ROM: {}", e),
+                         Err(e) => eprintln!("Failed to load ROM: {}", e),
+                    }
+                }
+            }
+        }
+
+        // F5: Load TRD disk
+        if window.is_key_pressed(Key::F5, minifb::KeyRepeat::No) {
+            if let Some(path) = FileDialog::new()
+                .add_filter("TRD Disks", &["trd"])
+                .add_filter("All Files", &["*"])
+                .pick_file() 
+            {
+                if let Some(path_str) = path.to_str() {
+                    match snapshot::load_trd(path_str, &mut fdc, 0) {
+                        Ok(_) => {
+                            println!("Loaded TRD disk: {}", path_str);
+                            current_filename = path.file_name()
+                                .unwrap_or_default()
+                                .to_string_lossy()
+                                .to_string();
+                        }
+                        Err(e) => eprintln!("Failed to load TRD: {}", e),
+                    }
+                }
+            }
+        }
+
+        // F6: Load TR-DOS ROM
+        if window.is_key_pressed(Key::F6, minifb::KeyRepeat::No) {
+            if let Some(path) = FileDialog::new()
+                .add_filter("TR-DOS ROM", &["rom", "bin"])
+                .add_filter("All Files", &["*"])
+                .pick_file() 
+            {
+                if let Some(path_str) = path.to_str() {
+                    match snapshot::load_trdos_rom(path_str, &mut memory) {
+                        Ok(_) => {
+                            println!("Loaded TR-DOS ROM: {}", path_str);
+                        }
+                        Err(e) => eprintln!("Failed to load TR-DOS ROM: {}", e),
                     }
                 }
             }

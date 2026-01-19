@@ -2,6 +2,8 @@
 
 use crate::memory::Memory;
 use crate::cpu::Z80;
+use crate::trd::TrdDisk;
+use crate::fdc::FDC;
 use std::fs::File;
 use std::io::{self, Read};
 
@@ -269,5 +271,29 @@ pub fn load_rom(path: &str, memory: &mut Memory) -> io::Result<()> {
         memory.load_rom(&data, 0);
     }
 
+    Ok(())
+}
+
+/// Load TRD disk image into FDC
+pub fn load_trd(path: &str, fdc: &mut FDC, drive: usize) -> io::Result<()> {
+    let disk = TrdDisk::load(path)?;
+    fdc.load_disk(drive, disk);
+    Ok(())
+}
+
+/// Load TR-DOS ROM into ROM bank 2
+pub fn load_trdos_rom(path: &str, memory: &mut Memory) -> io::Result<()> {
+    let mut file = File::open(path)?;
+    let mut data = Vec::new();
+    file.read_to_end(&mut data)?;
+
+    if data.len() > 16384 {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "TR-DOS ROM must be 16KB or less",
+        ));
+    }
+
+    memory.load_trdos_rom(&data);
     Ok(())
 }

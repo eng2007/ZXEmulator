@@ -12,10 +12,12 @@ const BANK_SIZE: usize = 16 * 1024;
 pub struct Memory {
     /// RAM banks (up to 512KB)
     ram: Vec<u8>,
-    /// 2 ROM banks of 16KB each (ROM 0 and ROM 1)
-    rom: [[u8; ROM_SIZE]; 2],
+    /// 3 ROM banks of 16KB each (ROM 0, ROM 1, ROM 2 for TR-DOS)
+    rom: [[u8; ROM_SIZE]; 3],
     /// Currently selected ROM (0 or 1)
     current_rom: usize,
+    /// TR-DOS ROM active flag (overrides current_rom when true)
+    trdos_rom_active: bool,
     /// Currently paged RAM banks for each 16KB slot
     /// [0] = always ROM, [1] = bank 5, [2] = bank 2, [3] = configurable
     paged_banks: [usize; 4],
@@ -39,8 +41,9 @@ impl Memory {
         
         Self {
             ram: vec![0; ram_size],
-            rom: [[0; ROM_SIZE]; 2],
+            rom: [[0; ROM_SIZE]; 3],
             current_rom: 0,
+            trdos_rom_active: false,
             paged_banks: [0, 5, 2, 0], // Default: ROM, Bank 5, Bank 2, Bank 0
             screen_bank: 5,
             paging_disabled: false,
@@ -53,6 +56,7 @@ impl Memory {
     pub fn reset(&mut self) {
         self.ram.fill(0);
         self.current_rom = 0;
+        self.trdos_rom_active = false;
         self.paged_banks = [0, 5, 2, 0];
         self.screen_bank = 5;
         self.paging_disabled = false;
@@ -60,7 +64,7 @@ impl Memory {
 
     /// Load ROM data
     pub fn load_rom(&mut self, data: &[u8], rom_number: usize) {
-        if rom_number < 2 && data.len() <= ROM_SIZE {
+        if rom_number < 3 && data.len() <= ROM_SIZE {
             self.rom[rom_number][..data.len()].copy_from_slice(data);
         }
     }
@@ -114,8 +118,11 @@ impl Memory {
     pub fn read(&self, address: u16) -> u8 {
         let addr = address as usize;
         match addr {
-            // 0x0000-0x3FFF: ROM
-            0x0000..=0x3FFF => self.rom[self.current_rom][addr],
+            // 0x0000-0x3FFF: ROM (use TR-DOS ROM if active, otherwise current_rom)
+            0x0000..=0x3FFF => {
+                let rom_bank = if self.trdos_rom_active { 2 } else { self.current_rom };
+                self.rom[rom_bank][addr]
+            }
             // 0x4000-0x7FFF: Bank 5 (always)
             0x4000..=0x7FFF => {
                 let offset = addr - 0x4000;
@@ -215,6 +222,28 @@ impl Memory {
     /// Get RAM bank for the switchable slot (0xC000-0xFFFF)
     pub fn get_bank_at_slot_3(&self) -> usize {
         self.paged_banks[3]
+    }
+
+    /// Load TR-DOS ROM (16KB) into ROM bank 2
+    pub fn load_trdos_rom(&mut self, data: &[u8]) {
+        if data.len() <= ROM_SIZE {
+            self.rom[2][..data.len()].copy_from_slice(data);
+        }
+    }
+
+    /// Enable TR-DOS ROM (switch to ROM bank 2)
+    pub fn enable_trdos_rom(&mut self) {
+        self.trdos_rom_active = true;
+    }
+
+    /// Disable TR-DOS ROM (return to normal ROM banking)
+    pub fn disable_trdos_rom(&mut self) {
+        self.trdos_rom_active = false;
+    }
+
+    /// Check if TR-DOS ROM is active
+    pub fn is_trdos_rom_active(&self) -> bool {
+        self.trdos_rom_active
     }
 }
 

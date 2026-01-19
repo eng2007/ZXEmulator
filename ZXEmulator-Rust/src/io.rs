@@ -3,6 +3,7 @@
 use crate::memory::Memory;
 use crate::keyboard::Keyboard;
 use crate::config::{Config, PortDecoding};
+use crate::fdc::FDC;
 
 /// I/O Controller handles port read/write operations
 pub struct IoController {
@@ -14,18 +15,21 @@ pub struct IoController {
     keyboard: *mut Keyboard,
     /// Memory reference for banking
     memory: *mut Memory,
+    /// FDC reference for disk operations
+    fdc: *mut FDC,
     /// Configuration
     config: Config,
 }
 
 impl IoController {
     /// Create new I/O controller
-    pub fn new(keyboard: &mut Keyboard, memory: &mut Memory, config: Config) -> Self {
+    pub fn new(keyboard: &mut Keyboard, memory: &mut Memory, fdc: &mut FDC, config: Config) -> Self {
         Self {
             border_color: 0,
             last_7ffd: 0,
             keyboard: keyboard as *mut Keyboard,
             memory: memory as *mut Memory,
+            fdc: fdc as *mut FDC,
             config,
         }
     }
@@ -38,10 +42,27 @@ impl IoController {
             return keyboard.read(port);
         }
 
-        // Kempston joystick (port 0x1F)
-        if port & 0xFF == 0x1F {
-            return 0x00; // No joystick
+        // FDC ports (Beta Disk interface) - enable TR-DOS ROM
+        let port_low = port & 0xFF;
+        if matches!(port_low, 0x1F | 0x3F | 0x5F | 0x7F | 0xFF) {
+            let memory = unsafe { &mut *self.memory };
+            memory.enable_trdos_rom();
+            
+            let fdc = unsafe { &mut *self.fdc };
+            
+            return match port_low {
+                0x1F => fdc.read_status(),
+                0x3F => fdc.read_track(),
+                0x5F => fdc.read_sector(),
+                0x7F => fdc.read_data(),
+                0xFF => fdc.read_system(),
+                _ => 0xFF,
+            };
         }
+
+        // Any other I/O - disable TR-DOS ROM
+        let memory = unsafe { &mut *self.memory };
+        memory.disable_trdos_rom();
 
         // Default - floating bus
         0xFF
@@ -56,6 +77,29 @@ impl IoController {
             // Bit 4: EAR (beeper)
             return;
         }
+
+        // FDC ports (Beta Disk interface) - enable TR-DOS ROM
+        let port_low = port & 0xFF;
+        if matches!(port_low, 0x1F | 0x3F | 0x5F | 0x7F | 0xFF) {
+            let memory = unsafe { &mut *self.memory };
+            memory.enable_trdos_rom();
+            
+            let fdc = unsafe { &mut *self.fdc };
+            
+            match port_low {
+                0x1F => fdc.write_command(value),
+                0x3F => fdc.write_track(value),
+                0x5F => fdc.write_sector(value),
+                0x7F => fdc.write_data(value),
+                0xFF => fdc.write_system(value),
+                _ => {}
+            }
+            return;
+        }
+
+        // Any other I/O - disable TR-DOS ROM
+        let memory = unsafe { &mut *self.memory };
+        memory.disable_trdos_rom();
 
         // Port 0x7FFD - 128K memory paging
         let is_7ffd = match self.config.port_decoding {
