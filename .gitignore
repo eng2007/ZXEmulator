@@ -13,3 +13,6 @@ example.log
 /ZXEmulator-Rust/target/release/.fingerprin
 
 /ZXEmulator-Rust/target/release/.fingerprint
+ZXEmulator-Rust/target/release/.fingerprint/zx-emulator-85cd40a2de295874/bin-zx-emulator
+ZXEmulator-Rust/target/release/.fingerprint/zx-emulator-85cd40a2de295874/dep-bin-zx-emulator
+ZXEmulator-Rust/target/release/.fingerprint/zx-emulator-85cd40a2de295874/output-bin-zx-emulator
