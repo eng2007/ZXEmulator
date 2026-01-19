@@ -161,6 +161,34 @@ fn main() {
             }
         }
 
+        // F4: Load ROM
+        if window.is_key_pressed(Key::F4, minifb::KeyRepeat::No) {
+             if let Some(path) = FileDialog::new()
+                .add_filter("ROMs", &["rom", "bin"])
+                .add_filter("All Files", &["*"])
+                .pick_file() 
+            {
+                if let Some(path_str) = path.to_str() {
+                    match snapshot::load_rom(path_str, &mut memory) {
+                        Ok(_) => {
+                            println!("Loaded ROM: {}", path_str);
+                            current_filename = path.file_name()
+                                .unwrap_or_default()
+                                .to_string_lossy()
+                                .to_string();
+                            
+                            // Reset emulator after loading new ROM
+                            cpu.reset();
+                            memory.reset();
+                            io.reset();
+                            println!("Emulator reset with new ROM");
+                        }
+                        Err(e) => eprintln!("Failed to load ROM: {}", e),
+                    }
+                }
+            }
+        }
+
         // Update keyboard state from main window
         let keys: Vec<Key> = window.get_keys();
         keyboard.update(&keys);
