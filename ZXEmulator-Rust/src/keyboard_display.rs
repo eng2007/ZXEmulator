@@ -83,25 +83,25 @@ const ROW3_DATA: [KeyStyle; 10] = [
     KeyStyle { color: KC_TAN, main: "D", top: "DATA",    tl: "STEP",tr: "\\", bl: "DIM",    br: "",       main_color: COLOR_TEXT_BLACK },
     KeyStyle { color: KC_TAN, main: "F", top: "SGN",     tl: "TO",  tr: "{",  bl: "FOR",    br: "",       main_color: COLOR_TEXT_BLACK },
     KeyStyle { color: KC_TAN, main: "G", top: "ABS",     tl: "THEN",tr: "}",  bl: "GOTO",   br: "",       main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN, main: "H", top: "SQR",     tl: "^",   tr: "^",  bl: "CIRCLE", br: "GOSUB",  main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN, main: "J", top: "VAL",     tl: "-",   tr: "-",  bl: "VAL$",   br: "LOAD",   main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN, main: "K", top: "LEN",     tl: "+",   tr: "+",  bl: "SCRN$",  br: "LIST",   main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN, main: "L", top: "USR",     tl: "=",   tr: "=",  bl: "ATTR",   br: "LET",    main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN, main: "H", top: "SQR",     tl: "",   tr: "^",  bl: "CIRCLE", br: "GOSUB",  main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN, main: "J", top: "VAL",     tl: "",   tr: "-",  bl: "VAL$",   br: "LOAD",   main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN, main: "K", top: "LEN",     tl: "",   tr: "+",  bl: "SCRN$",  br: "LIST",   main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN, main: "L", top: "USR",     tl: "",   tr: "=",  bl: "ATTR",   br: "LET",    main_color: COLOR_TEXT_BLACK },
     KeyStyle { color: KC_RED, main: "ENTER", top: "",    tl: "",    tr: "",   bl: "",       br: "",       main_color: COLOR_TEXT_BLACK },
 ];
 
 /// Row 4 Data (ZXCV)
 const ROW4_DATA: [KeyStyle; 10] = [
     KeyStyle { color: KC_RED,     main: "CAPS", top: "",      tl: "",    tr: "",   bl: "",   br: "SHIFT",  main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "Z",    top: "LN",      tl: ":",   tr: ":",  bl: "BEEP",   br: "COPY",   main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "X",    top: "EXP",     tl: "L",   tr: "L",  bl: "INK",    br: "CLEAR",  main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "C",    top: "LPRINT",  tl: "?",   tr: "?",  bl: "PAPER",  br: "CONT",   main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "V",    top: "LLIST",   tl: "/",   tr: "/",  bl: "FLASH",  br: "CLS",    main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "B",    top: "BIN",     tl: "*",   tr: "*",  bl: "BRIGHT", br: "BORDER", main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "N",    top: "INKEY$",  tl: ",",   tr: ",",  bl: "OVER",   br: "NEXT",   main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_TAN,   main: "M",    top: "PI",      tl: ".",   tr: ".",  bl: "INV",    br: "PAUSE",  main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "Z",    top: "LN",      tl: "",   tr: ":",  bl: "BEEP",   br: "COPY",   main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "X",    top: "EXP",     tl: "",   tr: "L",  bl: "INK",    br: "CLEAR",  main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "C",    top: "LPRINT",  tl: "",   tr: "?",  bl: "PAPER",  br: "CONT",   main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "V",    top: "LLIST",   tl: "",   tr: "/",  bl: "FLASH",  br: "CLS",    main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "B",    top: "BIN",     tl: "",   tr: "*",  bl: "BRIGHT", br: "BORDER", main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "N",    top: "INKEY$",  tl: "",   tr: ",",  bl: "OVER",   br: "NEXT",   main_color: COLOR_TEXT_BLACK },
+    KeyStyle { color: KC_TAN,   main: "M",    top: "PI",      tl: "",   tr: ".",  bl: "INV",    br: "PAUSE",  main_color: COLOR_TEXT_BLACK },
     KeyStyle { color: KC_YELLOW,  main: "SYMBOL", top: "",    tl: "",    tr: "",   bl: "",       br: "SHIFT",  main_color: COLOR_TEXT_BLACK },
-    KeyStyle { color: KC_BLUE,    main: "SPACE",  top: "",    tl: "",    tr: "",   bl: "BREAK",  br: "",       main_color: COLOR_TEXT_WHITE },
+    KeyStyle { color: KC_BLUE,    main: "SPACE",  top: "",    tl: "",    tr: "",   bl: "",       br: "BREAK",  main_color: COLOR_TEXT_WHITE },
 ];
 
 const ALL_ROWS: [&[KeyStyle; 10]; 4] = [&ROW1_DATA, &ROW2_DATA, &ROW3_DATA, &ROW4_DATA];
@@ -213,7 +213,7 @@ impl KeyboardDisplay {
         if !style.top.is_empty() {
              // For row 1, color matches key cap. For others, typically white/grey
              let top_color = if style.main.parse::<u8>().is_ok() && style.main.len() == 1 { style.color } else { COLOR_TEXT_WHITE };
-             self.draw_text_tiny(x + KEY_WIDTH/2, y - 8, style.top, top_color);
+             self.draw_text_tiny(x + KEY_WIDTH/2, y - 4, style.top, top_color);
         }
 
         // Draw key body

@@ -28,6 +28,13 @@ pub fn load_sna(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
         return Err(io::Error::new(io::ErrorKind::InvalidData, "SNA file too small"));
     }
 
+    memory.reset();
+
+    // If we are in 128K mode, we need to switch to 48K mode (ROM 1) and lock paging
+    if memory.is_128k_mode() {
+        memory.write_7ffd(0x30); // ROM 1, Disable Paging, Bank 0, Screen 5
+    }
+
     // Load registers from header
     cpu.i = data[0];
     cpu.hl_prime = u16::from_le_bytes([data[1], data[2]]);
@@ -49,7 +56,7 @@ pub fn load_sna(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
     cpu.r = data[20];
     cpu.af = u16::from_le_bytes([data[21], data[22]]);
     cpu.sp = u16::from_le_bytes([data[23], data[24]]);
-    cpu.im = data[25];
+    cpu.im = data[25] & 0x03;
 
     // Border color is at offset 26 (we ignore it for now)
     // let border = data[26];
@@ -68,8 +75,7 @@ pub fn load_sna(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
 
     cpu.halted = false;
 
-    Ok(())
-}
+    Ok(())}
 
 /// Load Z80 snapshot (48K/128K)
 pub fn load_z80(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()> {

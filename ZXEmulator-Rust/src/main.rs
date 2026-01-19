@@ -1,6 +1,7 @@
 //! ZX Spectrum Emulator - Main entry point
 
 use minifb::{Key, Window, WindowOptions, Scale};
+use rfd::FileDialog;
 use std::env;
 use std::time::Duration;
 
@@ -94,7 +95,7 @@ fn main() {
     kb_window.limit_update_rate(Some(FRAME_DURATION));
 
     println!("ZX Spectrum Emulator started");
-    println!("Controls: ESC = Exit, F2 = Reset");
+    println!("Controls: ESC = Exit, F2 = Reset, F3 = Load Snapshot");
 
     // Main loop - continue while main window is open
     while window.is_open() && !window.is_key_down(Key::Escape) {
@@ -104,6 +105,21 @@ fn main() {
             memory.reset();
             io.reset();
             println!("Emulator reset");
+        }
+
+        if window.is_key_pressed(Key::F3, minifb::KeyRepeat::No) {
+            if let Some(path) = FileDialog::new()
+                .add_filter("Snapshots", &["z80", "sna"])
+                .add_filter("All Files", &["*"])
+                .pick_file() 
+            {
+                if let Some(path_str) = path.to_str() {
+                     match snapshot::load_snapshot(path_str, &mut cpu, &mut memory) {
+                        Ok(_) => println!("Loaded snapshot: {}", path_str),
+                        Err(e) => eprintln!("Failed to load snapshot: {}", e),
+                    }
+                }
+            }
         }
 
         // Update keyboard state from main window

@@ -3,3 +3,14 @@
 *.bak
 ZXseMenu.zip
 example.log
+/ZXEmulator-Rust/target/debug/.fingerprint
+/ZXEmulator-Rust/target/debug/build
+/ZXEmulator-Rust/target/debug/deps
+/ZXEmulator-Rust/target/debug/incremental
+/ZXEmulator-Rust/target/release/.fingerprint
+/ZXEmulator-Rust/target/release/.fingerprint
+/ZXEmulator-Rust/target/release/.fingerprint
+/ZXEmulator-Rust/target/release/build
+/ZXEmulator-Rust/target/release/deps
+/ZXEmulator-Rust/target/release/.fingerprint
+/ZXEmulator-Rust/target/release/.fingerprint
