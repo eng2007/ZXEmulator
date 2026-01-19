@@ -9,6 +9,7 @@ authors = ["Claude Opus 4.5 + e.n.g."]
 minifb = "0.25"
 bitflags = "2.4"
 rfd = "0.12"
+zip = "0.6"
 
 [profile.release]
 opt-level = 3

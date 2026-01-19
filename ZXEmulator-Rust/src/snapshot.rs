@@ -13,9 +13,34 @@ pub fn load_snapshot(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Resu
         load_sna(path, cpu, memory)
     } else if path_lower.ends_with(".z80") {
         load_z80(path, cpu, memory)
+    } else if path_lower.ends_with(".zip") {
+        load_zip(path, cpu, memory)
     } else {
         Err(io::Error::new(io::ErrorKind::InvalidInput, "Unknown snapshot format"))
     }
+}
+
+/// Load ZIP file containing snapshot
+pub fn load_zip(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()> {
+    let file = File::open(path)?;
+    let mut archive = zip::ZipArchive::new(file)?;
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)?;
+        let name = file.name().to_lowercase();
+
+        if name.ends_with(".z80") {
+            let mut data = Vec::new();
+            file.read_to_end(&mut data)?;
+            return load_z80_from_bytes(&data, cpu, memory);
+        } else if name.ends_with(".sna") {
+            let mut data = Vec::new();
+            file.read_to_end(&mut data)?;
+            return load_sna_from_bytes(&data, cpu, memory);
+        }
+    }
+
+    Err(io::Error::new(io::ErrorKind::NotFound, "No .z80 or .sna file found in ZIP archive"))
 }
 
 /// Load SNA snapshot (48K only)
@@ -23,6 +48,11 @@ pub fn load_sna(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
     let mut file = File::open(path)?;
     let mut data = Vec::new();
     file.read_to_end(&mut data)?;
+    load_sna_from_bytes(&data, cpu, memory)
+}
+
+/// Load SNA from byte slice
+fn load_sna_from_bytes(data: &[u8], cpu: &mut Z80, memory: &mut Memory) -> io::Result<()> {
 
     if data.len() < 27 + 49152 {
         return Err(io::Error::new(io::ErrorKind::InvalidData, "SNA file too small"));
@@ -62,12 +92,25 @@ pub fn load_sna(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
     // let border = data[26];
 
     // Load RAM (48K from 0x4000)
+    // SNA format stores 48K RAM as three 16K blocks corresponding to:
+    // 0x4000-0x7FFF (Bank 5)
+    // 0x8000-0xBFFF (Bank 2)
+    // 0xC000-0xFFFF (Bank 0 - for 48K machine)
+    // proper internal order updates:
     let ram = memory.get_ram_mut();
-    for i in 0..49152 {
-        // SNA data goes to addresses 0x4000-0xFFFF (banks 5, 2, 0)
-        let addr = 0x4000 + i;
-        memory.write(addr as u16, data[27 + i]);
-    }
+    const BANK_SIZE: usize = 16 * 1024;
+    
+    // Bank 5 (Screen) - first 16K of snapshot
+    let bank5_start = 5 * BANK_SIZE;
+    ram[bank5_start..bank5_start + BANK_SIZE].copy_from_slice(&data[27..27 + BANK_SIZE]);
+
+    // Bank 2 - second 16K of snapshot
+    let bank2_start = 2 * BANK_SIZE;
+    ram[bank2_start..bank2_start + BANK_SIZE].copy_from_slice(&data[27 + BANK_SIZE..27 + 2 * BANK_SIZE]);
+
+    // Bank 0 - third 16K of snapshot
+    let bank0_start = 0 * BANK_SIZE;
+    ram[bank0_start..bank0_start + BANK_SIZE].copy_from_slice(&data[27 + 2 * BANK_SIZE..27 + 3 * BANK_SIZE]);
 
     // SNA stores PC on stack, so we pop it
     cpu.pc = memory.read_word(cpu.sp);
@@ -82,6 +125,11 @@ pub fn load_z80(path: &str, cpu: &mut Z80, memory: &mut Memory) -> io::Result<()
     let mut file = File::open(path)?;
     let mut data = Vec::new();
     file.read_to_end(&mut data)?;
+    load_z80_from_bytes(&data, cpu, memory)
+}
+
+/// Load Z80 from byte slice
+fn load_z80_from_bytes(data: &[u8], cpu: &mut Z80, memory: &mut Memory) -> io::Result<()> {
 
     if data.len() < 30 {
         return Err(io::Error::new(io::ErrorKind::InvalidData, "Z80 file too small"));

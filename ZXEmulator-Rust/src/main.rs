@@ -109,7 +109,7 @@ fn main() {
 
         if window.is_key_pressed(Key::F3, minifb::KeyRepeat::No) {
             if let Some(path) = FileDialog::new()
-                .add_filter("Snapshots", &["z80", "sna"])
+                .add_filter("Snapshots", &["z80", "sna", "zip"])
                 .add_filter("All Files", &["*"])
                 .pick_file() 
             {
