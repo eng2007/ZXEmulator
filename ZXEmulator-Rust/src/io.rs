@@ -2,6 +2,7 @@
 
 use crate::memory::Memory;
 use crate::keyboard::Keyboard;
+use crate::config::{Config, PortDecoding};
 
 /// I/O Controller handles port read/write operations
 pub struct IoController {
@@ -13,16 +14,19 @@ pub struct IoController {
     keyboard: *mut Keyboard,
     /// Memory reference for banking
     memory: *mut Memory,
+    /// Configuration
+    config: Config,
 }
 
 impl IoController {
     /// Create new I/O controller
-    pub fn new(keyboard: &mut Keyboard, memory: &mut Memory) -> Self {
+    pub fn new(keyboard: &mut Keyboard, memory: &mut Memory, config: Config) -> Self {
         Self {
             border_color: 0,
             last_7ffd: 0,
             keyboard: keyboard as *mut Keyboard,
             memory: memory as *mut Memory,
+            config,
         }
     }
 
@@ -54,7 +58,12 @@ impl IoController {
         }
 
         // Port 0x7FFD - 128K memory paging
-        if port == 0x7FFD {
+        let is_7ffd = match self.config.port_decoding {
+            PortDecoding::Full => port == 0x7FFD,
+            PortDecoding::Partial => (port & 0x8002) == 0, // Pentagon: A15=0, A1=0
+        };
+
+        if is_7ffd {
             if self.last_7ffd & 0x20 == 0 { // Not locked
                 self.last_7ffd = value;
                 let memory = unsafe { &mut *self.memory };

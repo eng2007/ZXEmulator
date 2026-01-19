@@ -13,6 +13,7 @@ mod keyboard_display;
 mod io;
 mod snapshot;
 mod debug_display;
+mod config;
 
 use cpu::Z80;
 use memory::Memory;
@@ -35,9 +36,14 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     // Create emulator components
-    let mut memory = Memory::new();
+    // Load configuration
+    let config = config::load_config("zx_emu.ini");
+    println!("Configuration loaded: {:?}", config);
+
+    // Create emulator components
+    let mut memory = Memory::new(config.clone());
     let mut keyboard = Keyboard::new();
-    let mut io = IoController::new(&mut keyboard, &mut memory);
+    let mut io = IoController::new(&mut keyboard, &mut memory, config.clone());
     let mut cpu = Z80::new(&mut memory, &mut io);
     let mut graphics = Graphics::new();
     let mut kb_display = KeyboardDisplay::new();

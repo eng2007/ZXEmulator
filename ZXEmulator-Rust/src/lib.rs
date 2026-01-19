@@ -6,3 +6,4 @@ pub mod graphics;
 pub mod keyboard;
 pub mod io;
 pub mod snapshot;
+pub mod config;

@@ -1,16 +1,17 @@
-//! Memory module for ZX Spectrum emulation
-//! 
-//! Supports both 48K and 128K models with proper memory banking.
+use crate::config::{Config, MemorySize};
 
-/// Total memory size for 128K model: 128KB RAM + 32KB ROM
-const RAM_SIZE: usize = 128 * 1024;
+/// Total memory size for 128K model: 128KB RAM
+/// Total memory size for 512K model: 512KB RAM
+const RAM_SIZE_128K: usize = 128 * 1024;
+const RAM_SIZE_512K: usize = 512 * 1024;
+const MAX_RAM_SIZE: usize = RAM_SIZE_512K;
 const ROM_SIZE: usize = 16 * 1024;
 const BANK_SIZE: usize = 16 * 1024;
 
-/// Memory system with banking support for ZX Spectrum 128
+/// Memory system with banking support
 pub struct Memory {
-    /// 8 RAM banks of 16KB each
-    ram: [u8; RAM_SIZE],
+    /// RAM banks (up to 512KB)
+    ram: Vec<u8>,
     /// 2 ROM banks of 16KB each (ROM 0 and ROM 1)
     rom: [[u8; ROM_SIZE]; 2],
     /// Currently selected ROM (0 or 1)
@@ -24,19 +25,27 @@ pub struct Memory {
     paging_disabled: bool,
     /// Is 128K mode
     is_128k: bool,
+    /// Configuration
+    config: Config,
 }
 
 impl Memory {
     /// Create new memory instance
-    pub fn new() -> Self {
+    pub fn new(config: Config) -> Self {
+        let ram_size = match config.memory_size {
+            MemorySize::K128 => RAM_SIZE_128K,
+            MemorySize::K512 => RAM_SIZE_512K,
+        };
+        
         Self {
-            ram: [0; RAM_SIZE],
+            ram: vec![0; ram_size],
             rom: [[0; ROM_SIZE]; 2],
             current_rom: 0,
             paged_banks: [0, 5, 2, 0], // Default: ROM, Bank 5, Bank 2, Bank 0
             screen_bank: 5,
             paging_disabled: false,
             is_128k: false,
+            config,
         }
     }
 
@@ -75,7 +84,21 @@ impl Memory {
         }
 
         // Bits 0-2: RAM bank for slot 3 (0xC000-0xFFFF)
-        self.paged_banks[3] = (value & 0x07) as usize;
+        let mut bank = (value & 0x07) as usize;
+        
+        // Handle 512K extension (Pentagon)
+        if self.config.memory_size == MemorySize::K512 {
+            // Bit 6: MSB 1 (adds 8 to bank number)
+            if value & 0x40 != 0 {
+                bank |= 0x08;
+            }
+            // Bit 7: MSB 2 (adds 16 to bank number)
+            if value & 0x80 != 0 {
+                bank |= 0x10;
+            }
+        }
+        
+        self.paged_banks[3] = bank;
 
         // Bit 3: Screen select (0 = bank 5, 1 = bank 7)
         self.screen_bank = if value & 0x08 != 0 { 7 } else { 5 };
@@ -106,7 +129,9 @@ impl Memory {
             // 0xC000-0xFFFF: Configurable bank
             0xC000..=0xFFFF => {
                 let offset = addr - 0xC000;
-                self.ram[self.paged_banks[3] * BANK_SIZE + offset]
+                // Ensure we don't access out of bounds if something went wrong, though shouldn't happen
+                let bank_idx = self.paged_banks[3] % (self.ram.len() / BANK_SIZE);
+                self.ram[bank_idx * BANK_SIZE + offset]
             }
             _ => 0xFF,
         }
@@ -131,7 +156,8 @@ impl Memory {
             // 0xC000-0xFFFF: Configurable bank
             0xC000..=0xFFFF => {
                 let offset = addr - 0xC000;
-                self.ram[self.paged_banks[3] * BANK_SIZE + offset] = value;
+                let bank_idx = self.paged_banks[3] % (self.ram.len() / BANK_SIZE);
+                self.ram[bank_idx * BANK_SIZE + offset] = value;
             }
             _ => {}
         }
@@ -194,7 +220,7 @@ impl Memory {
 
 impl Default for Memory {
     fn default() -> Self {
-        Self::new()
+        Self::new(Config::default())
     }
 }
 
