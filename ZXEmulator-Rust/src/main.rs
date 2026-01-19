@@ -12,12 +12,14 @@ mod keyboard;
 mod keyboard_display;
 mod io;
 mod snapshot;
+mod debug_display;
 
 use cpu::Z80;
 use memory::Memory;
 use graphics::{Graphics, WINDOW_WIDTH, WINDOW_HEIGHT};
 use keyboard::Keyboard;
 use keyboard_display::{KeyboardDisplay, KB_WIDTH, KB_HEIGHT};
+use debug_display::{DebugDisplay, DBG_WIDTH, DBG_HEIGHT};
 use io::IoController;
 
 /// Cycles per frame (3.5MHz / 50Hz)
@@ -39,6 +41,7 @@ fn main() {
     let mut cpu = Z80::new(&mut memory, &mut io);
     let mut graphics = Graphics::new();
     let mut kb_display = KeyboardDisplay::new();
+    let mut debug_display = DebugDisplay::new();
 
     // Load ROM if provided
     if args.len() > 1 {
@@ -90,9 +93,23 @@ fn main() {
     )
     .expect("Failed to create keyboard window");
 
+    // Create debug window
+    let mut dbg_window = Window::new(
+        "ZX Debugger",
+        DBG_WIDTH,
+        DBG_HEIGHT,
+        WindowOptions {
+            scale: Scale::X1,
+            resize: false,
+            ..WindowOptions::default()
+        },
+    )
+    .expect("Failed to create debug window");
+
     // Limit update rate to ~50 FPS
     window.limit_update_rate(Some(FRAME_DURATION));
     kb_window.limit_update_rate(Some(FRAME_DURATION));
+    dbg_window.limit_update_rate(Some(FRAME_DURATION));
 
     println!("ZX Spectrum Emulator started");
     println!("Controls: ESC = Exit, F2 = Reset, F3 = Load Snapshot");
@@ -162,6 +179,9 @@ fn main() {
         // Render keyboard display
         kb_display.render(&keyboard);
 
+        // Render debug display
+        debug_display.render(&cpu, &memory);
+
         // Update main window
         window
             .update_with_buffer(graphics.get_buffer(), WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -172,6 +192,13 @@ fn main() {
             kb_window
                 .update_with_buffer(kb_display.get_buffer(), KB_WIDTH, KB_HEIGHT)
                 .expect("Failed to update keyboard window");
+        }
+
+        // Update debug window (if still open)
+        if dbg_window.is_open() {
+            dbg_window
+                .update_with_buffer(debug_display.get_buffer(), DBG_WIDTH, DBG_HEIGHT)
+                .expect("Failed to update debug window");
         }
     }
 
