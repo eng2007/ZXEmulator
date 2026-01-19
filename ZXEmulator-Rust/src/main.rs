@@ -43,11 +43,20 @@ fn main() {
     let mut kb_display = KeyboardDisplay::new();
     let mut debug_display = DebugDisplay::new();
 
+    let mut current_filename = String::from("None");
+
     // Load ROM if provided
     if args.len() > 1 {
         let rom_path = &args[1];
         match snapshot::load_rom(rom_path, &mut memory) {
-            Ok(_) => println!("Loaded ROM: {}", rom_path),
+            Ok(_) => {
+                println!("Loaded ROM: {}", rom_path);
+                current_filename = std::path::Path::new(rom_path)
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_string_lossy()
+                    .to_string();
+            }
             Err(e) => {
                 eprintln!("Failed to load ROM: {}", e);
                 println!("Continuing with empty memory...");
@@ -62,7 +71,14 @@ fn main() {
     if args.len() > 2 {
         let snapshot_path = &args[2];
         match snapshot::load_snapshot(snapshot_path, &mut cpu, &mut memory) {
-            Ok(_) => println!("Loaded snapshot: {}", snapshot_path),
+            Ok(_) => {
+                println!("Loaded snapshot: {}", snapshot_path);
+                current_filename = std::path::Path::new(snapshot_path)
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_string_lossy()
+                    .to_string();
+            }
             Err(e) => eprintln!("Failed to load snapshot: {}", e),
         }
     }
@@ -132,7 +148,13 @@ fn main() {
             {
                 if let Some(path_str) = path.to_str() {
                      match snapshot::load_snapshot(path_str, &mut cpu, &mut memory) {
-                        Ok(_) => println!("Loaded snapshot: {}", path_str),
+                        Ok(_) => {
+                            println!("Loaded snapshot: {}", path_str);
+                            current_filename = path.file_name()
+                                .unwrap_or_default()
+                                .to_string_lossy()
+                                .to_string();
+                        }
                         Err(e) => eprintln!("Failed to load snapshot: {}", e),
                     }
                 }
@@ -180,7 +202,7 @@ fn main() {
         kb_display.render(&keyboard);
 
         // Render debug display
-        debug_display.render(&cpu, &memory);
+        debug_display.render(&cpu, &memory, &current_filename);
 
         // Update main window
         window

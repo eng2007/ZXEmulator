@@ -170,6 +170,26 @@ impl Memory {
     pub fn is_128k_mode(&self) -> bool {
         self.is_128k
     }
+
+    /// Get current ROM bank (0 or 1)
+    pub fn get_current_rom(&self) -> usize {
+        self.current_rom
+    }
+
+    /// Get current screen bank (5 or 7)
+    pub fn get_screen_bank(&self) -> usize {
+        self.screen_bank
+    }
+
+    /// Check if paging is disabled
+    pub fn is_paging_disabled(&self) -> bool {
+        self.paging_disabled
+    }
+
+    /// Get RAM bank for the switchable slot (0xC000-0xFFFF)
+    pub fn get_bank_at_slot_3(&self) -> usize {
+        self.paged_banks[3]
+    }
 }
 
 impl Default for Memory {

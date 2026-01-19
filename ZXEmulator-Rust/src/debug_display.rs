@@ -4,7 +4,7 @@
 use crate::cpu::Z80;
 use crate::memory::Memory;
 
-pub const DBG_WIDTH: usize = 300;
+pub const DBG_WIDTH: usize = 450;
 pub const DBG_HEIGHT: usize = 400;
 
 const COLOR_BG: u32 = 0xFF101010;
@@ -24,7 +24,7 @@ impl DebugDisplay {
         }
     }
 
-    pub fn render(&mut self, cpu: &Z80, memory: &Memory) {
+    pub fn render(&mut self, cpu: &Z80, memory: &Memory, rom_name: &str) {
         self.buffer.fill(COLOR_BG);
 
         let mut y = 10;
@@ -101,6 +101,47 @@ impl DebugDisplay {
             y += 10;
         }
 
+        // --- System Info (Right Side) ---
+        let sys_x = 310;
+        let mut sys_y = 10;
+        self.draw_text(sys_x, sys_y, "SYSTEM", COLOR_HEADER);
+        sys_y += 15;
+
+        // Truncate ROM name if too long (max ~12 chars)
+        let rom_display = if rom_name.len() > 12 {
+            &rom_name[..12]
+        } else {
+            rom_name
+        };
+        self.draw_text(sys_x, sys_y, rom_display, COLOR_HIGHLIGHT);
+        sys_y += 15;
+        
+        self.draw_text(sys_x, sys_y, if memory.is_128k_mode() { "128K Mode" } else { "48K Mode" }, COLOR_TEXT);
+        sys_y += 10;
+        
+        if memory.is_128k_mode() {
+            self.draw_text(sys_x, sys_y, "Paging:", COLOR_LABEL);
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, if memory.is_paging_disabled() { "LOCKED" } else { "ACTIVE" }, 
+                if memory.is_paging_disabled() { 0xFFFF0000 } else { 0xFF00FF00 });
+            sys_y += 15;
+
+            self.draw_text(sys_x, sys_y, "Map:", COLOR_LABEL);
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, &format!("ROM: {}", memory.get_current_rom()), COLOR_TEXT);
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, "Bnk5", COLOR_LABEL); // 4000
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, "Bnk2", COLOR_LABEL); // 8000
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, &format!("Bnk{}", memory.get_bank_at_slot_3()), COLOR_HIGHLIGHT);
+            sys_y += 15;
+             self.draw_text(sys_x, sys_y, &format!("Scr: {}", memory.get_screen_bank()), COLOR_TEXT);
+        } else {
+            self.draw_text(sys_x, sys_y, "Standard", COLOR_LABEL);
+            sys_y += 10;
+            self.draw_text(sys_x, sys_y, "Map", COLOR_LABEL);
+        }
     }
 
     fn draw_register(&mut self, x: usize, y: usize, label: &str, value: u16) {
@@ -116,7 +157,8 @@ impl DebugDisplay {
     }
 
     fn draw_text(&mut self, x: usize, y: usize, text: &str, color: u32) {
-        for (i, char) in text.chars().enumerate() {
+        let upper = text.to_uppercase();
+        for (i, char) in upper.chars().enumerate() {
             self.draw_char(x + i * 8, y, char, color);
         }
     }
@@ -167,7 +209,13 @@ impl DebugDisplay {
            ' ' => vec![0, 0, 0, 0, 0],
            ':' => vec![0, 0x36, 0x36, 0, 0],
            '>' => vec![0x08, 0x14, 0x22, 0x41, 0],
-            _ => vec![0xFF, 0xFF, 0xFF, 0xFF, 0xFF], // Blobs for unknown
+            '.' => vec![0, 0xC0, 0xC0, 0, 0],
+            '-' => vec![0x08, 0x08, 0x08, 0x08, 0x08],
+            '_' => vec![0x80, 0x80, 0x80, 0x80, 0x80],
+            '\'' => vec![0, 0x03, 0, 0, 0],
+            '(' => vec![0, 0x41, 0x22, 0x1C, 0],
+            ')' => vec![0, 0x1C, 0x22, 0x41, 0],
+             _ => vec![0xFF, 0xFF, 0xFF, 0xFF, 0xFF], // Blobs for unknown
         };
 
         // Draw 5x7 (actually stored as columns here for easy encoding? No wait, these look like column bits)
