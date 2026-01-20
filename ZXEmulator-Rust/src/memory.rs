@@ -18,6 +18,8 @@ pub struct Memory {
     current_rom: usize,
     /// TR-DOS ROM active flag (overrides current_rom when true)
     trdos_rom_active: bool,
+    /// TR-DOS ROM loaded flag (true if TR-DOS ROM has been loaded into ROM bank 2)
+    trdos_rom_loaded: bool,
     /// Currently paged RAM banks for each 16KB slot
     /// [0] = always ROM, [1] = bank 5, [2] = bank 2, [3] = configurable
     paged_banks: [usize; 4],
@@ -44,6 +46,7 @@ impl Memory {
             rom: [[0; ROM_SIZE]; 3],
             current_rom: 0,
             trdos_rom_active: false,
+            trdos_rom_loaded: false,
             paged_banks: [0, 5, 2, 0], // Default: ROM, Bank 5, Bank 2, Bank 0
             screen_bank: 5,
             paging_disabled: false,
@@ -57,6 +60,7 @@ impl Memory {
         self.ram.fill(0);
         self.current_rom = 0;
         self.trdos_rom_active = false;
+        // Don't reset trdos_rom_loaded - keep ROM loaded after reset
         self.paged_banks = [0, 5, 2, 0];
         self.screen_bank = 5;
         self.paging_disabled = false;
@@ -228,28 +232,28 @@ impl Memory {
     pub fn load_trdos_rom(&mut self, data: &[u8]) {
         if data.len() <= ROM_SIZE {
             self.rom[2][..data.len()].copy_from_slice(data);
+            self.trdos_rom_loaded = true;
         }
     }
 
     /// Enable TR-DOS ROM (switch to ROM bank 2)
     pub fn enable_trdos_rom(&mut self) {
-        if !self.trdos_rom_active {
-            println!("[MEMORY] TR-DOS ROM enabled (ROM bank 2 active)");
-        }
         self.trdos_rom_active = true;
     }
 
     /// Disable TR-DOS ROM (return to normal ROM banking)
     pub fn disable_trdos_rom(&mut self) {
-        if self.trdos_rom_active {
-            println!("[MEMORY] TR-DOS ROM disabled (back to ROM bank {})", self.current_rom);
-        }
         self.trdos_rom_active = false;
     }
 
     /// Check if TR-DOS ROM is active
     pub fn is_trdos_rom_active(&self) -> bool {
         self.trdos_rom_active
+    }
+
+    /// Check if TR-DOS ROM is loaded in ROM bank 2
+    pub fn is_trdos_rom_loaded(&self) -> bool {
+        self.trdos_rom_loaded
     }
 }
 

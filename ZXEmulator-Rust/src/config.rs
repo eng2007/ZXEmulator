@@ -18,6 +18,9 @@ pub enum MemorySize {
 pub struct Config {
     pub port_decoding: PortDecoding,
     pub memory_size: MemorySize,
+    pub trdos_enabled: bool,
+    pub default_rom_path: Option<String>,
+    pub trdos_rom_path: Option<String>,
 }
 
 impl Default for Config {
@@ -25,6 +28,9 @@ impl Default for Config {
         Self {
             port_decoding: PortDecoding::Partial, // Default to Pentagon behavior
             memory_size: MemorySize::K128,        // Default to standard 128K
+            trdos_enabled: false,                 // TR-DOS disabled by default
+            default_rom_path: None,               // No default ROM path
+            trdos_rom_path: None,                 // No TR-DOS ROM path
         }
     }
 }
@@ -38,6 +44,11 @@ pub fn load_config(path: &str) -> Config {
             writeln!(file, "[Settings]").unwrap();
             writeln!(file, "PortDecoding=Partial ; Full or Partial").unwrap();
             writeln!(file, "MemorySize=128      ; 128 or 512").unwrap();
+            writeln!(file, "").unwrap();
+            writeln!(file, "[TR-DOS]").unwrap();
+            writeln!(file, "EnableTRDOS=No      ; Yes or No - Enable TR-DOS support").unwrap();
+            writeln!(file, "DefaultROM=         ; Path to default ZX Spectrum ROM (e.g., 128.rom)").unwrap();
+            writeln!(file, "TRDOSROM=           ; Path to TR-DOS ROM (e.g., trdos.rom)").unwrap();
         }
         return config;
     }
@@ -68,6 +79,21 @@ pub fn load_config(path: &str) -> Config {
                                 config.memory_size = MemorySize::K512;
                             } else {
                                 config.memory_size = MemorySize::K128;
+                            }
+                        }
+                        "EnableTRDOS" => {
+                            config.trdos_enabled = value.eq_ignore_ascii_case("Yes") 
+                                                || value.eq_ignore_ascii_case("True")
+                                                || value == "1";
+                        }
+                        "DefaultROM" => {
+                            if !value.is_empty() {
+                                config.default_rom_path = Some(value.to_string());
+                            }
+                        }
+                        "TRDOSROM" => {
+                            if !value.is_empty() {
+                                config.trdos_rom_path = Some(value.to_string());
                             }
                         }
                         _ => {}

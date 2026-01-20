@@ -55,12 +55,28 @@ fn main() {
 
     let mut current_filename = String::from("None");
 
-    // Load ROM if provided
-    if args.len() > 1 {
+    // Auto-load ROMs from config
+    if let Some(rom_path) = &config.default_rom_path {
+        match snapshot::load_rom(rom_path, &mut memory) {
+            Ok(_) => {
+                println!("Loaded default ROM from config: {}", rom_path);
+                current_filename = std::path::Path::new(rom_path)
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_string_lossy()
+                    .to_string();
+            }
+            Err(e) => {
+                eprintln!("Failed to load default ROM '{}': {}", rom_path, e);
+                println!("Continuing with empty memory...");
+            }
+        }
+    } else if args.len() > 1 {
+        // Fallback to command-line ROM loading if no config path
         let rom_path = &args[1];
         match snapshot::load_rom(rom_path, &mut memory) {
             Ok(_) => {
-                println!("Loaded ROM: {}", rom_path);
+                println!("Loaded ROM from command line: {}", rom_path);
                 current_filename = std::path::Path::new(rom_path)
                     .file_name()
                     .unwrap_or_default()
@@ -73,8 +89,23 @@ fn main() {
             }
         }
     } else {
-        println!("Usage: {} <rom_file> [snapshot_file]", args[0]);
-        println!("No ROM file specified, starting with empty memory (test mode)");
+        println!("No default ROM in config, starting with empty memory");
+    }
+
+    // Auto-load TR-DOS ROM if enabled
+    if config.trdos_enabled {
+        if let Some(trdos_path) = &config.trdos_rom_path {
+            match snapshot::load_trdos_rom(trdos_path, &mut memory) {
+                Ok(_) => {
+                    println!("TR-DOS enabled: Loaded TR-DOS ROM from config: {}", trdos_path);
+                }
+                Err(e) => {
+                    eprintln!("Failed to load TR-DOS ROM '{}': {}", trdos_path, e);
+                }
+            }
+        } else {
+            println!("TR-DOS enabled in config but no TRDOSROM path specified");
+        }
     }
 
     // Load snapshot if provided

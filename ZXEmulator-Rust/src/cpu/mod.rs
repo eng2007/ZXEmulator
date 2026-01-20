@@ -150,6 +150,16 @@ impl Z80 {
     /// Fetch byte from PC and increment PC
     #[inline]
     pub fn fetch(&mut self) -> u8 {
+        // Auto-enable TR-DOS ROM when PC enters TR-DOS area (0x3C00-0x3FFF)
+        // This is necessary for RANDOMIZE USR 15616 to work correctly
+        // Only activate if TR-DOS ROM is actually loaded
+        if self.pc >= 0x3C00 && self.pc < 0x4000 {
+            if self.mem().is_trdos_rom_loaded() && !self.mem().is_trdos_rom_active() {
+                println!("[CPU] PC=0x{:04X} entering TR-DOS area, activating TR-DOS ROM", self.pc);
+                self.mem_mut().enable_trdos_rom();
+            }
+        }
+        
         let byte = self.mem().read(self.pc);
         self.pc = self.pc.wrapping_add(1);
         self.r = (self.r & 0x80) | ((self.r.wrapping_add(1)) & 0x7F);
