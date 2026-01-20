@@ -124,19 +124,6 @@ fn main() {
         }
     }
 
-    // Create main emulator window
-    let mut window = Window::new(
-        "ZX Spectrum Emulator (Rust)",
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-        WindowOptions {
-            scale: Scale::X2,
-            resize: true,
-            ..WindowOptions::default()
-        },
-    )
-    .expect("Failed to create window");
-
     // Create keyboard display window
     let mut kb_window = Window::new(
         "ZX Spectrum Keyboard",
@@ -162,6 +149,19 @@ fn main() {
         },
     )
     .expect("Failed to create debug window");
+
+    // Create main emulator window
+    let mut window = Window::new(
+        "ZX Spectrum Emulator (Rust)",
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
+        WindowOptions {
+            scale: Scale::X2,
+            resize: false,
+            ..WindowOptions::default()
+        },
+    )
+    .expect("Failed to create window");
 
     // Limit update rate to ~50 FPS
     window.limit_update_rate(Some(FRAME_DURATION));

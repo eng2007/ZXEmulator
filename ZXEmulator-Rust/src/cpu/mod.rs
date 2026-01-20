@@ -155,7 +155,7 @@ impl Z80 {
         // Only activate if TR-DOS ROM is actually loaded
         if self.pc >= 0x3C00 && self.pc < 0x4000 {
             if self.mem().is_trdos_rom_loaded() && !self.mem().is_trdos_rom_active() {
-                println!("[CPU] PC=0x{:04X} entering TR-DOS area, activating TR-DOS ROM", self.pc);
+                // println!("[CPU] PC=0x{:04X} entering TR-DOS area, activating TR-DOS ROM", self.pc);
                 self.mem_mut().enable_trdos_rom();
             }
         }

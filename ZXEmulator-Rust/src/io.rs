@@ -46,8 +46,8 @@ impl IoController {
         let port_low = port & 0xFF;
         if matches!(port_low, 0x1F | 0x3F | 0x5F | 0x7F | 0xFF) {
             let memory = unsafe { &mut *self.memory };
-            println!("[TR-DOS] Read port 0x{:02X}, enabling TR-DOS ROM", port_low);
-            memory.enable_trdos_rom();
+            // println!("[TR-DOS] Read port 0x{:02X}, enabling TR-DOS ROM", port_low);
+            // memory.enable_trdos_rom();
             
             let fdc = unsafe { &mut *self.fdc };
             
@@ -60,15 +60,22 @@ impl IoController {
                 _ => 0xFF,
             };
             
-            println!("[TR-DOS] Port 0x{:02X} read = 0x{:02X}", port_low, value);
+            // Temporary: log all reads including 0xFF (limited)
+            static mut LOG_COUNT: u32 = 0;
+            unsafe {
+                if LOG_COUNT < 100 {
+                    println!("[TR-DOS] Port 0x{:02X} read = 0x{:02X}", port_low, value);
+                    LOG_COUNT += 1;
+                }
+            }
             return value;
         }
 
         // Any other I/O - disable TR-DOS ROM
         let memory = unsafe { &mut *self.memory };
         if memory.is_trdos_rom_active() {
-            println!("[TR-DOS] Non-disk I/O (port 0x{:04X}), disabling TR-DOS ROM", port);
-            memory.disable_trdos_rom();
+            // println!("[TR-DOS] Non-disk I/O (port 0x{:04X}), disabling TR-DOS ROM", port);
+            // memory.disable_trdos_rom();
         }
 
         // Default - floating bus
@@ -89,8 +96,8 @@ impl IoController {
         let port_low = port & 0xFF;
         if matches!(port_low, 0x1F | 0x3F | 0x5F | 0x7F | 0xFF) {
             let memory = unsafe { &mut *self.memory };
-            println!("[TR-DOS] Write port 0x{:02X} = 0x{:02X}, enabling TR-DOS ROM", port_low, value);
-            memory.enable_trdos_rom();
+            // println!("[TR-DOS] Write port 0x{:02X} = 0x{:02X}, enabling TR-DOS ROM", port_low, value);
+            // memory.enable_trdos_rom();
             
             let fdc = unsafe { &mut *self.fdc };
             
@@ -124,8 +131,8 @@ impl IoController {
         // Any other I/O - disable TR-DOS ROM
         let memory = unsafe { &mut *self.memory };
         if memory.is_trdos_rom_active() {
-            println!("[TR-DOS] Non-disk I/O (port 0x{:04X}), disabling TR-DOS ROM", port);
-            memory.disable_trdos_rom();
+            // println!("[TR-DOS] Non-disk I/O (port 0x{:04X}), disabling TR-DOS ROM", port);
+            // memory.disable_trdos_rom();
         }
 
         // Port 0x7FFD - 128K memory paging

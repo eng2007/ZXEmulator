@@ -144,6 +144,14 @@ impl FDC {
             status |= STATUS_NOT_READY;
         }
         
+        println!("[FDC] Read status: 0x{:02X} (BUSY={} DRQ={} NOT_READY={} TRACK0={})", 
+            status,
+            (status & STATUS_BUSY) != 0,
+            (status & STATUS_DRQ) != 0,
+            (status & STATUS_NOT_READY) != 0,
+            (status & STATUS_TRACK_0) != 0
+        );
+        
         status
     }
 
@@ -152,18 +160,44 @@ impl FDC {
         // Determine command type
         let cmd_type = cmd & 0xF0;
         
+        println!("[FDC] Command 0x{:02X}, type 0x{:02X}", cmd, cmd_type);
+        
         match cmd_type {
-            CMD_RESTORE => self.cmd_restore(),
-            CMD_SEEK => self.cmd_seek(),
-            CMD_STEP => self.cmd_step(cmd),
-            CMD_READ_SECTOR => self.cmd_read_sector(cmd),
-            CMD_WRITE_SECTOR => self.cmd_write_sector(cmd),
-            CMD_READ_ADDRESS => self.cmd_read_address(),
-            CMD_FORCE_INTERRUPT => self.cmd_force_interrupt(),
+            CMD_RESTORE => {
+                println!("[FDC] -> RESTORE");
+                self.cmd_restore();
+            }
+            CMD_SEEK => {
+                println!("[FDC] -> SEEK");
+                self.cmd_seek();
+            }
+            CMD_STEP => {
+                println!("[FDC] -> STEP");
+                self.cmd_step(cmd);
+            }
+            CMD_READ_SECTOR => {
+                println!("[FDC] -> READ_SECTOR");
+                self.cmd_read_sector(cmd);
+            }
+            CMD_WRITE_SECTOR => {
+                println!("[FDC] -> WRITE_SECTOR");
+                self.cmd_write_sector(cmd);
+            }
+            CMD_READ_ADDRESS => {
+                println!("[FDC] -> READ_ADDRESS");
+                self.cmd_read_address();
+            }
+            CMD_FORCE_INTERRUPT => {
+                println!("[FDC] -> FORCE_INTERRUPT");
+                self.cmd_force_interrupt();
+            }
             _ => {
                 // For commands like 0x30, 0x40, 0x50 (step variants)
                 if cmd_type >= 0x20 && cmd_type < 0x80 {
+                    println!("[FDC] -> STEP variant");
                     self.cmd_step(cmd);
+                } else {
+                    println!("[FDC] -> UNKNOWN COMMAND!");
                 }
             }
         }
@@ -235,8 +269,34 @@ impl FDC {
     }
 
     /// Read system register (port 0xFF)
-    pub fn read_system(&self) -> u8 {
-        self.system
+    /// In Beta Disk interface, reading port 0xFF returns:
+    /// Bit 6: INTRQ - Interrupt Request from FDC
+    /// Bit 7: DRQ - Data Request from FDC
+    /// Bits 0-5: Usually return 0x3F (all high)
+    /// NOTE: Reading this port does NOT clear INTRQ (only reading 0x1F does)
+    pub fn read_system(&mut self) -> u8 {
+        let mut result = 0x3F; // Bits 0-5 typically high
+        
+        if self.intrq {
+            result |= 0x40; // Bit 6: INTRQ
+        }
+        
+        if self.drq {
+            result |= 0x80; // Bit 7: DRQ
+        }
+        
+        static mut LOG_COUNT_FDC: u32 = 0;
+        unsafe {
+            if LOG_COUNT_FDC < 100 {
+                println!("[FDC] read_system() -> 0x{:02X} (INTRQ={} DRQ={})", 
+                    result, self.intrq, self.drq);
+                LOG_COUNT_FDC += 1;
+            }
+        }
+        
+        // NOTE: Do NOT clear INTRQ here! Only reading status (0x1F) clears it
+        
+        result
     }
 
     /// Write system register (port 0xFF)
@@ -279,15 +339,20 @@ impl FDC {
         self.status = STATUS_BUSY;
         self.head_track = 0;
         self.track = 0;
-        self.status = STATUS_TRACK_0;
+        // Clear BUSY and set TRACK_0
+        self.status &= !STATUS_BUSY;
+        self.status |= STATUS_TRACK_0;
         self.intrq = true;
         self.state = FdcState::Idle;
+        
+        println!("[FDC] ====== RESTORE COMPLETED ====== status=0x{:02X}, INTRQ={}", self.status, self.intrq);
     }
 
     /// CMD I: Seek
     fn cmd_seek(&mut self) {
         self.status = STATUS_BUSY;
         self.head_track = self.track;
+        // Clear BUSY and other flags
         self.status = 0;
         if self.head_track == 0 {
             self.status |= STATUS_TRACK_0;
@@ -308,6 +373,7 @@ impl FDC {
             self.track = self.head_track;
         }
         
+        // Clear BUSY and other flags
         self.status = 0;
         if self.head_track == 0 {
             self.status |= STATUS_TRACK_0;
@@ -391,7 +457,9 @@ impl FDC {
         self.status &= !STATUS_BUSY;
         self.state = FdcState::Idle;
         self.drq = false;
-        self.intrq = true;
+        // NOTE: FORCE_INTERRUPT (0xD0) does NOT generate INTRQ
+        // INTRQ is only generated if interrupt condition bits (0-3) are set
+        self.intrq = false;
     }
 
     /// Check if DRQ is active

@@ -657,7 +657,16 @@ impl Z80 {
     }
 
     fn ret(&mut self) {
-        self.pc = self.pop();
+        let return_addr = self.pop();
+        
+        // Auto-disable TR-DOS ROM when returning to address >= 0x4000
+        // This is the standard TR-DOS exit mechanism
+        if self.mem().is_trdos_rom_active() && return_addr >= 0x4000 {
+            //  println!("[CPU] RET to 0x{:04X}, exiting TR-DOS ROM", return_addr);
+            self.mem_mut().disable_trdos_rom();
+        }
+        
+        self.pc = return_addr;
     }
 
     fn rst(&mut self, addr: u16) {

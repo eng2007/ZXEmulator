@@ -615,12 +615,28 @@ impl Z80 {
 
     fn retn(&mut self) {
         self.iff1 = self.iff2;
-        self.pc = self.pop();
+        let return_addr = self.pop();
+        
+        // Auto-disable TR-DOS ROM when returning to address >= 0x4000
+        if self.mem().is_trdos_rom_active() && return_addr >= 0x4000 {
+            println!("[CPU] RETN to 0x{:04X}, exiting TR-DOS ROM", return_addr);
+            self.mem_mut().disable_trdos_rom();
+        }
+        
+        self.pc = return_addr;
     }
 
     fn reti(&mut self) {
         self.iff1 = self.iff2;
-        self.pc = self.pop();
+        let return_addr = self.pop();
+        
+        // Auto-disable TR-DOS ROM when returning to address >= 0x4000
+        if self.mem().is_trdos_rom_active() && return_addr >= 0x4000 {
+            println!("[CPU] RETI to 0x{:04X}, exiting TR-DOS ROM", return_addr);
+            self.mem_mut().disable_trdos_rom();
+        }
+        
+        self.pc = return_addr;
     }
 
     fn ld_a_ir(&mut self, value: u8) {
